@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import {
@@ -161,12 +162,14 @@ function RailButton({
 
 function BrandMark() {
   return (
-    <span
-      aria-hidden
-      className="flex size-6 items-center justify-center rounded-md bg-foreground text-[11px] font-bold text-canvas"
-    >
-      M
-    </span>
+    <Image
+      src="/logo.png"
+      alt="Mujeeb AI"
+      width={24}
+      height={24}
+      priority
+      className="size-6 rounded-[7px] object-cover shadow-xs"
+    />
   );
 }
 

@@ -6,6 +6,8 @@ import { LanguageSwitcher } from "@/components/marketing/language-switcher";
 import { HeaderShell } from "@/components/marketing/header-shell";
 import { getCurrentUser } from "@/auth/session";
 
+import Image from "next/image";
+
 export async function SiteHeader() {
   const t = await getTranslations("nav");
   const user = await getCurrentUser();
@@ -14,15 +16,14 @@ export async function SiteHeader() {
     <HeaderShell>
       <div className="mx-auto flex h-[68px] max-w-[76rem] items-center gap-3 px-5 sm:px-8">
         <Link href="/" className="group flex items-center gap-2.5">
-          {/* The mark carries the accent, which is the one colour the
-              product uses to mean "this is us". A flat foreground square
-              read as a placeholder. */}
-          <span
-            aria-hidden
-            className="flex size-9 items-center justify-center rounded-[11px] bg-gradient-to-br from-accent to-accent-hover text-[15px] font-bold text-accent-text shadow-sm transition-transform duration-200 group-hover:scale-105"
-          >
-            M
-          </span>
+          <Image
+            src="/logo.png"
+            alt="Mujeeb AI"
+            width={36}
+            height={36}
+            priority
+            className="size-9 rounded-[11px] object-cover shadow-sm transition-transform duration-200 group-hover:scale-105"
+          />
           <span className="text-[18px] font-semibold tracking-tight text-foreground">Mujeeb AI</span>
         </Link>
 
