@@ -1,0 +1,1290 @@
+{
+  "metadata": {
+    "title": "Mujeeb AI",
+    "description": "プレミアムな多言語AIワークスペース。"
+  },
+  "common": {
+    "appName": "Mujeeb AI",
+    "loading": "読み込み中…",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "confirm": "確認",
+    "close": "閉じる",
+    "back": "戻る",
+    "continue": "続ける",
+    "retry": "再試行",
+    "comingSoon": "近日公開",
+    "locked": "ロック中",
+    "error": "問題が発生しました",
+    "language": "言語",
+    "theme": "テーマ",
+    "themeLight": "ライト",
+    "themeDark": "ダーク",
+    "themeSystem": "システム",
+    "skipToContent": "本文へスキップ",
+    "dismiss": "閉じる"
+  },
+  "nav": {
+    "newChat": "新しいチャット",
+    "search": "会話を検索",
+    "settings": "設定",
+    "pricing": "料金",
+    "admin": "管理コンソール",
+    "signOut": "ログアウト",
+    "signIn": "ログイン",
+    "signUp": "アカウント作成",
+    "backToApp": "Mujeeb AI に戻る",
+    "moderator": "モデレーターコンソール",
+    "openApp": "Mujeeb AI を開く",
+    "openMenu": "メニューを開く",
+    "conversations": "会話",
+    "pinned": "ピン留め",
+    "recent": "最近",
+    "noConversations": "会話はまだありません。上から始めてください。",
+    "noSearchResults": "この検索に一致する会話はありません。",
+    "collapseSidebar": "サイドバーを折りたたむ",
+    "expandSidebar": "サイドバーを展開する"
+  },
+  "landing": {
+    "hero": {
+      "title": "邪魔をしない AI ワークスペース",
+      "subtitle": "7 言語に対応した高速なストリーミング会話。資料も画像もそのまま扱え、特定の AI プロバイダーに縛られません。",
+      "priceNote": "無料で開始。{plan} は月額 {price} です。",
+      "eyebrow": "7言語対応。基盤モデルは自由。"
+    },
+    "cta": {
+      "start": "無料アカウントを作成",
+      "pricing": "料金を見る",
+      "continue": "Mujeeb AI を続ける"
+    },
+    "features": {
+      "title": "実務のために",
+      "chat": {
+        "title": "書かれるそばから読める回答",
+        "body": "最初のトークンから届くので、モデルが考えている間に読み進められます。"
+      },
+      "files": {
+        "title": "ファイルを理解します",
+        "body": "PDF・Word・Excel・PowerPoint・CSV・テキストをサーバー側で抽出し、命令ではなくデータとしてモデルに渡します。"
+      },
+      "vision": {
+        "title": "画像を見ます",
+        "body": "スクリーンショットや写真を添付して、写っているものについて質問できます。"
+      },
+      "global": {
+        "title": "7 言語を、きちんと",
+        "body": "英語・フランス語・アラビア語・ポルトガル語・スペイン語・日本語・中国語に対応。右から左のレイアウトも見せかけではなく本物です。"
+      },
+      "images": {
+        "title": "画像を生成します",
+        "body": "望むものを説明すれば画像が返り、生成元の会話にそのまま残ります。"
+      },
+      "privacy": {
+        "title": "会話はあなたのものです",
+        "body": "行レベルセキュリティにより、他のアカウントの履歴は読めません。管理者もあなたのチャットを覗けません。"
+      },
+      "subtitle": "以下はすべて無料プランで動作します。デモではありません。"
+    },
+    "closing": {
+      "title": "会話を始める",
+      "body": "カードは不要です。無料プランは体験版ではなく、きちんとした製品です。"
+    },
+    "stats": {
+      "languages": {
+        "value": "7",
+        "label": "言語対応、RTLレイアウトも本格対応"
+      },
+      "providers": {
+        "value": "ロックインなし",
+        "label": "モデル提供元はいつでも変更可能"
+      },
+      "formats": {
+        "value": "9+",
+        "label": "サーバー側で読み取る文書形式"
+      },
+      "free": {
+        "value": "無料",
+        "label": "体験版ではなく実用プラン"
+      }
+    },
+    "footer": {
+      "tagline": "邪魔をしないAIワークスペース。",
+      "product": "製品",
+      "company": "概要",
+      "rights": "All rights reserved."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "おかえりなさい",
+      "subtitle": "Mujeeb AIを続けるにはログインしてください",
+      "submit": "ログイン",
+      "magicLink": "ログインリンクをメールで受け取る",
+      "noAccount": "アカウントをお持ちでないですか?",
+      "magicLinkHint": "サインイン用のリンクをメールでお送りします。パスワードは不要です。",
+      "useMagicLink": "メールのリンクでサインインする",
+      "usePassword": "パスワードでサインインする"
+    },
+    "register": {
+      "title": "アカウントを作成",
+      "subtitle": "Mujeeb AI Freeから始めましょう — クレジットカード不要",
+      "submit": "アカウントを作成",
+      "haveAccount": "すでにアカウントをお持ちですか?"
+    },
+    "email": {
+      "label": "メールアドレス",
+      "placeholder": "you@example.com"
+    },
+    "password": {
+      "label": "パスワード",
+      "placeholder": "8文字以上",
+      "hint": "8 文字以上。"
+    },
+    "forgotPassword": "パスワードをお忘れですか?",
+    "reset": {
+      "title": "パスワードを再設定",
+      "subtitle": "安全なリンクをメールで送信します",
+      "submit": "再設定リンクを送信",
+      "sent": "そのメールアドレスのアカウントが存在する場合、再設定リンクをお送りします。"
+    },
+    "verify": {
+      "title": "メールをご確認ください",
+      "subtitle": "確認リンクをメールアドレスにお送りしました。",
+      "resend": "確認メールを再送信",
+      "resending": "送信中…",
+      "resendSuccess": "確認メールを送信しました！受信トレイをご確認ください。",
+      "instruction": "メール内の確認リンクをクリックしてアカウントを有効化してください。"
+    },
+    "magicLink": {
+      "sent": "そのメールアドレスのアカウントが存在する場合、ログインリンクをお送りします。"
+    },
+    "errors": {
+      "invalidCredentials": "メールアドレスまたはパスワードが正しくありません。",
+      "generic": "処理を完了できませんでした。もう一度お試しください。",
+      "invalidEmail": "有効なメールアドレスではないようです。",
+      "weakPassword": "パスワードは8文字以上で入力してください。",
+      "rateLimited": "試行回数が多すぎます。しばらく待ってから再度お試しください。",
+      "passwordMismatch": "パスワードが一致しません。",
+      "userAlreadyExists": "このメールアドレスは既に登録されています。ログインをお試しください。",
+      "nameRequired": "お名前（姓・名）を入力してください。",
+      "emailNotConfirmed": "メールアドレスがまだ確認されていません。受信トレイを確認するか、再送信してください。",
+      "registrationClosed": "現在、新規登録を停止しています。しばらくしてからお試しください。",
+      "emailDeliveryFailed": "確認メールを送信できませんでした。少し時間をおいて再度お試しください。",
+      "accountSuspended": "このアカウントは停止中です。心当たりがない場合はサポートにご連絡ください。",
+      "accountDisabled": "このアカウントは無効化されています。",
+      "sessionExpired": "セッションの有効期限が切れました。新しいリンクを取得してやり直してください。",
+      "invalidLink": "このリンクは無効です。新しいリンクを取得してください。",
+      "expiredLink": "このリンクは期限切れか、すでに使用済みです。新しいリンクを取得してください。",
+      "oauth": "現在 Google サインインを利用できません。メールアドレスとパスワードをご利用ください。"
+    },
+    "firstName": {
+      "label": "名",
+      "placeholder": "太郎"
+    },
+    "lastName": {
+      "label": "姓",
+      "placeholder": "山田"
+    },
+    "confirmPassword": {
+      "label": "パスワード（確認）",
+      "placeholder": "パスワードを再入力"
+    },
+    "passwordStrength": {
+      "weak": "8文字以上必要です",
+      "medium": "良好なパスワード強度",
+      "strong": "強力なパスワード"
+    },
+    "updatePassword": {
+      "title": "新しいパスワードを設定",
+      "subtitle": "これまでに使っていないものを選んでください。",
+      "submit": "パスワードを更新",
+      "success": "パスワードを更新しました。サインインしています。"
+    },
+    "passwordsMatch": "パスワードが一致しました",
+    "backToLogin": "サインインに戻る",
+    "showPassword": "パスワードを表示",
+    "hidePassword": "パスワードを非表示",
+    "google": {
+      "continue": "Google で続行"
+    },
+    "or": "または以下で続行"
+  },
+  "chat": {
+    "composer": {
+      "placeholder": "Mujeeb AIにメッセージを送る…",
+      "send": "送信",
+      "stop": "停止",
+      "attach": "ファイルを添付",
+      "generateImage": "画像を生成",
+      "disclaimer": "Mujeeb AIは間違えることがあります。重要な情報は確認してください。",
+      "attachHint": "書類または画像を添付（{size} まで）",
+      "addContent": "ファイルを追加、または画像を作成",
+      "uploadFiles": "ファイルをアップロード",
+      "exitImageMode": "画像モードを終了",
+      "attachmentLimit": "1件のメッセージに添付できるファイルは最大 {count} 件です。",
+      "dropHint": "ファイルをドロップして添付（最大 {count} 件）"
+    },
+    "empty": {
+      "title": "今日は何をお手伝いしましょう？",
+      "subtitle": "質問する、書類を添付する、または下から出発点を選んでください。"
+    },
+    "regenerate": "再生成",
+    "edit": "編集",
+    "copy": "コピー",
+    "copied": "コピーしました",
+    "variantOf": "応答 {current} / {total}",
+    "thinking": "考え中",
+    "stopped": "生成を停止しました",
+    "errorGeneric": "Mujeeb AIがこのモデルに接続できません。再試行するか別のモデルを選んでください。",
+    "quotaReached": {
+      "title": "本日の無料利用上限に達しました",
+      "body": "Mujeeb AI Proにアップグレードすると上限が広がります。または明日再度お試しください。",
+      "upgrade": "Proにアップグレード"
+    },
+    "conversation": {
+      "rename": "名前を変更",
+      "archive": "アーカイブ",
+      "delete": "会話を削除",
+      "deleteConfirm": "この会話は完全に削除されます。",
+      "untitled": "新しい会話",
+      "actions": "会話の操作",
+      "pin": "ピン留め",
+      "unpin": "ピン留めを解除",
+      "renameHint": "後で見分けられる名前を付けてください。"
+    },
+    "cancel": "キャンセル",
+    "saveAndResend": "保存して再送信",
+    "generating": "生成中…",
+    "previousVariant": "前の回答",
+    "nextVariant": "次の回答",
+    "removeAttachment": "添付を削除",
+    "a11y": {
+      "yourMessage": "あなたのメッセージ",
+      "assistantMessage": "Mujeeb AI の回答"
+    },
+    "suggestions": {
+      "explain": {
+        "title": "説明してもらう",
+        "prompt": "データベースのインデックスの仕組みと、追加するとかえって遅くなるのはどんなときかを説明してください。"
+      },
+      "draft": {
+        "title": "文章を下書きする",
+        "prompt": "配送が 2 日遅れることを顧客に伝える、短く丁寧なメールを書いてください。"
+      },
+      "analyze": {
+        "title": "資料を読み解く",
+        "prompt": "レポートを添付します。要点をまとめ、矛盾していそうな点を挙げてください。"
+      },
+      "brainstorm": {
+        "title": "一緒に考える",
+        "prompt": "外部に委託する場合と社内で人を育てる場合の得失を整理するのを手伝ってください。"
+      }
+    },
+    "gatewayError": {
+      "provider_unavailable": "現在このモデルに接続できません。再試行するか、別のモデルを選んでください。",
+      "rate_limited": "このモデルは混み合っています。少し待って再試行してください。",
+      "quota_exceeded": "本日の上限に達しました。",
+      "model_unavailable": "このモデルは現在利用できません。別のモデルを選んでください。",
+      "invalid_request": "このメッセージを処理できませんでした。",
+      "provider_error": "モデルがエラーを返しました。再試行してください。",
+      "not_configured": "この環境ではまだこの機能が設定されていません。",
+      "unknown": "問題が発生しました。再試行してください。"
+    },
+    "tooManyAttachments": "このメッセージに添付できる数を超えています。",
+    "image": {
+      "view": "原寸で表示",
+      "close": "閉じる",
+      "copy": "画像をコピー",
+      "copied": "コピーしました",
+      "download": "ダウンロード",
+      "downloadFailed": "その画像をダウンロードできませんでした。",
+      "copyUnsupported": "お使いのブラウザは画像のコピーに対応していません。ダウンロードをお試しください。"
+    }
+  },
+  "models": {
+    "selector": {
+      "freeGroup": "Mujeeb AI 無料モデル",
+      "moreGroup": "その他のモデル",
+      "available": "利用可能",
+      "lockedPro": "Mujeeb AI Pro",
+      "lockedComingSoon": "近日公開"
+    }
+  },
+  "files": {
+    "unsupported": "このファイル形式にはまだ対応していません。",
+    "tooLarge": "このファイルはプランの上限を超えています。",
+    "processing": "ファイルを処理中…",
+    "ready": "準備完了",
+    "failed": "このファイルを処理できませんでした。"
+  },
+  "images": {
+    "prompt": {
+      "placeholder": "生成したい画像を説明してください…"
+    },
+    "generate": "生成",
+    "generating": "画像を生成中…",
+    "failed": "画像の生成に失敗しました。もう一度お試しください。",
+    "quotaReached": "本日の画像生成回数をすべて使い切りました。"
+  },
+  "settings": {
+    "title": "設定",
+    "account": "アカウント",
+    "profile": "プロフィール",
+    "displayName": "表示名",
+    "language": "言語",
+    "appearance": "外観",
+    "subscription": "サブスクリプション",
+    "usage": "利用状況",
+    "signOutEverywhere": "すべてのデバイスからログアウト",
+    "description": "プロフィール、プラン、1 日の利用状況。",
+    "saved": "保存しました。",
+    "saveFailed": "保存できませんでした。もう一度お試しください。",
+    "email": "メールアドレス",
+    "emailHint": "アカウントのアドレス変更はサポートまでご連絡ください。",
+    "displayNameHint": "アプリ内に表示されます。他のユーザーには見えません。",
+    "unlimited": "無制限",
+    "notIncluded": "現在のプランには含まれていません",
+    "quotaResetNote": "1 日の上限は UTC 00:00 にリセットされます。",
+    "font": "表示フォント",
+    "fontHint": "アプリ全体に適用されます。すべての選択肢はお使いのデバイスにあるフォントを使用し、ダウンロードは発生しません。",
+    "fonts": {
+      "system": "既定",
+      "grotesk": "グロテスク",
+      "humanist": "ヒューマニスト",
+      "serif": "明朝体",
+      "mono": "等幅",
+      "geometric": "ジオメトリック",
+      "rounded": "丸ゴシック",
+      "slab": "スラブ",
+      "reading": "読書向け"
+    },
+    "devices": {
+      "title": "デバイス",
+      "description": "このアカウントがサインインしている場所です。心当たりのないものがあれば、サインアウトしてパスワードを変更してください。",
+      "thisDevice": "このデバイス",
+      "twoFactor": "2要素",
+      "lastActive": "最終アクティブ {when}",
+      "signOutDevice": "サインアウト",
+      "signOutOthers": "他のすべてのデバイスからサインアウト",
+      "signOutOthersConfirm": "はい、サインアウトする",
+      "signOutOthersWarning": "他の {count} 件のセッションを終了します。このデバイスはサインインしたままです。",
+      "othersRevoked": "他のデバイスからサインアウトしました。",
+      "revoked": "デバイスをサインアウトしました。",
+      "onlyThisDevice": "サインイン中のデバイスはこれだけです。",
+      "failed": "そのデバイスをサインアウトできませんでした。",
+      "notFound": "そのデバイスはすでにサインアウト済みです。",
+      "cancel": "キャンセル",
+      "unknownLocation": "場所不明"
+    },
+    "accents": {
+      "default": "デフォルトのブルー",
+      "violet": "バイオレット",
+      "emerald": "エメラルド",
+      "amber": "アンバー",
+      "rose": "ローズ",
+      "cyan": "シアン",
+      "slate": "スレート"
+    },
+    "accent": "アクセントカラー",
+    "accentHint": "アプリ全体のボタン・リンク・ハイライトの色を変えます。"
+  },
+  "billing": {
+    "plan": {
+      "free": {
+        "name": "Mujeeb AI Free"
+      },
+      "pro": {
+        "name": "Mujeeb AI Pro"
+      }
+    },
+    "perMonth": "/月",
+    "currentPlan": "現在のプラン",
+    "manage": "サブスクリプションを管理",
+    "cancel": "サブスクリプションを解約",
+    "cancelAtPeriodEnd": "プランは{date}に終了します",
+    "checkoutError": "決済を開始できませんでした。もう一度お試しください。",
+    "pricing": {
+      "title": "シンプルで明快な料金",
+      "subtitle": "まずは無料で。必要になったらアップグレードを。",
+      "mostPopular": "人気",
+      "included": "含まれるもの",
+      "everythingIn": "{plan} のすべてに加えて",
+      "getStarted": "無料で始める",
+      "currentPlan": "現在のプラン",
+      "upgradeTo": "{plan} にアップグレード",
+      "free": "ずっと無料",
+      "perMonth": "月あたり",
+      "perYear": "年あたり",
+      "billedIn": "Paystack を通じて {currency} で請求されます。",
+      "noCard": "開始にカードは不要です。",
+      "unavailable": "現在プランを表示できません。しばらくしてからお試しください。",
+      "priceUnavailable": "価格は利用できません",
+      "priceUnavailableHint": "このプランには {currency} での価格がまだ設定されていません。"
+    },
+    "features": {
+      "messages_per_day": "{count, plural, =0 {メッセージなし} other {1 日 # 件のメッセージ}}",
+      "image_generations_per_day": "{count, plural, =0 {画像生成なし} other {1 日 # 枚の画像生成}}",
+      "vision_requests_per_day": "{count, plural, =0 {画像解析なし} other {1 日 # 回の画像解析}}",
+      "file_processing_per_day": "{count, plural, =0 {ファイルのアップロードなし} other {1 日 # 件のファイル}}",
+      "max_file_size_mb": "{count} MB までのファイル",
+      "premium_models": "Pro モデルの利用",
+      "advanced_models": "上位モデルの利用",
+      "unlimitedMessages": "メッセージ無制限",
+      "unlimitedImages": "画像生成が無制限",
+      "unlimitedVision": "画像解析が無制限",
+      "unlimitedFiles": "ファイルのアップロードが無制限",
+      "core": "7 言語対応のストリーミングチャット",
+      "history": "会話履歴と検索"
+    },
+    "cancelConfirm": {
+      "title": "サブスクリプションを解約しますか？",
+      "body": "現在の請求期間の終わりまで Pro を利用でき、その後 {plan} に戻ります。",
+      "confirm": "解約する"
+    },
+    "cancelled": "解約しました。",
+    "cancelError": "解約できませんでした。もう一度お試しください。",
+    "success": "お支払いを確認しました。プランが有効になりました。",
+    "pending": "お支払いを確認中です。完了するとこのページが更新されます。",
+    "notConfigured": "この環境では支払い機能がまだ有効になっていません。",
+    "faq": {
+      "title": "よくある質問",
+      "cancel": {
+        "q": "いつでも解約できますか？",
+        "a": "はい。設定からワンクリックで解約でき、支払い済みの期間が終わるまで Pro をご利用いただけます。"
+      },
+      "payment": {
+        "q": "利用できる支払い方法は？",
+        "a": "Paystack 経由のカード決済と銀行振込です。対応地域では現地通貨でお支払いいただけます。"
+      },
+      "limits": {
+        "q": "1 日の上限はどう機能しますか？",
+        "a": "各プランには毎日 00:00 UTC にリセットされる上限があります。到達した場合は翌日に続けるか、アップグレードしてください。"
+      }
+    },
+    "pastDue": "前回のお支払いが完了しませんでした。Pro を継続するにはお支払い方法を更新してください。",
+    "upgradePage": {
+      "title": "アップグレード",
+      "description": "アプリを離れずにプランを比較してアップグレードできます。",
+      "yourPlan": "現在のプラン",
+      "upgradeTo": "{plan} にアップグレード",
+      "alreadyOnPlan": "現在 {plan} をご利用中です。設定から管理・解約できます。",
+      "securityNote": "支払いは Paystack の安全なウィンドウで処理されます。カード情報がこのアプリに入力されることも、閲覧されることもありません。"
+    },
+    "upgrade": "アップグレード",
+    "notice": {
+      "purchasedTitle": "{plan} をご利用中です",
+      "grantedTitle": "{plan} が付与されました",
+      "purchasedBody": "ありがとうございます。サブスクリプションは有効で、{date} に更新されます。",
+      "purchasedBodyPlain": "ありがとうございます。サブスクリプションは有効です。",
+      "grantedBodyDays": "{days} 日間の無償アクセス（{date} まで）。",
+      "grantedBody": "無償アクセスがアカウントに追加されました。",
+      "dismiss": "閉じる"
+    },
+    "currency": {
+      "label": "表示通貨"
+    },
+    "cycle": {
+      "started": "現在の期間の開始",
+      "renews": "次回更新日",
+      "accessEnds": "利用期限",
+      "daysLeft": "（{count, plural, =0 {本日} other {あと#日}}）",
+      "grantNote": "これはチームから付与された無償アクセスです。お支払いもキャンセルも必要ありません。"
+    }
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "ダッシュボード",
+      "users": "ユーザー",
+      "moderation": "モデレーション",
+      "usage": "利用状況",
+      "plans": "プラン",
+      "subscriptions": "サブスクリプション",
+      "models": "モデル",
+      "providers": "プロバイダー",
+      "systemPrompt": "システムプロンプト",
+      "featureFlags": "機能フラグ",
+      "settings": "システム設定",
+      "auditLogs": "監査ログ",
+      "status": "プラットフォームの状態",
+      "moderators": "モデレーター",
+      "security": "セキュリティ",
+      "announcements": "お知らせ",
+      "emailTemplates": "メールテンプレート"
+    },
+    "confirmDestructive": "確認するには {confirmText} と入力してください。",
+    "unauthorized": "管理コンソールへのアクセス権がありません。",
+    "portalTitle": "スーパー管理者コンソール",
+    "roleLabel": "スーパー管理者",
+    "section": {
+      "people": "ユーザー",
+      "billing": "請求",
+      "ai": "AI",
+      "platform": "プラットフォーム"
+    },
+    "dashboard": {
+      "title": "概要",
+      "description": "プラットフォームの状態と動きを一覧で。",
+      "totalUsers": "ユーザー数",
+      "activeSubscriptions": "有効なサブスクリプション",
+      "messagesToday": "本日のメッセージ",
+      "imagesToday": "本日の画像",
+      "newUsers7d": "今週の新規",
+      "recentSignups": "最近の登録",
+      "recentAudit": "最近の管理操作",
+      "noActivity": "管理操作の記録はまだありません。",
+      "noSignups": "アカウントはまだ作成されていません。"
+    },
+    "users": {
+      "title": "ユーザー",
+      "description": "アカウントを検索し、利用状況を確認し、アクセスを管理します。",
+      "searchPlaceholder": "メールまたは名前で検索…",
+      "search": "検索",
+      "filterRole": "役割",
+      "filterStatus": "状態",
+      "all": "すべて",
+      "colUser": "ユーザー",
+      "colRole": "役割",
+      "colStatus": "状態",
+      "colPlan": "プラン",
+      "colJoined": "登録日",
+      "colActions": "操作",
+      "empty": "この条件に一致するアカウントはありません。",
+      "emptyHint": "別の語で検索するか、条件を解除してください。",
+      "showing": "{total} 件中 {from}–{to} 件を表示",
+      "previous": "前へ",
+      "next": "次へ",
+      "actions": "{name} の操作",
+      "viewDetail": "詳細を表示",
+      "suspend": "アカウントを停止",
+      "restore": "アカウントを復元",
+      "disable": "アカウントを無効化",
+      "delete": "完全に削除",
+      "sendReset": "パスワード再設定を送信",
+      "sendMagicLink": "サインインリンクを送信",
+      "sendVerification": "確認メールを再送",
+      "makeModerator": "モデレーターにする",
+      "removeModerator": "モデレーター権限を外す",
+      "resetUsage": "本日の利用状況をリセット",
+      "you": "あなた",
+      "confirm": {
+        "suspend": {
+          "title": "このアカウントを停止しますか？",
+          "body": "{name} はサインアウトされ、管理者が復元するまで Mujeeb AI を利用できなくなります。",
+          "consequence1": "既存の会話は削除されず保持されます。",
+          "consequence2": "有効なサブスクリプションは、併せて解約しない限り課金され続けます。"
+        },
+        "disable": {
+          "title": "このアカウントを無効化しますか？",
+          "body": "{name} はすべてのアクセスを失います。戻す予定のないアカウントに使用してください。"
+        },
+        "delete": {
+          "title": "このアカウントを完全に削除しますか？",
+          "body": "{name} を認証から削除し、プロフィールにも波及します。",
+          "consequence1": "すべての会話・メッセージ・アップロード済みファイルが削除されます。",
+          "consequence2": "支払い記録は会計のため、ユーザーとの紐づけを外した上で保持されます。",
+          "consequence3": "元に戻せません。",
+          "phraseHint": "確認のため DELETE と入力してください。"
+        },
+        "role": {
+          "title": "このアカウントの役割を変更しますか？",
+          "body": "{name} に {role} の役割が付与され、対応するコンソールを利用できるようになります。"
+        }
+      },
+      "detail": {
+        "title": "アカウント",
+        "overview": "概要",
+        "usageToday": "本日の利用状況",
+        "overrides": "上限の個別設定",
+        "noOverrides": "個別設定はありません。プランの上限が適用されます。",
+        "addOverride": "個別設定を追加",
+        "removeOverride": "削除",
+        "conversations": "会話数",
+        "joined": "登録日",
+        "locale": "言語",
+        "notFound": "このアカウントは存在しません。",
+        "back": "ユーザー一覧に戻る",
+        "devices": "デバイス",
+        "noDevices": "アクティブなセッションはありません。",
+        "ofLimit": "/ {limit}"
+      },
+      "grantPro": "Pro を30日間付与",
+      "resetStaffAccount": "スタッフアカウントをリセット",
+      "inviteTitle": "ユーザーを招待",
+      "revokeSessions": "すべての端末からサインアウト",
+      "revokeSessionsConfirm": "このアカウントの有効なセッションをすべて終了します。各端末で再度サインインが必要になります。データは削除されません。",
+      "sessionsRevoked": "すべての端末からサインアウトしました",
+      "activity": {
+        "title": "アカウント履歴",
+        "empty": "このアカウントにはまだ何も起きていません。",
+        "failed": "拒否",
+        "by": "実行者: {name}",
+        "bySystem": "システムによる"
+      },
+      "moderation": {
+        "title": "モデレーション",
+        "noteLabel": "内部メモ",
+        "notePlaceholder": "何が起き、どう対応したか。",
+        "noteHint": "スタッフのみ閲覧可能。このアカウントの履歴に表示されます。",
+        "addNote": "メモを追加",
+        "noteSaved": "メモを追加しました。",
+        "grantExplainer": "このアカウントはスタッフが付与した無償アクセスであり、有料サブスクリプションではありません。",
+        "revokeGrant": "無償アクセスを終了",
+        "grantRevoked": "無償アクセスを終了しました。",
+        "revokeGrantConfirm": "予定の期限より前に、無償プランを今すぐ終了します。",
+        "revokeConsequenceAccess": "直ちに無料プランに戻ります。",
+        "revokeConsequenceNoRefund": "有料サブスクリプションには一切影響しません。"
+      }
+    },
+    "usage": {
+      "title": "利用状況と上限",
+      "description": "プラットフォーム全体の 1 日の消費量と、その調整手段。",
+      "for": "{date} 分",
+      "totals": "合計",
+      "topConsumers": "利用の多い順",
+      "noUsage": "この日はまだ記録がありません。",
+      "resetUserDone": "このアカウントの利用状況をリセットしました。",
+      "category": "カテゴリ",
+      "used": "使用量",
+      "activeUsers": "アカウント数",
+      "overrideTitle": "上限の個別設定",
+      "overrideBody": "個別設定はプランの上限に優先して適用されます。",
+      "overrideFeature": "上限項目",
+      "overrideValue": "新しい上限",
+      "overrideValueHint": "無制限にするには -1 を指定します。",
+      "overrideReason": "理由",
+      "overrideReasonHint": "監査ログに記録されます。",
+      "overrideSave": "個別設定を保存",
+      "overrideSaved": "個別設定を保存しました。",
+      "overrideRemoved": "個別設定を削除しました。"
+    },
+    "category": {
+      "messages": "メッセージ",
+      "image_generations": "画像生成",
+      "vision_requests": "画像解析",
+      "file_processing": "ファイルのアップロード",
+      "audio_processing": "音声処理",
+      "video_processing": "動画処理"
+    },
+    "feature": {
+      "messages_per_day": "1 日あたりのメッセージ",
+      "image_generations_per_day": "1 日あたりの画像生成",
+      "vision_requests_per_day": "1 日あたりの画像解析",
+      "file_processing_per_day": "1 日あたりのファイル",
+      "audio_processing_per_day": "1 日あたりの音声処理",
+      "video_processing_per_day": "1 日あたりの動画処理",
+      "max_file_size_mb": "ファイルサイズ上限（MB）",
+      "premium_models": "Pro モデルの利用",
+      "advanced_models": "上位モデルの利用",
+      "max_attachments_per_message": "1メッセージあたりのファイル数"
+    },
+    "plans": {
+      "title": "プラン",
+      "description": "価格と権限。これらの値が料金ページ・決済・すべての上限判定の元になります。",
+      "price": "価格（USD / {interval}）",
+      "entitlements": "権限",
+      "saved": "保存しました。",
+      "saveFailed": "保存できませんでした。もう一度お試しください。",
+      "paystackCode": "Paystack プランコード",
+      "paystackCodeHint": "任意。都度課金ではなく Paystack のサブスクリプションで請求する場合に設定します。",
+      "save": "価格を保存",
+      "currencyPrices": "通貨ごとの価格",
+      "currencyPricesHint": "各通貨で請求する金額を設定します。販売しない通貨は空欄にしてください（換算せず決済を拒否します）。設定で請求通貨を切り替えると、ここで設定した金額が使われます。",
+      "charging": "請求中",
+      "missingChargingCurrency": "決済で使用する {currency} の価格が未設定です。設定するまで顧客はこのプランを購入できません。"
+    },
+    "subscriptions": {
+      "title": "サブスクリプション",
+      "description": "検証済みの Paystack イベントから復元した、現在および過去のサブスクリプション。",
+      "colUser": "ユーザー",
+      "colPlan": "プラン",
+      "colStatus": "状態",
+      "colRenews": "更新日",
+      "colStarted": "開始日",
+      "empty": "サブスクリプションはまだありません。",
+      "cancelAtPeriodEnd": "期間終了時に終了"
+    },
+    "models": {
+      "title": "モデル",
+      "description": "どのモデルが存在し、誰が使え、ゲートウェイがどの順でフォールバックするか。",
+      "colModel": "モデル",
+      "colProvider": "プロバイダー",
+      "colTier": "ティア",
+      "colAvailability": "提供状況",
+      "colPriority": "優先度",
+      "updated": "モデルを更新しました。"
+    },
+    "providers": {
+      "title": "プロバイダー",
+      "description": "上流の AI プロバイダー。認証情報はサーバーの環境変数にあり、ここには一切表示されません。",
+      "colProvider": "プロバイダー",
+      "colKind": "種別",
+      "colCredentials": "認証情報",
+      "colEnabled": "有効",
+      "configured": "設定済み",
+      "missing": "未設定",
+      "missingHint": "このプロバイダーの環境変数を設定すると有効にできます。",
+      "toggled": "プロバイダーを更新しました。"
+    },
+    "systemPrompt": {
+      "title": "システムプロンプト",
+      "description": "すべての会話の先頭に付与される指示。サーバーが管理し、バージョン管理されます。",
+      "active": "有効なバージョン {version}",
+      "editor": "プロンプト",
+      "publish": "新しいバージョンを公開",
+      "published": "バージョン {version} を公開しました。",
+      "history": "バージョン履歴",
+      "restore": "復元",
+      "restored": "新しいバージョンとして復元しました。",
+      "by": "{name} による",
+      "empty": "プロンプトを空にはできません。",
+      "confirmTitle": "このシステムプロンプトを公開しますか？",
+      "confirmBody": "すべてのユーザーの次のメッセージから、すべてのモデルで有効になります。"
+    },
+    "featureFlags": {
+      "title": "機能フラグ",
+      "description": "デプロイせずに機能を切り替えます。フラグでセキュリティ制御を上書きすることはできません。",
+      "updated": "フラグを更新しました。"
+    },
+    "settings": {
+      "title": "設定",
+      "description": "運用設定。セキュリティの境界はコード側で維持されます。",
+      "updated": "設定を更新しました。"
+    },
+    "auditLogs": {
+      "title": "監査ログ",
+      "description": "すべての特権操作を、追記のみで記録します。",
+      "colTime": "日時",
+      "colActor": "実行者",
+      "colAction": "操作",
+      "colTarget": "対象",
+      "colResult": "結果",
+      "empty": "管理操作の記録はまだありません。",
+      "system": "システム",
+      "filterAction": "操作で絞り込み…",
+      "colUndo": "",
+      "resultSuccess": "成功",
+      "resultFailure": "失敗"
+    },
+    "status": {
+      "title": "プラットフォームの状態",
+      "description": "各外部依存がこの環境で設定され、到達可能かどうか。",
+      "service": "サービス",
+      "state": "状態",
+      "detail": "詳細",
+      "operational": "正常",
+      "degraded": "低下",
+      "notConfigured": "未設定",
+      "error": "エラー",
+      "refresh": "再チェック",
+      "checkedAt": "{time} に確認"
+    },
+    "moderation": {
+      "title": "モデレーション履歴",
+      "description": "モデレーターと管理者によるアカウント操作。"
+    },
+    "common": {
+      "confirm": "確定",
+      "cancel": "キャンセル",
+      "save": "保存",
+      "saving": "保存中…",
+      "actionFailed": "この操作を完了できませんでした。",
+      "notPermitted": "この操作を行う権限がありません。",
+      "never": "なし",
+      "none": "なし",
+      "unlimited": "無制限",
+      "enabled": "有効",
+      "disabled": "無効"
+    },
+    "role": {
+      "user": "ユーザー",
+      "moderator": "モデレーター",
+      "super_admin": "スーパー管理者"
+    },
+    "status_": {
+      "active": "有効",
+      "suspended": "停止中",
+      "disabled": "無効",
+      "pending_verification": "確認待ち",
+      "deleted": "削除済み"
+    },
+    "moderators": {
+      "title": "モデレーター",
+      "description": "モデレーターアカウントを作成・削除します。新しいモデレーターにはメールで仮パスワードが送られ、サインインする前に自分のパスワードと認証アプリの設定が必要です。",
+      "createTitle": "モデレーターを追加",
+      "listTitle": "現在のモデレーター",
+      "emailLabel": "メールアドレス",
+      "nameLabel": "表示名（任意）",
+      "createHint": "このアドレスに仮パスワードを送信します。パスワードを変更し二要素認証を設定するまで、アカウントはコンソールにアクセスできません。",
+      "createSubmit": "モデレーターを作成",
+      "createdFor": "{email} に招待を送信しました。",
+      "created": "モデレーターを作成しました。",
+      "colModerator": "モデレーター",
+      "colSetup": "設定状況",
+      "colInvited": "招待日",
+      "colActions": "",
+      "none": "モデレーターはまだいません。",
+      "pendingPassword": "パスワード未設定",
+      "pendingMfa": "2FA未設定",
+      "ready": "準備完了",
+      "remove": "削除",
+      "removed": "モデレーターを削除しました。",
+      "removeFailed": "そのモデレーターを削除できませんでした。",
+      "createFailed": "そのモデレーターを作成できませんでした。",
+      "emailFailed": "招待メールを送信できなかったため、アカウントは作成されませんでした。メール設定を確認して再試行してください。",
+      "alreadyExists": "そのアドレスのアカウントは既に存在します。ユーザー画面から権限を変更してください。",
+      "notModerator": "そのアカウントはモデレーターではありません。",
+      "invalid": "入力内容を確認して再試行してください。",
+      "resetDone": "リセットしました。新しい仮パスワードを送信しました。",
+      "resetFailed": "そのアカウントをリセットできませんでした。",
+      "cannotResetSelf": "自分のアカウントはリセットできません。CLI をご利用ください。"
+    },
+    "security": {
+      "title": "セキュリティ",
+      "description": "アカウントのサインイン状態と、サインインしている場所。",
+      "account": "このアカウント",
+      "signedInAs": "サインイン中",
+      "twoFactor": "二要素認証",
+      "twoFactorOn": "有効",
+      "twoFactorOff": "無効",
+      "assurance": "セッションの保証レベル",
+      "lastSignIn": "最終サインイン",
+      "sessionSince": "このセッションの開始",
+      "sessions": "セッション",
+      "sessionsExplainer": "Supabase はデバイスごとの一覧を提供していないため、このページはデバイスを個別に列挙できません（作り出すことはしません）。できるのはこのアカウントの全セッションを終了することです。管理できない場所でサインインした場合にお使いください。",
+      "signOutHere": "このブラウザからサインアウト",
+      "signOutAll": "すべての端末からサインアウト",
+      "signOutAllConfirm": "はい、すべてサインアウト",
+      "signOutAllWarning": "これは現在のセッションを含むすべてのセッションを終了します。認証アプリで再度サインインが必要です。",
+      "cancel": "キャンセル",
+      "assurancePassword": "パスワードのみ",
+      "assuranceTwoFactor": "パスワード + 二要素",
+      "password": "パスワード",
+      "currentPassword": "現在のパスワード",
+      "newPassword": "新しいパスワード",
+      "confirmPassword": "新しいパスワード（確認）",
+      "changePassword": "パスワードを変更",
+      "passwordHint": "{min} 文字以上。",
+      "passwordTooShort": "{min} 文字以上で入力してください。",
+      "passwordMismatch": "パスワードが一致しません。",
+      "passwordChanged": "パスワードを変更しました。",
+      "passwordInvalid": "両方の項目を確認して、もう一度お試しください。",
+      "passwordWrong": "現在のパスワードが正しくありません。",
+      "passwordSame": "新しいパスワードは現在のものと異なる必要があります。",
+      "passwordRejected": "このパスワードは拒否されました。より長い、または一般的でないものをお試しください。",
+      "passwordFailed": "パスワードを変更できませんでした。",
+      "recovery": "認証アプリを紛失した場合",
+      "recoveryBody": "印刷できるリカバリコードはありません。認証アプリにアクセスできなくなった場合は、スーパー管理者がアカウントをリセットし、新しい認証アプリを登録します。リセットはすべて監査ログに記録されます。",
+      "deviceRevoked": "この端末からサインアウトしました。",
+      "passwordThrottled": "試行回数が多すぎます。15分待ってからもう一度お試しください。",
+      "idleWarning": "{seconds} 秒後にサインアウトします。マウスを動かすかキーを押すとサインインを維持できます。"
+    },
+    "auditAction": {
+      "admin": {
+        "user_suspended": "アカウントを停止",
+        "user_disabled": "アカウントを無効化",
+        "user_restored": "アカウントを復元",
+        "user_deleted": "アカウントを削除",
+        "moderator_created": "モデレーターを追加",
+        "moderator_removed": "モデレーターを削除",
+        "password_reset": "パスワード再設定を送信",
+        "magic_link_created": "サインインリンクを送信",
+        "verification_resent": "確認メールを再送",
+        "quota_changed": "個別クォータを変更",
+        "quota_reset": "使用量をリセット",
+        "plan_updated": "プラン価格を変更",
+        "plan_currency_prices_updated": "通貨別価格を変更",
+        "feature_flag_changed": "機能を切り替え",
+        "system_setting_changed": "設定を変更",
+        "provider_changed": "プロバイダーを変更",
+        "model_changed": "モデルを変更",
+        "prompt_changed": "システムプロンプトを公開",
+        "prompt_restored": "システムプロンプトを復元",
+        "action_undone": "操作を取り消し",
+        "moderator_reset": "スタッフアカウントをリセット",
+        "plan_granted": "無償プランを付与",
+        "plan_grant_revoked": "無償プランを終了",
+        "user_invited": "アカウントを招待",
+        "sessions_revoked": "すべてのセッションを失効",
+        "email_template_saved": "メールテンプレートを保存",
+        "email_template_restored": "メールテンプレートを復元",
+        "email_template_reset": "メールテンプレートを既定に戻した"
+      },
+      "billing": {
+        "subscription_activated": "サブスクリプションを有効化",
+        "subscription_created": "サブスクリプションを作成",
+        "subscription_cancelled": "サブスクリプションを解約"
+      },
+      "staff": {
+        "signin": "スタッフがサインイン",
+        "signin_failed": "サインイン失敗",
+        "signin_denied": "サインイン拒否",
+        "password_set": "パスワードを設定",
+        "mfa_enrolled": "二要素認証を登録",
+        "sessions_revoked": "全セッションを無効化",
+        "password_changed": "スタッフのパスワードを変更",
+        "password_change_failed": "スタッフのパスワード変更に失敗"
+      },
+      "account": {
+        "device_revoked": "デバイスをサインアウト",
+        "other_devices_revoked": "他のデバイスをサインアウト",
+        "all_devices_revoked": "すべてのデバイスをサインアウト"
+      }
+    },
+    "undo": {
+      "action": "取り消す",
+      "confirm": "取り消しを確認",
+      "done": "操作を取り消しました。",
+      "undoneBadge": "取り消し済み",
+      "failed": "この操作は取り消せませんでした。",
+      "notFound": "そのログはもう存在しません。",
+      "notUndoable": "この操作は取り消せません。",
+      "alreadyUndone": "この操作はすでに取り消されています。",
+      "noPriorState": "元の値が記録されていないため取り消せません。",
+      "invite": "招待したアカウントを削除する",
+      "inviteRedeemed": "この招待は既に使用されているため、この方法ではアカウントを削除できません。",
+      "alreadyGone": "そのアカウントは既に存在しません。"
+    },
+    "settingKey": {
+      "billing_currency": "請求通貨",
+      "default_model_slug": "既定のチャットモデル",
+      "default_vision_model_slug": "既定の画像認識モデル",
+      "default_locale": "既定の言語",
+      "support_email": "サポート用メール",
+      "free_plan_slug": "無料プラン",
+      "max_upload_size_mb": "最大アップロードサイズ",
+      "chat_rate_limit_per_minute": "チャットのレート制限",
+      "max_conversation_messages": "会話履歴の長さ",
+      "supported_locales": "有効な言語",
+      "announcement": "お知らせバナー",
+      "max_attachments_per_message": "1メッセージあたりのファイル数",
+      "staff_require_mfa_each_signin": "サインインのたびに2FAコードを要求"
+    },
+    "grants": {
+      "granted": "Pro アクセスを30日間付与しました。",
+      "revoked": "無償アクセスを終了しました。",
+      "failed": "アクセスを付与できませんでした。",
+      "invalid": "入力内容を確認して再試行してください。",
+      "planNotFound": "そのプランは存在しないか無効です。",
+      "hasPaidSubscription": "このアカウントには有料サブスクリプションがあります。付与すると請求から切り離されます。",
+      "notAGrant": "このアカウントに終了できる無償アクセスはありません。",
+      "dialogTitle": "{user} に無償アクセスを付与",
+      "duration": "期間",
+      "days": "{days} 日",
+      "customDays": "または日数を指定",
+      "customDaysHint": "1〜365 日。サブスクリプションは自動的に終了するため、後で解除する必要はありません。",
+      "reason": "理由（任意）",
+      "reasonHint": "監査ログに記録されます。数か月後に「なぜこのアカウントが Pro なのか」と聞かれたときに役立ちます。",
+      "reasonPlaceholder": "8月12日の障害のお詫び",
+      "confirm": "{days} 日付与",
+      "cancel": "キャンセル",
+      "grantedFor": "{days} 日間付与しました。"
+    },
+    "targetType": {
+      "user": "アカウント",
+      "plan": "プラン",
+      "model": "モデル",
+      "provider": "プロバイダー",
+      "feature_flag": "機能フラグ",
+      "system_setting": "設定",
+      "system_prompt_version": "システムプロンプト",
+      "subscription": "サブスクリプション",
+      "plan_entitlement": "エンタイトルメント",
+      "email": "メール",
+      "platform": "プラットフォーム",
+      "deleted": "削除済みアカウント",
+      "email_template": "メール"
+    },
+    "announcements": {
+      "title": "お知らせ",
+      "description": "サインイン中のすべてのユーザーに表示されるバナーです。常時表示すると読まれなくなるため、控えめに使ってください。",
+      "editorTitle": "メッセージ",
+      "body": "お知らせ",
+      "placeholder": "日曜 02:00〜04:00 (WAT) にメンテナンスを予定しています。",
+      "formattingHint": "**太字**、_斜体_、`コード`、[リンク](https://example.com) に対応しています。",
+      "preview": "プレビュー",
+      "previewEmpty": "プレビューする内容がありません。",
+      "liveNow": "お知らせが公開中で、サインイン中のすべてのユーザーに表示されています。",
+      "noneLive": "公開中のお知らせはありません。",
+      "publish": "公開",
+      "update": "更新",
+      "clear": "取り下げる",
+      "published": "お知らせを公開しました。",
+      "cleared": "お知らせを取り下げました。",
+      "failed": "保存できませんでした。"
+    },
+    "invite": {
+      "emailLabel": "メールアドレス",
+      "nameLabel": "表示名（任意）",
+      "submit": "招待を送信",
+      "hint": "パスワードを設定するためのリンクが届きます。",
+      "sentTo": "{email} に招待を送信しました。",
+      "sent": "招待を送信しました",
+      "invalid": "有効なメールアドレスを入力してください。",
+      "alreadyExists": "そのメールアドレスのアカウントは既に存在します。",
+      "failed": "招待を作成できませんでした。",
+      "emailFailed": "招待メールを配信できなかったため、アカウントは作成されていません。",
+      "throttled": "招待の送信が多すぎます。後でもう一度お試しください。",
+      "vipLabel": "特別な招待として送信",
+      "vipHint": "標準の招待の代わりに、ようこそ形式の招待を送ります。変わるのはメールだけで、アカウントの権限は同じです。",
+      "submitVip": "特別な招待を送信",
+      "sentVip": "特別な招待を送信しました"
+    },
+    "moderationAction": {
+      "warned": "警告を発行",
+      "suspended": "アカウントを停止",
+      "restored": "アカウントを復元",
+      "disabled": "アカウントを無効化",
+      "deleted": "アカウントを削除",
+      "note": "メモを追加"
+    },
+    "emailTemplates": {
+      "title": "メールテンプレート",
+      "description": "プラットフォームが自動送信する各メールの文面。変更ごとにバージョンが作られ、いつでも復元できます。",
+      "kindLabel": "メール",
+      "localeLabel": "言語",
+      "subject": "件名",
+      "preview": "プレビューテキスト",
+      "previewHint": "多くの受信トレイで件名の後に表示される行。",
+      "heading": "見出し",
+      "body": "本文",
+      "actionLabel": "ボタンの文言",
+      "footnote": "脚注",
+      "changeNote": "変更内容（任意）",
+      "changeNoteHint": "このバージョンとともに記録され、履歴が読み物になります。",
+      "blankMeansDefault": "空欄にすると、その言語の組み込み文面が使われます。件名だけを変更し、他は翻訳のままにできます。",
+      "placeholderHint": "変数: {list}",
+      "usingDefault": "組み込みの文面を使用中",
+      "versionBadge": "バージョン {version}",
+      "live": "使用中",
+      "restoredFrom": "v{version} から復元",
+      "noSubject": "（件名なし）",
+      "systemAuthor": "システム",
+      "save": "新しいバージョンを保存",
+      "history": "履歴 ({count})",
+      "restore": "復元",
+      "resetToDefault": "既定に戻す",
+      "resetConfirm": "カスタマイズを削除し、このメールは組み込みの文面に戻ります。",
+      "resetConsequenceCopy": "付属の翻訳がただちに再適用されます。",
+      "resetConsequenceHistory": "このテンプレートのバージョン履歴も一緒に削除されます。",
+      "saved": "バージョン {version} として保存しました。",
+      "restored": "バージョン {version} を現在の文面として復元しました。",
+      "reset": "組み込みの文面に戻しました。",
+      "invalid": "入力内容を確認して、もう一度お試しください。",
+      "empty": "テンプレートには件名・見出し・本文のいずれかが必要です。",
+      "failed": "テンプレートを保存できませんでした。",
+      "notFound": "このテンプレートはまだ設定されていません。",
+      "versionNotFound": "そのバージョンは存在しません。",
+      "kind": {
+        "verify": "メールアドレスの確認",
+        "reset": "パスワードの再設定",
+        "magicLink": "サインインリンク",
+        "welcome": "ようこそ",
+        "staffInvite": "モデレーター招待",
+        "vipInvite": "特別な招待",
+        "invite": "招待"
+      }
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "ページが見つかりません",
+      "body": "お探しのページは存在しないか、移動しました。"
+    },
+    "serverError": {
+      "title": "問題が発生しました",
+      "body": "しばらくしてからもう一度お試しください。"
+    },
+    "maintenance": {
+      "title": "Mujeeb AIはメンテナンス中です",
+      "body": "まもなく復旧します。ご不便をおかけして申し訳ございません。"
+    }
+  },
+  "emails": {
+    "common": {
+      "greeting": "{name} 様",
+      "openApp": "Mujeeb AI を開く"
+    },
+    "verify": {
+      "subject": "Mujeeb AI アカウントの確認",
+      "preview": "クリック 1 回でアカウントを有効化できます。",
+      "heading": "メールアドレスを確認してください",
+      "body": "このアドレスを確認すると、Mujeeb AI アカウントが有効になり、チャットを開始できます。",
+      "action": "メールアドレスを確認",
+      "footnote": "このリンクは 24 時間で失効します。Mujeeb AI のアカウントを作成していない場合は、このメールを無視してください。"
+    },
+    "reset": {
+      "subject": "Mujeeb AI のパスワード再設定",
+      "preview": "新しいパスワードを設定します。",
+      "heading": "パスワードの再設定",
+      "body": "下のリンクから新しいパスワードを設定してください。設定するまで現在のパスワードは有効です。",
+      "action": "新しいパスワードを設定",
+      "footnote": "このリンクは 1 時間で失効し、1 回のみ使用できます。心当たりがない場合は無視してください。アカウントは変更されません。"
+    },
+    "magicLink": {
+      "subject": "Mujeeb AI のサインインリンク",
+      "preview": "パスワードなしでサインインできます。",
+      "heading": "Mujeeb AI にサインイン",
+      "body": "下のリンクからサインインしてください。パスワードは不要です。",
+      "action": "サインイン",
+      "footnote": "このリンクは 1 時間で失効し、1 回のみ使用できます。心当たりがない場合は無視してください。"
+    },
+    "welcome": {
+      "subject": "Mujeeb AI へようこそ",
+      "preview": "アカウントの準備が整いました。",
+      "heading": "アカウントの準備が整いました",
+      "body": "現在 Mujeeb AI Free をご利用中です。会話を始める、書類を添付する、画像を生成する — いつでもどうぞ。",
+      "action": "Mujeeb AI を開く",
+      "footnote": "もっと使いたい場合は、Mujeeb AI Pro で 1 日の上限が上がり、追加モデルが使えます。"
+    },
+    "staffInvite": {
+      "subject": "Mujeeb AI のモデレーター権限が付与されました",
+      "preview": "サインインしてアカウントを設定してください。",
+      "heading": "モデレーター権限",
+      "body": "スーパー管理者があなたのモデレーターアカウントを Mujeeb AI に作成しました。下記の仮パスワードでサインインしてください。続行する前に、ご自身のパスワードの設定と認証アプリの登録を求められます。",
+      "action": "スタッフポータルにサインイン",
+      "footnote": "この仮パスワードは一度だけ有効です。このメールに心当たりがない場合は、サインインせず管理者にご連絡ください。",
+      "secretLabel": "仮パスワード"
+    },
+    "vipInvite": {
+      "subject": "Mujeeb AI からの特別なご招待",
+      "preview": "個人的にご招待いたします。",
+      "heading": "特別なご招待です、{name} 様",
+      "body": "Mujeeb AI から個人的にご招待いたします。一般の登録ではありません。すでにアカウントをご用意しています。下のボタンから招待を受け取り、パスワードを設定してください。",
+      "action": "招待を受ける",
+      "footnote": "この招待リンクは1時間で期限切れになり、一度だけ使用できます。あなた個人宛にお送りしていますので、転送はお控えください。"
+    },
+    "invite": {
+      "subject": "Mujeeb AI へのご招待",
+      "preview": "ご招待の準備ができました。",
+      "heading": "Mujeeb AI へのご招待",
+      "body": "アカウントが作成されました。下のボタンから招待を受け取り、パスワードを設定してください。",
+      "action": "招待を受ける",
+      "footnote": "この招待リンクは1時間で期限切れになり、一度だけ使用できます。心当たりがない場合は無視して構いません。"
+    }
+  },
+  "moderator": {
+    "portalTitle": "モデレーターコンソール",
+    "roleLabel": "モデレーター",
+    "roleLabelAdmin": "スーパー管理者",
+    "nav": {
+      "dashboard": "概要",
+      "users": "アカウント",
+      "moderation": "モデレーションログ",
+      "activity": "自分の操作",
+      "security": "セキュリティ"
+    },
+    "dashboard": {
+      "title": "概要",
+      "description": "確認・対応できる範囲。",
+      "suspended": "停止中のアカウント",
+      "pending": "確認待ち",
+      "actions7d": "今週のあなたの操作",
+      "totalAccounts": "アカウント数"
+    },
+    "users": {
+      "title": "アカウント",
+      "description": "アカウントを検索してモデレーションを行います。スタッフのアカウントは表示されません。",
+      "inviteTitle": "ユーザーを招待"
+    },
+    "moderation": {
+      "title": "モデレーションログ",
+      "description": "プラットフォーム全体のアカウント操作を新しい順に表示します。",
+      "colTime": "日時",
+      "colUser": "アカウント",
+      "colAction": "操作",
+      "colBy": "実行者",
+      "colReason": "理由",
+      "empty": "モデレーション操作の記録はまだありません。",
+      "action": {
+        "warned": "警告",
+        "suspended": "停止",
+        "restored": "復元",
+        "disabled": "無効化",
+        "deleted": "削除",
+        "note": "メモ"
+      }
+    },
+    "note": {
+      "add": "メモを追加",
+      "title": "モデレーションメモを追加",
+      "body": "メモはモデレーターと管理者に表示され、このアカウントに記録されます。",
+      "placeholder": "何を確認しましたか？",
+      "save": "メモを保存",
+      "saved": "メモを保存しました。"
+    },
+    "reason": {
+      "label": "理由",
+      "placeholder": "この操作を行う理由は？",
+      "required": "理由の入力は必須です。"
+    },
+    "activity": {
+      "title": "自分の操作",
+      "description": "最近変更した内容と、取り消せる操作。",
+      "empty": "取り消し可能な操作はまだありません。"
+    }
+  },
+  "staffAuth": {
+    "title": "スタッフサインイン",
+    "subtitle": "Mujeeb AI コンソールへの管理者・モデレーター用アクセス。",
+    "submit": "コンソールにサインイン",
+    "errors": {
+      "invalidCredentials": "メールアドレスまたはパスワードが正しくありません。",
+      "notStaff": "この入口は管理者とモデレーター専用です。",
+      "inactive": "このスタッフアカウントは有効ではありません。他の管理者にご連絡ください。",
+      "rateLimited": "試行回数が多すぎます。しばらくしてからお試しください。",
+      "mfaBadCode": "コードが正しくありません。認証アプリを確認してください。",
+      "mfaUnavailable": "このアカウントには認証アプリが設定されていません。",
+      "idleTimeout": "5分間操作がなかったためサインアウトしました。続けるには再度サインインしてください。",
+      "wrongEntrance": "このアカウント用の入口ではありません。ご自身のコンソールのサインインリンクをご利用ください。",
+      "mfaRateLimited": "試行回数が多すぎます。少し待ってからお試しください。",
+      "mfaExpired": "コードの有効期限が切れました。認証アプリの現在のコードを入力してください。",
+      "sessionLost": "サインインが引き継がれませんでした。ページを再読み込みして、もう一度サインインしてください。",
+      "mfaServerError": "こちら側で検証に失敗しました。少し待ってからもう一度お試しください。"
+    },
+    "onboarding": {
+      "passwordTitle": "パスワードを設定",
+      "passwordDescription": "仮パスワードでサインインしました。続行する前にご自身のパスワードを設定してください。",
+      "newPassword": "新しいパスワード",
+      "confirmPassword": "新しいパスワード（確認）",
+      "passwordHint": "12文字以上。スタッフアカウントは価格の変更、ユーザーの停止、監査ログの閲覧ができるため、顧客より長い最小文字数です。",
+      "passwordSubmit": "保存して続行",
+      "passwordMismatch": "パスワードが一致しません。",
+      "passwordTooShort": "12文字以上を使用してください。",
+      "passwordInvalid": "パスワードを確認してもう一度お試しください。",
+      "passwordRejected": "そのパスワードは設定できませんでした。別のものをお試しください。",
+      "passwordSaved": "パスワードを保存しました。",
+      "notStaff": "このアカウントはスタッフアカウントではありません。",
+      "mfaTitle": "二要素認証を設定",
+      "mfaDescription": "認証アプリでこのコードをスキャンし、表示される6桁のコードを入力してください。設定しないとスタッフアカウントは使用できません。",
+      "mfaQrAlt": "認証アプリ用のQRコード",
+      "mfaSecretLabel": "または、このキーを手動で入力",
+      "mfaCodeLabel": "6桁のコード",
+      "mfaSubmit": "確認して完了",
+      "mfaEnrollFailed": "登録を開始できませんでした。再読み込みしてお試しください。",
+      "mfaBadCode": "コードが正しくありません。認証アプリを確認してください。",
+      "mfaNotVerified": "登録がまだ完了していません。",
+      "mfaFailed": "登録の完了中に問題が発生しました。",
+      "mfaEnrolled": "二要素認証が有効になりました。",
+      "mfaNoRecoveryCodes": "保存すべきリカバリコードはありません。認証アプリを紛失した場合は、スーパー管理者がアカウントをリセットし、新しく登録できるようにします。"
+    },
+    "mfaTitle": "コードを入力",
+    "mfaSubtitle": "認証アプリを開き、6桁のコードを入力してください。",
+    "mfaCodeLabel": "6桁のコード",
+    "mfaSubmit": "確認",
+    "exit": {
+      "action": "サインアウトして終了",
+      "title": "コンソールからサインアウトしますか？",
+      "description": "サインアウトして、公開ホームページに戻ります。",
+      "consequenceSignOut": "この端末のセッションが終了します。",
+      "consequenceReauth": "再度入るにはパスワードと認証コードが必要です。",
+      "confirm": "サインアウト",
+      "cancel": "サインインしたままにする"
+    },
+    "portal": {
+      "adminEntrance": "スーパー管理者アクセス",
+      "staffEntrance": "モデレーターアクセス",
+      "sharedEntrance": "スタッフアクセス"
+    }
+  }
+}

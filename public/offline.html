@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Offline · Mujeeb AI</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body {
+        margin: 0; min-height: 100dvh; display: grid; place-items: center;
+        padding: 24px; background: #0e0f11; color: #e8eaed;
+        font: 15px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+      @media (prefers-color-scheme: light) { body { background: #fbfbfc; color: #16181d; } }
+      main { max-width: 26rem; text-align: center; }
+      .mark {
+        width: 48px; height: 48px; margin: 0 auto 20px; border-radius: 12px;
+        background: linear-gradient(135deg, #6f7bf7, #4f46e5);
+        display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 20px;
+      }
+      h1 { font-size: 19px; font-weight: 600; margin: 0 0 8px; }
+      p { margin: 0; opacity: 0.7; }
+      button {
+        margin-top: 20px; padding: 10px 20px; border: 0; border-radius: 8px;
+        background: #6f7bf7; color: #fff; font: inherit; font-weight: 600; cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="mark">M</div>
+      <h1>You're offline</h1>
+      <p>Mujeeb AI needs a connection to answer. Your conversations are safe and will be here when you're back.</p>
+      <button onclick="location.reload()">Try again</button>
+    </main>
+  </body>
+</html>

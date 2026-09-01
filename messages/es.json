@@ -1,0 +1,1290 @@
+{
+  "metadata": {
+    "title": "Mujeeb AI",
+    "description": "Un espacio de trabajo de IA premium y multilingüe."
+  },
+  "common": {
+    "appName": "Mujeeb AI",
+    "loading": "Cargando…",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "continue": "Continuar",
+    "retry": "Reintentar",
+    "comingSoon": "Próximamente",
+    "locked": "Bloqueado",
+    "error": "Algo salió mal",
+    "language": "Idioma",
+    "theme": "Tema",
+    "themeLight": "Claro",
+    "themeDark": "Oscuro",
+    "themeSystem": "Sistema",
+    "skipToContent": "Saltar al contenido",
+    "dismiss": "Descartar"
+  },
+  "nav": {
+    "newChat": "Nuevo chat",
+    "search": "Buscar conversaciones",
+    "settings": "Configuración",
+    "pricing": "Precios",
+    "admin": "Consola de administración",
+    "signOut": "Cerrar sesión",
+    "signIn": "Iniciar sesión",
+    "signUp": "Crear cuenta",
+    "backToApp": "Volver a Mujeeb AI",
+    "moderator": "Consola de moderación",
+    "openApp": "Abrir Mujeeb AI",
+    "openMenu": "Abrir menú",
+    "conversations": "Conversaciones",
+    "pinned": "Fijadas",
+    "recent": "Recientes",
+    "noConversations": "Aún no hay conversaciones. Empieza una arriba.",
+    "noSearchResults": "Ninguna conversación coincide con esa búsqueda.",
+    "collapseSidebar": "Contraer la barra lateral",
+    "expandSidebar": "Expandir la barra lateral"
+  },
+  "landing": {
+    "hero": {
+      "title": "Un espacio de trabajo con IA que no estorba",
+      "subtitle": "Conversaciones rápidas en streaming en siete idiomas, con tus documentos e imágenes al lado, y sin quedar atado a un único proveedor de IA.",
+      "priceNote": "Empieza gratis. {plan} cuesta {price} al mes.",
+      "eyebrow": "Siete idiomas. Cualquier modelo por debajo."
+    },
+    "cta": {
+      "start": "Crea tu cuenta gratis",
+      "pricing": "Ver precios",
+      "continue": "Continuar a Mujeeb AI"
+    },
+    "features": {
+      "title": "Pensado para trabajo real",
+      "chat": {
+        "title": "Respuestas mientras se escriben",
+        "body": "Las respuestas llegan desde la primera palabra, así que lees mientras el modelo aún piensa."
+      },
+      "files": {
+        "title": "Entiende tus archivos",
+        "body": "PDF, Word, Excel, PowerPoint, CSV y texto plano, extraídos en el servidor y entregados al modelo como datos, nunca como instrucciones."
+      },
+      "vision": {
+        "title": "Ve tus imágenes",
+        "body": "Adjunta una captura o una foto y pregunta por lo que aparece en ella."
+      },
+      "global": {
+        "title": "Siete idiomas, bien hechos",
+        "body": "Inglés, francés, árabe, portugués, español, japonés y chino, con una maquetación de derecha a izquierda de verdad, no un simple reflejo."
+      },
+      "images": {
+        "title": "Genera imágenes",
+        "body": "Describe lo que quieres y recibe una imagen, guardada en la conversación de la que salió."
+      },
+      "privacy": {
+        "title": "Tus conversaciones siguen siendo tuyas",
+        "body": "La seguridad a nivel de fila impide que una cuenta lea el historial de otra, y los administradores no tienen una ventana a tus chats."
+      },
+      "subtitle": "Todo lo de abajo funciona en el plan gratuito. Nada de esto es una demo."
+    },
+    "closing": {
+      "title": "Empieza una conversación",
+      "body": "Sin tarjeta. El plan gratuito es un producto de verdad, no una prueba."
+    },
+    "stats": {
+      "languages": {
+        "value": "7",
+        "label": "Idiomas, con maquetación RTL real"
+      },
+      "providers": {
+        "value": "Sin ataduras",
+        "label": "Cambia de proveedor cuando quieras"
+      },
+      "formats": {
+        "value": "9+",
+        "label": "Formatos leídos en el servidor"
+      },
+      "free": {
+        "value": "Gratis",
+        "label": "Un plan real, no una prueba"
+      }
+    },
+    "footer": {
+      "tagline": "Un espacio de trabajo con IA que no estorba.",
+      "product": "Producto",
+      "company": "Acerca de",
+      "rights": "Todos los derechos reservados."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Bienvenido de nuevo",
+      "subtitle": "Inicia sesión para continuar en Mujeeb AI",
+      "submit": "Iniciar sesión",
+      "magicLink": "Enviarme un enlace de acceso",
+      "noAccount": "¿No tienes una cuenta?",
+      "magicLinkHint": "Te enviaremos por correo un enlace que inicia sesión, sin contraseña.",
+      "useMagicLink": "Entrar con un enlace por correo",
+      "usePassword": "Entrar con una contraseña"
+    },
+    "register": {
+      "title": "Crea tu cuenta",
+      "subtitle": "Empieza con Mujeeb AI Free, sin tarjeta requerida",
+      "submit": "Crear cuenta",
+      "haveAccount": "¿Ya tienes una cuenta?"
+    },
+    "email": {
+      "label": "Correo electrónico",
+      "placeholder": "tu@example.com"
+    },
+    "password": {
+      "label": "Contraseña",
+      "placeholder": "Mín. 8 caracteres",
+      "hint": "Al menos 8 caracteres."
+    },
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "reset": {
+      "title": "Restablece tu contraseña",
+      "subtitle": "Te enviaremos un enlace seguro",
+      "submit": "Enviar enlace",
+      "sent": "Si existe una cuenta con esa dirección, un enlace está en camino."
+    },
+    "verify": {
+      "title": "Revisa tu correo",
+      "subtitle": "Hemos enviado un enlace de confirmación a tu correo.",
+      "resend": "Reenviar correo de confirmación",
+      "resending": "Enviando…",
+      "resendSuccess": "¡Correo de confirmación enviado! Revisa tu bandeja de entrada.",
+      "instruction": "Haz clic en el enlace de tu correo para activar tu cuenta."
+    },
+    "magicLink": {
+      "sent": "Si existe una cuenta con esa dirección, un enlace de acceso está en camino."
+    },
+    "errors": {
+      "invalidCredentials": "El correo o la contraseña no son correctos.",
+      "generic": "No pudimos completar esa acción. Inténtalo de nuevo.",
+      "invalidEmail": "Esa dirección de correo no parece válida.",
+      "weakPassword": "La contraseña debe tener al menos 8 caracteres.",
+      "rateLimited": "Demasiados intentos. Espera un momento e inténtalo de nuevo.",
+      "passwordMismatch": "Las contraseñas no coinciden.",
+      "userAlreadyExists": "Ya existe una cuenta con este correo. Prueba a iniciar sesión.",
+      "nameRequired": "Por favor ingresa tu nombre y apellido.",
+      "emailNotConfirmed": "Tu correo aún no está verificado. Revisa tu bandeja de entrada o solicita un nuevo enlace.",
+      "registrationClosed": "Los registros están pausados ahora mismo. Vuelve a intentarlo pronto.",
+      "emailDeliveryFailed": "No pudimos enviar tu correo de verificación. Inténtalo de nuevo en un momento.",
+      "accountSuspended": "Esta cuenta está suspendida. Contacta con soporte si crees que es un error.",
+      "accountDisabled": "Esta cuenta ha sido deshabilitada.",
+      "sessionExpired": "Tu sesión ha caducado. Solicita un enlace nuevo e inténtalo otra vez.",
+      "invalidLink": "Ese enlace no es válido. Solicita uno nuevo.",
+      "expiredLink": "Ese enlace ha caducado o ya se usó. Solicita uno nuevo.",
+      "oauth": "El inicio de sesión con Google no está disponible ahora. Usa tu correo y contraseña."
+    },
+    "firstName": {
+      "label": "Nombre",
+      "placeholder": "Juan"
+    },
+    "lastName": {
+      "label": "Apellido",
+      "placeholder": "Pérez"
+    },
+    "confirmPassword": {
+      "label": "Confirmar contraseña",
+      "placeholder": "Repite la contraseña"
+    },
+    "passwordStrength": {
+      "weak": "Mínimo 8 caracteres requeridos",
+      "medium": "Buena seguridad",
+      "strong": "Contraseña fuerte"
+    },
+    "updatePassword": {
+      "title": "Elige una nueva contraseña",
+      "subtitle": "Elige una que no hayas usado antes.",
+      "submit": "Actualizar contraseña",
+      "success": "Contraseña actualizada. Has iniciado sesión."
+    },
+    "passwordsMatch": "Las contraseñas coinciden",
+    "backToLogin": "Volver al inicio de sesión",
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña",
+    "google": {
+      "continue": "Continuar con Google"
+    },
+    "or": "o continuar con"
+  },
+  "chat": {
+    "composer": {
+      "placeholder": "Escribe a Mujeeb AI…",
+      "send": "Enviar",
+      "stop": "Detener",
+      "attach": "Adjuntar archivo",
+      "generateImage": "Generar imagen",
+      "disclaimer": "Mujeeb AI puede cometer errores. Verifica la información importante.",
+      "attachHint": "Adjuntar un documento o imagen (hasta {size})",
+      "addContent": "Añadir archivos o crear una imagen",
+      "uploadFiles": "Subir archivos",
+      "exitImageMode": "Salir del modo imagen",
+      "attachmentLimit": "Puedes adjuntar hasta {count} archivos a un mensaje.",
+      "dropHint": "Suelta los archivos para adjuntar: hasta {count}"
+    },
+    "empty": {
+      "title": "¿En qué te ayudo?",
+      "subtitle": "Haz una pregunta, adjunta un documento o elige un punto de partida."
+    },
+    "regenerate": "Regenerar",
+    "edit": "Editar",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "variantOf": "Respuesta {current} de {total}",
+    "thinking": "Pensando",
+    "stopped": "Generación detenida",
+    "errorGeneric": "Mujeeb AI tiene problemas para contactar este modelo. Intenta de nuevo o elige otro modelo.",
+    "quotaReached": {
+      "title": "Has alcanzado el límite gratuito de hoy",
+      "body": "Actualiza a Mujeeb AI Pro para límites más altos, o inténtalo mañana.",
+      "upgrade": "Actualizar a Pro"
+    },
+    "conversation": {
+      "rename": "Renombrar",
+      "archive": "Archivar",
+      "delete": "Eliminar conversación",
+      "deleteConfirm": "Esta conversación se eliminará de forma permanente.",
+      "untitled": "Nueva conversación",
+      "actions": "Acciones de la conversación",
+      "pin": "Fijar",
+      "unpin": "Dejar de fijar",
+      "renameHint": "Ponle un nombre que reconozcas más adelante."
+    },
+    "cancel": "Cancelar",
+    "saveAndResend": "Guardar y reenviar",
+    "generating": "Generando…",
+    "previousVariant": "Respuesta anterior",
+    "nextVariant": "Respuesta siguiente",
+    "removeAttachment": "Quitar adjunto",
+    "a11y": {
+      "yourMessage": "Tu mensaje",
+      "assistantMessage": "Respuesta de Mujeeb AI"
+    },
+    "suggestions": {
+      "explain": {
+        "title": "Explícame algo",
+        "prompt": "Explica cómo funcionan los índices de base de datos y cuándo añadir uno hace que todo vaya más lento."
+      },
+      "draft": {
+        "title": "Redactar un mensaje",
+        "prompt": "Redacta un correo breve y amable avisando a un cliente de que su entrega se retrasa dos días."
+      },
+      "analyze": {
+        "title": "Trabajar un documento",
+        "prompt": "Voy a adjuntar un informe: resume las conclusiones clave y señala todo lo que parezca incoherente."
+      },
+      "brainstorm": {
+        "title": "Pensarlo bien",
+        "prompt": "Ayúdame a sopesar contratar a un externo frente a formar a alguien del equipo."
+      }
+    },
+    "gatewayError": {
+      "provider_unavailable": "Mujeeb AI no puede acceder a este modelo ahora mismo. Inténtalo de nuevo o elige otro.",
+      "rate_limited": "Ese modelo está saturado. Espera un momento e inténtalo de nuevo.",
+      "quota_exceeded": "Has alcanzado el límite de hoy.",
+      "model_unavailable": "Ese modelo no está disponible ahora. Elige otro.",
+      "invalid_request": "Mujeeb AI no ha podido procesar ese mensaje.",
+      "provider_error": "El modelo ha devuelto un error. Inténtalo de nuevo.",
+      "not_configured": "Esta función todavía no está configurada en esta instalación.",
+      "unknown": "Algo ha ido mal. Inténtalo de nuevo."
+    },
+    "tooManyAttachments": "Son más archivos de los que permite este mensaje.",
+    "image": {
+      "view": "Ver a tamaño completo",
+      "close": "Cerrar",
+      "copy": "Copiar imagen",
+      "copied": "Copiado",
+      "download": "Descargar",
+      "downloadFailed": "No se pudo descargar esa imagen.",
+      "copyUnsupported": "Tu navegador no permite copiar imágenes. Prueba a descargarla."
+    }
+  },
+  "models": {
+    "selector": {
+      "freeGroup": "Modelos gratuitos de Mujeeb AI",
+      "moreGroup": "Más modelos",
+      "available": "Disponible",
+      "lockedPro": "Mujeeb AI Pro",
+      "lockedComingSoon": "Próximamente"
+    }
+  },
+  "files": {
+    "unsupported": "Ese tipo de archivo aún no es compatible.",
+    "tooLarge": "Ese archivo supera el límite de tu plan.",
+    "processing": "Procesando archivo…",
+    "ready": "Listo",
+    "failed": "No pudimos procesar este archivo."
+  },
+  "images": {
+    "prompt": {
+      "placeholder": "Describe la imagen que quieres generar…"
+    },
+    "generate": "Generar",
+    "generating": "Generando imagen…",
+    "failed": "La generación de imagen falló. Inténtalo de nuevo.",
+    "quotaReached": "Has usado todas tus generaciones de imágenes de hoy."
+  },
+  "settings": {
+    "title": "Configuración",
+    "account": "Cuenta",
+    "profile": "Perfil",
+    "displayName": "Nombre para mostrar",
+    "language": "Idioma",
+    "appearance": "Apariencia",
+    "subscription": "Suscripción",
+    "usage": "Uso",
+    "signOutEverywhere": "Cerrar sesión en todos los dispositivos",
+    "description": "Tu perfil, tu plan y tu consumo diario.",
+    "saved": "Guardado.",
+    "saveFailed": "No hemos podido guardarlo. Inténtalo de nuevo.",
+    "email": "Correo electrónico",
+    "emailHint": "Contacta con soporte para cambiar la dirección de tu cuenta.",
+    "displayNameHint": "Se muestra en la aplicación. No es visible para otros usuarios.",
+    "unlimited": "Sin límite",
+    "notIncluded": "No incluido en tu plan",
+    "quotaResetNote": "Los límites diarios se reinician a las 00:00 UTC.",
+    "font": "Fuente de lectura",
+    "fontHint": "Se aplica a toda la aplicación. Todas las opciones usan fuentes ya presentes en tu dispositivo: no se descarga nada.",
+    "fonts": {
+      "system": "Predeterminada",
+      "grotesk": "Grotesca",
+      "humanist": "Humanista",
+      "serif": "Serif",
+      "mono": "Monoespaciada",
+      "geometric": "Geométrica",
+      "rounded": "Redondeada",
+      "slab": "Egipcia",
+      "reading": "Lectura"
+    },
+    "devices": {
+      "title": "Dispositivos",
+      "description": "Dónde tiene la sesión iniciada esta cuenta. Si no reconoces algo, ciérralo y cambia tu contraseña.",
+      "thisDevice": "Este dispositivo",
+      "twoFactor": "2FA",
+      "lastActive": "Última actividad {when}",
+      "signOutDevice": "Cerrar sesión",
+      "signOutOthers": "Cerrar sesión en los demás dispositivos",
+      "signOutOthersConfirm": "Sí, cerrarlas",
+      "signOutOthersWarning": "Esto finaliza {count, plural, one {# sesión más} other {# sesiones más}}. Seguirás con la sesión iniciada aquí.",
+      "othersRevoked": "Sesión cerrada en los demás dispositivos.",
+      "revoked": "Sesión cerrada en ese dispositivo.",
+      "onlyThisDevice": "Este es el único dispositivo con la sesión iniciada.",
+      "failed": "No se pudo cerrar la sesión en ese dispositivo.",
+      "notFound": "Ese dispositivo ya no tiene sesión.",
+      "cancel": "Cancelar",
+      "unknownLocation": "Ubicación desconocida"
+    },
+    "accents": {
+      "default": "Azul por defecto",
+      "violet": "Violeta",
+      "emerald": "Esmeralda",
+      "amber": "Ámbar",
+      "rose": "Rosa",
+      "cyan": "Cian",
+      "slate": "Pizarra"
+    },
+    "accent": "Color de acento",
+    "accentHint": "Colorea botones, enlaces y resaltados en toda la aplicación."
+  },
+  "billing": {
+    "plan": {
+      "free": {
+        "name": "Mujeeb AI Free"
+      },
+      "pro": {
+        "name": "Mujeeb AI Pro"
+      }
+    },
+    "perMonth": "/mes",
+    "currentPlan": "Plan actual",
+    "manage": "Administrar suscripción",
+    "cancel": "Cancelar suscripción",
+    "cancelAtPeriodEnd": "Tu plan terminará el {date}",
+    "checkoutError": "No pudimos iniciar el pago. Inténtalo de nuevo.",
+    "pricing": {
+      "title": "Precios simples y transparentes",
+      "subtitle": "Empieza gratis. Mejora tu plan cuando necesites más margen.",
+      "mostPopular": "El más elegido",
+      "included": "Qué incluye",
+      "everythingIn": "Todo lo de {plan}, y además",
+      "getStarted": "Empezar gratis",
+      "currentPlan": "Tu plan actual",
+      "upgradeTo": "Cambiar a {plan}",
+      "free": "Gratis para siempre",
+      "perMonth": "al mes",
+      "perYear": "al año",
+      "billedIn": "Se cobra en {currency} mediante Paystack.",
+      "noCard": "No hace falta tarjeta para empezar.",
+      "unavailable": "Los planes no están disponibles ahora mismo. Inténtalo en breve.",
+      "priceUnavailable": "Precio no disponible",
+      "priceUnavailableHint": "Este plan aún no tiene un precio definido en {currency}."
+    },
+    "features": {
+      "messages_per_day": "{count, plural, =0 {Sin mensajes} one {# mensaje} other {# mensajes}} al día",
+      "image_generations_per_day": "{count, plural, =0 {Sin generación de imágenes} one {# imagen generada} other {# imágenes generadas}} al día",
+      "vision_requests_per_day": "{count, plural, =0 {Sin análisis de imágenes} one {# análisis de imagen} other {# análisis de imágenes}} al día",
+      "file_processing_per_day": "{count, plural, =0 {Sin subida de archivos} one {# archivo} other {# archivos}} al día",
+      "max_file_size_mb": "Archivos de hasta {count} MB",
+      "premium_models": "Acceso a los modelos Pro",
+      "advanced_models": "Acceso a los modelos avanzados",
+      "unlimitedMessages": "Mensajes ilimitados",
+      "unlimitedImages": "Generación de imágenes ilimitada",
+      "unlimitedVision": "Análisis de imágenes ilimitado",
+      "unlimitedFiles": "Subida de archivos ilimitada",
+      "core": "Chat en streaming en 7 idiomas",
+      "history": "Historial completo y búsqueda de conversaciones"
+    },
+    "cancelConfirm": {
+      "title": "¿Cancelar tu suscripción?",
+      "body": "Conservas el acceso Pro hasta el final del periodo actual y luego vuelves a {plan}.",
+      "confirm": "Cancelar suscripción"
+    },
+    "cancelled": "Suscripción cancelada.",
+    "cancelError": "No pudimos cancelar tu suscripción. Inténtalo de nuevo.",
+    "success": "Pago recibido. Tu plan está activo.",
+    "pending": "Todavía estamos confirmando tu pago. Esta página se actualizará sola.",
+    "notConfigured": "Los pagos aún no están habilitados en esta instalación.",
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "cancel": {
+        "q": "¿Puedo cancelar cuando quiera?",
+        "a": "Sí. Cancela desde Ajustes con un clic y conservas el acceso Pro hasta el final del periodo ya pagado."
+      },
+      "payment": {
+        "q": "¿Qué métodos de pago aceptáis?",
+        "a": "Tarjetas y transferencias bancarias a través de Paystack, en tu moneda local cuando esté disponible."
+      },
+      "limits": {
+        "q": "¿Cómo funcionan los límites diarios?",
+        "a": "Cada plan tiene un límite diario que se reinicia a las 00:00 UTC. Si lo alcanzas, puedes seguir al día siguiente o mejorar tu plan."
+      }
+    },
+    "pastDue": "Tu último pago no se ha completado. Actualiza el método de pago para conservar el acceso Pro.",
+    "upgradePage": {
+      "title": "Mejorar plan",
+      "description": "Compara planes y mejora sin salir de la aplicación.",
+      "yourPlan": "Tu plan",
+      "upgradeTo": "Cambiar a {plan}",
+      "alreadyOnPlan": "Tienes {plan}. Gestiónalo o cancélalo desde Ajustes.",
+      "securityNote": "El pago lo gestiona Paystack en su propia ventana segura. Los datos de la tarjeta nunca se introducen en esta aplicación ni son vistos por ella."
+    },
+    "upgrade": "Mejorar plan",
+    "notice": {
+      "purchasedTitle": "Estás en {plan}",
+      "grantedTitle": "Te han concedido {plan}",
+      "purchasedBody": "Gracias: tu suscripción está activa y se renueva el {date}.",
+      "purchasedBodyPlain": "Gracias: tu suscripción está activa.",
+      "grantedBodyDays": "{days, plural, one {# día} other {# días}} de acceso de cortesía, hasta el {date}.",
+      "grantedBody": "Se ha añadido acceso de cortesía a tu cuenta.",
+      "dismiss": "Descartar"
+    },
+    "currency": {
+      "label": "Moneda mostrada"
+    },
+    "cycle": {
+      "started": "El periodo actual empezó",
+      "renews": "Se renueva el",
+      "accessEnds": "Acceso hasta el",
+      "daysLeft": "({count, plural, =0 {hoy} one {# día} other {# días}})",
+      "grantNote": "Es un acceso de cortesía concedido por nuestro equipo. No hay nada que pagar ni que cancelar."
+    }
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "Panel",
+      "users": "Usuarios",
+      "moderation": "Moderación",
+      "usage": "Uso",
+      "plans": "Planes",
+      "subscriptions": "Suscripciones",
+      "models": "Modelos",
+      "providers": "Proveedores",
+      "systemPrompt": "Prompt del sistema",
+      "featureFlags": "Funciones",
+      "settings": "Configuración del sistema",
+      "auditLogs": "Registros de auditoría",
+      "status": "Estado de la plataforma",
+      "moderators": "Moderadores",
+      "security": "Seguridad",
+      "announcements": "Anuncios",
+      "emailTemplates": "Plantillas de correo"
+    },
+    "confirmDestructive": "Escribe {confirmText} para confirmar.",
+    "unauthorized": "No tienes acceso a la consola de administración.",
+    "portalTitle": "Consola de super admin",
+    "roleLabel": "Superadministrador",
+    "section": {
+      "people": "Personas",
+      "billing": "Facturación",
+      "ai": "IA",
+      "platform": "Plataforma"
+    },
+    "dashboard": {
+      "title": "Resumen",
+      "description": "El estado y la actividad de la plataforma de un vistazo.",
+      "totalUsers": "Usuarios",
+      "activeSubscriptions": "Suscripciones activas",
+      "messagesToday": "Mensajes hoy",
+      "imagesToday": "Imágenes hoy",
+      "newUsers7d": "Nuevos esta semana",
+      "recentSignups": "Altas recientes",
+      "recentAudit": "Actividad administrativa reciente",
+      "noActivity": "Aún no se ha registrado actividad administrativa.",
+      "noSignups": "Todavía no se ha creado ninguna cuenta."
+    },
+    "users": {
+      "title": "Usuarios",
+      "description": "Busca cuentas, revisa su actividad y gestiona el acceso.",
+      "searchPlaceholder": "Buscar por correo o nombre…",
+      "search": "Buscar",
+      "filterRole": "Rol",
+      "filterStatus": "Estado",
+      "all": "Todos",
+      "colUser": "Usuario",
+      "colRole": "Rol",
+      "colStatus": "Estado",
+      "colPlan": "Plan",
+      "colJoined": "Alta",
+      "colActions": "Acciones",
+      "empty": "Ninguna cuenta coincide con estos filtros.",
+      "emptyHint": "Prueba otro término o borra los filtros.",
+      "showing": "Mostrando {from}–{to} de {total}",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "actions": "Acciones para {name}",
+      "viewDetail": "Ver detalles",
+      "suspend": "Suspender cuenta",
+      "restore": "Restaurar cuenta",
+      "disable": "Deshabilitar cuenta",
+      "delete": "Eliminar permanentemente",
+      "sendReset": "Enviar restablecimiento de contraseña",
+      "sendMagicLink": "Enviar enlace de acceso",
+      "sendVerification": "Reenviar verificación",
+      "makeModerator": "Nombrar moderador",
+      "removeModerator": "Quitar el rol de moderador",
+      "resetUsage": "Restablecer el uso de hoy",
+      "you": "Tú",
+      "confirm": {
+        "suspend": {
+          "title": "¿Suspender esta cuenta?",
+          "body": "{name} cerrará sesión y no podrá usar Mujeeb AI hasta que un administrador restaure la cuenta.",
+          "consequence1": "Las conversaciones existentes se conservan, no se eliminan.",
+          "consequence2": "Una suscripción activa se seguirá cobrando salvo que también la canceles."
+        },
+        "disable": {
+          "title": "¿Deshabilitar esta cuenta?",
+          "body": "{name} perderá el acceso por completo. Úsalo para cuentas que no deban volver."
+        },
+        "delete": {
+          "title": "¿Eliminar permanentemente esta cuenta?",
+          "body": "Esto elimina a {name} de la autenticación y se propaga a su perfil.",
+          "consequence1": "Se eliminan todas las conversaciones, mensajes y archivos subidos.",
+          "consequence2": "Los registros de pago se conservan para contabilidad, desvinculados del usuario.",
+          "consequence3": "Esto no se puede deshacer.",
+          "phraseHint": "Escribe DELETE para confirmar."
+        },
+        "role": {
+          "title": "¿Cambiar el rol de esta cuenta?",
+          "body": "{name} recibirá el rol {role} y accederá a la consola correspondiente."
+        }
+      },
+      "detail": {
+        "title": "Cuenta",
+        "overview": "Resumen",
+        "usageToday": "Uso de hoy",
+        "overrides": "Excepciones de cuota",
+        "noOverrides": "Sin excepciones. Esta cuenta usa los límites de su plan.",
+        "addOverride": "Añadir excepción",
+        "removeOverride": "Quitar",
+        "conversations": "Conversaciones",
+        "joined": "Alta",
+        "locale": "Idioma",
+        "notFound": "Esa cuenta ya no existe.",
+        "back": "Volver a usuarios",
+        "devices": "Dispositivos",
+        "noDevices": "Sin sesiones activas.",
+        "ofLimit": "de {limit}"
+      },
+      "grantPro": "Conceder Pro por 30 días",
+      "resetStaffAccount": "Restablecer cuenta del personal",
+      "inviteTitle": "Invitar a alguien",
+      "revokeSessions": "Cerrar sesión en todas partes",
+      "revokeSessionsConfirm": "Esto finaliza todas las sesiones activas de esta cuenta. Tendrá que iniciar sesión de nuevo en cada dispositivo. No se elimina nada.",
+      "sessionsRevoked": "Sesión cerrada en todos los dispositivos",
+      "activity": {
+        "title": "Historial de la cuenta",
+        "empty": "Aún no ha ocurrido nada en esta cuenta.",
+        "failed": "Rechazado",
+        "by": "por {name}",
+        "bySystem": "por el sistema"
+      },
+      "moderation": {
+        "title": "Moderación",
+        "noteLabel": "Nota interna",
+        "notePlaceholder": "Qué ocurrió y qué hiciste al respecto.",
+        "noteHint": "Solo visible para el personal. Aparece en el historial de la cuenta.",
+        "addNote": "Añadir nota",
+        "noteSaved": "Nota añadida.",
+        "grantExplainer": "Esta cuenta tiene acceso de cortesía concedido por el personal, no una suscripción de pago.",
+        "revokeGrant": "Finalizar acceso de cortesía",
+        "grantRevoked": "Acceso de cortesía finalizado.",
+        "revokeGrantConfirm": "Esto finaliza el plan de cortesía ahora, antes de su vencimiento previsto.",
+        "revokeConsequenceAccess": "Pasa de inmediato al plan gratuito.",
+        "revokeConsequenceNoRefund": "Las suscripciones de pago nunca se ven afectadas."
+      }
+    },
+    "usage": {
+      "title": "Uso y cuotas",
+      "description": "El consumo diario de toda la plataforma, y los controles para ajustarlo.",
+      "for": "Del {date}",
+      "totals": "Totales",
+      "topConsumers": "Mayores consumidores",
+      "noUsage": "Todavía no hay nada registrado ese día.",
+      "resetUserDone": "Uso restablecido para esta cuenta.",
+      "category": "Categoría",
+      "used": "Usado",
+      "activeUsers": "Cuentas",
+      "overrideTitle": "Establecer una excepción de cuota",
+      "overrideBody": "Las excepciones se superponen al límite del plan y tienen prioridad sobre él.",
+      "overrideFeature": "Cuota",
+      "overrideValue": "Nuevo límite",
+      "overrideValueHint": "Usa -1 para ilimitado.",
+      "overrideReason": "Motivo",
+      "overrideReasonHint": "Queda registrado en el registro de auditoría.",
+      "overrideSave": "Guardar excepción",
+      "overrideSaved": "Excepción guardada.",
+      "overrideRemoved": "Excepción eliminada."
+    },
+    "category": {
+      "messages": "Mensajes",
+      "image_generations": "Imágenes generadas",
+      "vision_requests": "Análisis de imágenes",
+      "file_processing": "Archivos subidos",
+      "audio_processing": "Procesamiento de audio",
+      "video_processing": "Procesamiento de vídeo"
+    },
+    "feature": {
+      "messages_per_day": "Mensajes al día",
+      "image_generations_per_day": "Imágenes generadas al día",
+      "vision_requests_per_day": "Análisis de imágenes al día",
+      "file_processing_per_day": "Archivos subidos al día",
+      "audio_processing_per_day": "Trabajos de audio al día",
+      "video_processing_per_day": "Trabajos de vídeo al día",
+      "max_file_size_mb": "Tamaño máximo de archivo (MB)",
+      "premium_models": "Acceso a modelos Pro",
+      "advanced_models": "Acceso a modelos avanzados",
+      "max_attachments_per_message": "Archivos por mensaje"
+    },
+    "plans": {
+      "title": "Planes",
+      "description": "Precios y derechos. Estos valores alimentan la página de precios, el pago y cada comprobación de cuota.",
+      "price": "Precio (USD / {interval})",
+      "entitlements": "Derechos",
+      "saved": "Guardado.",
+      "saveFailed": "No se ha podido guardar. Inténtalo de nuevo.",
+      "paystackCode": "Código de plan de Paystack",
+      "paystackCodeHint": "Opcional. Rellénalo para cobrar mediante una suscripción de Paystack en lugar de un cargo único.",
+      "save": "Guardar precios",
+      "currencyPrices": "Precio por moneda",
+      "currencyPricesHint": "Establece el importe cobrado en cada moneda. Deja en blanco las monedas en las que no vendes: el pago las rechaza en lugar de convertir. Cambiar la moneda de facturación en Ajustes usa el importe definido aquí.",
+      "charging": "En cobro",
+      "missingChargingCurrency": "No hay precio definido en {currency}, la moneda que usa el pago. Los clientes no pueden comprar este plan hasta que lo definas."
+    },
+    "subscriptions": {
+      "title": "Suscripciones",
+      "description": "Suscripciones activas y pasadas, reconstruidas a partir de eventos verificados de Paystack.",
+      "colUser": "Usuario",
+      "colPlan": "Plan",
+      "colStatus": "Estado",
+      "colRenews": "Renueva",
+      "colStarted": "Inicio",
+      "empty": "Todavía no hay suscripciones.",
+      "cancelAtPeriodEnd": "Termina al final del periodo"
+    },
+    "models": {
+      "title": "Modelos",
+      "description": "Qué modelos existen, quién puede usarlos y en qué orden recurre la pasarela a las alternativas.",
+      "colModel": "Modelo",
+      "colProvider": "Proveedor",
+      "colTier": "Nivel",
+      "colAvailability": "Disponibilidad",
+      "colPriority": "Prioridad",
+      "updated": "Modelo actualizado."
+    },
+    "providers": {
+      "title": "Proveedores",
+      "description": "Proveedores de IA externos. Las credenciales viven en variables de entorno del servidor y nunca se muestran aquí.",
+      "colProvider": "Proveedor",
+      "colKind": "Tipo",
+      "colCredentials": "Credenciales",
+      "colEnabled": "Habilitado",
+      "configured": "Configurado",
+      "missing": "Sin configurar",
+      "missingHint": "Define las variables de entorno de este proveedor para habilitarlo.",
+      "toggled": "Proveedor actualizado."
+    },
+    "systemPrompt": {
+      "title": "Prompt del sistema",
+      "description": "La instrucción que precede a cada conversación. Controlada por el servidor y versionada.",
+      "active": "Versión activa {version}",
+      "editor": "Prompt",
+      "publish": "Publicar nueva versión",
+      "published": "Versión {version} publicada.",
+      "history": "Historial de versiones",
+      "restore": "Restaurar",
+      "restored": "Restaurada como una nueva versión.",
+      "by": "por {name}",
+      "empty": "El prompt no puede estar vacío.",
+      "confirmTitle": "¿Publicar este prompt del sistema?",
+      "confirmBody": "Se aplica desde el siguiente mensaje de cada usuario, en todos los modelos."
+    },
+    "featureFlags": {
+      "title": "Indicadores de función",
+      "description": "Activa y desactiva capacidades sin desplegar. Los indicadores no pueden saltarse los controles de seguridad.",
+      "updated": "Indicador actualizado."
+    },
+    "settings": {
+      "title": "Ajustes",
+      "description": "Configuración operativa. Los límites de seguridad siguen aplicándose en el código.",
+      "updated": "Ajuste actualizado."
+    },
+    "auditLogs": {
+      "title": "Registro de auditoría",
+      "description": "Cada acción privilegiada, solo en modo añadir.",
+      "colTime": "Hora",
+      "colActor": "Autor",
+      "colAction": "Acción",
+      "colTarget": "Destino",
+      "colResult": "Resultado",
+      "empty": "Aún no se ha registrado ninguna acción administrativa.",
+      "system": "Sistema",
+      "filterAction": "Filtrar por acción…",
+      "colUndo": "",
+      "resultSuccess": "Correcto",
+      "resultFailure": "Fallido"
+    },
+    "status": {
+      "title": "Estado de la plataforma",
+      "description": "Si cada dependencia externa está configurada y es accesible desde esta instalación.",
+      "service": "Servicio",
+      "state": "Estado",
+      "detail": "Detalle",
+      "operational": "Operativo",
+      "degraded": "Degradado",
+      "notConfigured": "Sin configurar",
+      "error": "Error",
+      "refresh": "Volver a comprobar",
+      "checkedAt": "Comprobado a las {time}"
+    },
+    "moderation": {
+      "title": "Historial de moderación",
+      "description": "Acciones sobre cuentas realizadas por moderadores y administradores."
+    },
+    "common": {
+      "confirm": "Confirmar",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "saving": "Guardando…",
+      "actionFailed": "No se ha podido completar esa acción.",
+      "notPermitted": "No tienes permiso para hacer eso.",
+      "never": "Nunca",
+      "none": "Ninguna",
+      "unlimited": "Sin límite",
+      "enabled": "Habilitado",
+      "disabled": "Deshabilitado"
+    },
+    "role": {
+      "user": "Usuario",
+      "moderator": "Moderador",
+      "super_admin": "Superadministrador"
+    },
+    "status_": {
+      "active": "Activa",
+      "suspended": "Suspendida",
+      "disabled": "Deshabilitada",
+      "pending_verification": "Verificación pendiente",
+      "deleted": "Eliminada"
+    },
+    "moderators": {
+      "title": "Moderadores",
+      "description": "Crea y elimina cuentas de moderador. Un nuevo moderador recibe una contraseña temporal por correo y debe establecer su propia contraseña y una aplicación de autenticación antes de poder iniciar sesión.",
+      "createTitle": "Añadir moderador",
+      "listTitle": "Moderadores actuales",
+      "emailLabel": "Correo electrónico",
+      "nameLabel": "Nombre visible (opcional)",
+      "createHint": "Enviamos una contraseña temporal a esta dirección. La cuenta no puede acceder a la consola hasta que se sustituya la contraseña y se configure la autenticación en dos pasos.",
+      "createSubmit": "Crear moderador",
+      "createdFor": "Invitación enviada a {email}.",
+      "created": "Moderador creado.",
+      "colModerator": "Moderador",
+      "colSetup": "Configuración",
+      "colInvited": "Invitado",
+      "colActions": "",
+      "none": "Aún no hay moderadores.",
+      "pendingPassword": "Contraseña sin definir",
+      "pendingMfa": "2FA sin configurar",
+      "ready": "Listo",
+      "remove": "Quitar",
+      "removed": "Moderador eliminado.",
+      "removeFailed": "No se pudo quitar ese moderador.",
+      "createFailed": "No se pudo crear ese moderador.",
+      "emailFailed": "No pudimos enviar el correo de invitación, así que la cuenta no se creó. Revisa la configuración de correo e inténtalo de nuevo.",
+      "alreadyExists": "Ya existe una cuenta con esa dirección. Cambia su rol desde Usuarios.",
+      "notModerator": "Esa cuenta no es un moderador.",
+      "invalid": "Revisa los datos e inténtalo de nuevo.",
+      "resetDone": "Restablecido. Se envió una nueva contraseña temporal.",
+      "resetFailed": "No se pudo restablecer esa cuenta.",
+      "cannotResetSelf": "No puedes restablecer tu propia cuenta. Usa la CLI."
+    },
+    "security": {
+      "title": "Seguridad",
+      "description": "El estado de sesión de tu cuenta y dónde tiene la sesión iniciada.",
+      "account": "Esta cuenta",
+      "signedInAs": "Sesión iniciada como",
+      "twoFactor": "Autenticación en dos pasos",
+      "twoFactorOn": "Activada",
+      "twoFactorOff": "Desactivada",
+      "assurance": "Nivel de garantía de la sesión",
+      "lastSignIn": "Último inicio de sesión",
+      "sessionSince": "Esta sesión empezó",
+      "sessions": "Sesiones",
+      "sessionsExplainer": "Supabase no expone un inventario por dispositivo, así que esta página no puede listar tus dispositivos sin inventarlos. Lo que sí puede hacer es cerrar todas las sesiones de esta cuenta: úsalo si has iniciado sesión en algún sitio que ya no controlas.",
+      "signOutHere": "Cerrar sesión en este navegador",
+      "signOutAll": "Cerrar sesión en todas partes",
+      "signOutAllConfirm": "Sí, cerrar en todas partes",
+      "signOutAllWarning": "Esto cierra todas las sesiones, incluida esta. Volverás a iniciar sesión con tu aplicación de autenticación.",
+      "cancel": "Cancelar",
+      "assurancePassword": "Solo contraseña",
+      "assuranceTwoFactor": "Contraseña + doble factor",
+      "password": "Contraseña",
+      "currentPassword": "Contraseña actual",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar nueva contraseña",
+      "changePassword": "Cambiar contraseña",
+      "passwordHint": "Al menos {min} caracteres.",
+      "passwordTooShort": "Usa al menos {min} caracteres.",
+      "passwordMismatch": "Estas contraseñas no coinciden.",
+      "passwordChanged": "Tu contraseña se ha cambiado.",
+      "passwordInvalid": "Revisa ambos campos e inténtalo de nuevo.",
+      "passwordWrong": "Esa contraseña actual no es correcta.",
+      "passwordSame": "La nueva contraseña debe ser distinta de la actual.",
+      "passwordRejected": "Esa contraseña fue rechazada. Prueba una más larga o menos común.",
+      "passwordFailed": "No se pudo cambiar la contraseña.",
+      "recovery": "Si pierdes tu autenticador",
+      "recoveryBody": "No hay códigos de recuperación imprimibles. Si pierdes el acceso a tu aplicación de autenticación, un Super Admin restablece tu cuenta y registras una nueva — cada restablecimiento queda en el registro de auditoría.",
+      "deviceRevoked": "Ese dispositivo ha cerrado sesión.",
+      "passwordThrottled": "Demasiados intentos. Espera 15 minutos e inténtalo de nuevo.",
+      "idleWarning": "Cerrando sesión en {seconds} s: mueve el ratón o pulsa una tecla para seguir conectado."
+    },
+    "auditAction": {
+      "admin": {
+        "user_suspended": "Cuenta suspendida",
+        "user_disabled": "Cuenta desactivada",
+        "user_restored": "Cuenta restaurada",
+        "user_deleted": "Cuenta eliminada",
+        "moderator_created": "Moderador añadido",
+        "moderator_removed": "Moderador eliminado",
+        "password_reset": "Restablecimiento enviado",
+        "magic_link_created": "Enlace de acceso enviado",
+        "verification_resent": "Correo de verificación reenviado",
+        "quota_changed": "Cuota personalizada modificada",
+        "quota_reset": "Uso restablecido",
+        "plan_updated": "Precio del plan modificado",
+        "plan_currency_prices_updated": "Precios por moneda modificados",
+        "feature_flag_changed": "Función activada o desactivada",
+        "system_setting_changed": "Ajuste modificado",
+        "provider_changed": "Proveedor modificado",
+        "model_changed": "Modelo modificado",
+        "prompt_changed": "Prompt del sistema publicado",
+        "prompt_restored": "Prompt del sistema restaurado",
+        "action_undone": "Acción deshecha",
+        "moderator_reset": "Cuenta del personal restablecida",
+        "plan_granted": "Plan de cortesía concedido",
+        "plan_grant_revoked": "Plan de cortesía finalizado",
+        "user_invited": "Cuenta invitada",
+        "sessions_revoked": "Todas las sesiones revocadas",
+        "email_template_saved": "Plantilla de correo guardada",
+        "email_template_restored": "Plantilla de correo restaurada",
+        "email_template_reset": "Plantilla de correo restablecida"
+      },
+      "billing": {
+        "subscription_activated": "Suscripción activada",
+        "subscription_created": "Suscripción creada",
+        "subscription_cancelled": "Suscripción cancelada"
+      },
+      "staff": {
+        "signin": "Inicio de sesión del personal",
+        "signin_failed": "Fallo de inicio de sesión",
+        "signin_denied": "Inicio de sesión denegado",
+        "password_set": "Contraseña establecida",
+        "mfa_enrolled": "Doble factor activado",
+        "sessions_revoked": "Todas las sesiones revocadas",
+        "password_changed": "Contraseña de personal cambiada",
+        "password_change_failed": "Fallo al cambiar la contraseña"
+      },
+      "account": {
+        "device_revoked": "Sesión cerrada en un dispositivo",
+        "other_devices_revoked": "Sesión cerrada en otros dispositivos",
+        "all_devices_revoked": "Sesión cerrada en todos los dispositivos"
+      }
+    },
+    "undo": {
+      "action": "Deshacer",
+      "confirm": "Confirmar",
+      "done": "Acción deshecha.",
+      "undoneBadge": "Deshecha",
+      "failed": "No se pudo deshacer esa acción.",
+      "notFound": "Esa entrada ya no existe.",
+      "notUndoable": "Esa acción no se puede deshacer.",
+      "alreadyUndone": "Esa acción ya se deshizo.",
+      "noPriorState": "No se registró el valor original, así que no se puede deshacer.",
+      "invite": "eliminar la cuenta invitada",
+      "inviteRedeemed": "Esta invitación ya se ha usado, así que la cuenta ya no puede eliminarse de este modo.",
+      "alreadyGone": "Esa cuenta ya no existe."
+    },
+    "settingKey": {
+      "billing_currency": "Moneda de facturación",
+      "default_model_slug": "Modelo de chat predeterminado",
+      "default_vision_model_slug": "Modelo de visión predeterminado",
+      "default_locale": "Idioma predeterminado",
+      "support_email": "Correo de soporte",
+      "free_plan_slug": "Plan gratuito",
+      "max_upload_size_mb": "Tamaño máximo de archivo",
+      "chat_rate_limit_per_minute": "Límite de mensajes por minuto",
+      "max_conversation_messages": "Longitud del historial",
+      "supported_locales": "Idiomas activos",
+      "announcement": "Banner de anuncio",
+      "max_attachments_per_message": "Archivos por mensaje",
+      "staff_require_mfa_each_signin": "Pedir código 2FA en cada inicio de sesión"
+    },
+    "grants": {
+      "granted": "Acceso Pro concedido por 30 días.",
+      "revoked": "Acceso de cortesía finalizado.",
+      "failed": "No se pudo conceder el acceso.",
+      "invalid": "Revisa los datos e inténtalo de nuevo.",
+      "planNotFound": "Ese plan no existe o no está activo.",
+      "hasPaidSubscription": "Esta cuenta tiene una suscripción de pago: concederlo la desvincularía de la facturación.",
+      "notAGrant": "Esta cuenta no tiene acceso de cortesía que finalizar.",
+      "dialogTitle": "Conceder acceso de cortesía a {user}",
+      "duration": "Duración",
+      "days": "{days} días",
+      "customDays": "O indica un número de días",
+      "customDaysHint": "De 1 a 365. La suscripción caduca sola: no hay nada que recordar desactivar.",
+      "reason": "Motivo (opcional)",
+      "reasonHint": "Se registra en el log de auditoría. Útil meses después, cuando alguien pregunte por qué esta cuenta tiene Pro.",
+      "reasonPlaceholder": "Disculpa por la caída del 12 de agosto",
+      "confirm": "Conceder {days} días",
+      "cancel": "Cancelar",
+      "grantedFor": "Concedido por {days} días."
+    },
+    "targetType": {
+      "user": "Cuenta",
+      "plan": "Plan",
+      "model": "Modelo",
+      "provider": "Proveedor",
+      "feature_flag": "Función",
+      "system_setting": "Ajuste",
+      "system_prompt_version": "Prompt del sistema",
+      "subscription": "Suscripción",
+      "plan_entitlement": "Derecho",
+      "email": "Correo",
+      "platform": "Plataforma",
+      "deleted": "cuenta eliminada",
+      "email_template": "Correo"
+    },
+    "announcements": {
+      "title": "Anuncios",
+      "description": "Un banner que ven todos los usuarios con sesión iniciada. Úsalo con moderación: uno permanente deja de leerse.",
+      "editorTitle": "Mensaje",
+      "body": "Anuncio",
+      "placeholder": "Mantenimiento programado el domingo, 02:00–04:00 WAT.",
+      "formattingHint": "Admite **negrita**, _cursiva_, `código` y [enlaces](https://example.com).",
+      "preview": "Vista previa",
+      "previewEmpty": "Nada que previsualizar todavía.",
+      "liveNow": "Hay un anuncio activo y visible para todos los usuarios con sesión iniciada.",
+      "noneLive": "No hay ningún anuncio activo.",
+      "publish": "Publicar",
+      "update": "Actualizar",
+      "clear": "Retirar",
+      "published": "Anuncio publicado.",
+      "cleared": "Anuncio retirado.",
+      "failed": "No se pudo guardar."
+    },
+    "invite": {
+      "emailLabel": "Correo electrónico",
+      "nameLabel": "Nombre visible (opcional)",
+      "submit": "Enviar invitación",
+      "hint": "Recibirá un enlace para establecer su propia contraseña.",
+      "sentTo": "Invitación enviada a {email}.",
+      "sent": "Invitación enviada",
+      "invalid": "Introduce un correo electrónico válido.",
+      "alreadyExists": "Ya existe una cuenta con ese correo electrónico.",
+      "failed": "No se pudo crear la invitación.",
+      "emailFailed": "No se pudo entregar el correo de invitación, así que no se creó ninguna cuenta.",
+      "throttled": "Demasiadas invitaciones enviadas. Inténtalo más tarde.",
+      "vipLabel": "Enviar como invitación especial",
+      "vipHint": "Envía una invitación de bienvenida en lugar de la estándar. Solo cambia el correo: la cuenta tiene exactamente los mismos permisos.",
+      "submitVip": "Enviar invitación especial",
+      "sentVip": "Invitación especial enviada"
+    },
+    "moderationAction": {
+      "warned": "Advertencia emitida",
+      "suspended": "Cuenta suspendida",
+      "restored": "Cuenta restaurada",
+      "disabled": "Cuenta deshabilitada",
+      "deleted": "Cuenta eliminada",
+      "note": "Nota añadida"
+    },
+    "emailTemplates": {
+      "title": "Plantillas de correo",
+      "description": "El texto de cada correo que la plataforma envía automáticamente. Cada cambio crea una versión, y cualquier versión puede restaurarse.",
+      "kindLabel": "Correo",
+      "localeLabel": "Idioma",
+      "subject": "Asunto",
+      "preview": "Texto de vista previa",
+      "previewHint": "La línea que aparece tras el asunto en la mayoría de bandejas.",
+      "heading": "Encabezado",
+      "body": "Cuerpo",
+      "actionLabel": "Texto del botón",
+      "footnote": "Nota al pie",
+      "changeNote": "Qué cambió (opcional)",
+      "changeNoteHint": "Se guarda con esta versión para que el historial se lea como un relato.",
+      "blankMeansDefault": "Deja un campo vacío para conservar el texto original de ese idioma. Puedes cambiar solo el asunto y dejar lo demás traducido.",
+      "placeholderHint": "Variables: {list}",
+      "usingDefault": "Usando el texto original",
+      "versionBadge": "Versión {version}",
+      "live": "En uso",
+      "restoredFrom": "restaurado desde v{version}",
+      "noSubject": "(sin asunto)",
+      "systemAuthor": "Sistema",
+      "save": "Guardar nueva versión",
+      "history": "Historial ({count})",
+      "restore": "Restaurar",
+      "resetToDefault": "Restablecer",
+      "resetConfirm": "Esto elimina la personalización y el correo vuelve a su texto original.",
+      "resetConsequenceCopy": "La traducción incluida vuelve a aplicarse de inmediato.",
+      "resetConsequenceHistory": "El historial de versiones de esta plantilla se elimina con ella.",
+      "saved": "Guardado como versión {version}.",
+      "restored": "Versión {version} restaurada como texto en uso.",
+      "reset": "Restablecido al texto original.",
+      "invalid": "Revisa los campos e inténtalo de nuevo.",
+      "empty": "Una plantilla necesita al menos asunto, encabezado o cuerpo.",
+      "failed": "No se pudo guardar la plantilla.",
+      "notFound": "Esa plantilla aún no está configurada.",
+      "versionNotFound": "Esa versión ya no existe.",
+      "kind": {
+        "verify": "Verificación de correo",
+        "reset": "Restablecer contraseña",
+        "magicLink": "Enlace de inicio de sesión",
+        "welcome": "Bienvenida",
+        "staffInvite": "Invitación de moderador",
+        "vipInvite": "Invitación especial",
+        "invite": "Invitación"
+      }
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "Página no encontrada",
+      "body": "La página que buscas no existe o fue movida."
+    },
+    "serverError": {
+      "title": "Algo salió mal",
+      "body": "Inténtalo de nuevo en un momento."
+    },
+    "maintenance": {
+      "title": "Mujeeb AI está en mantenimiento",
+      "body": "Volveremos pronto. Gracias por tu paciencia."
+    }
+  },
+  "emails": {
+    "common": {
+      "greeting": "Hola {name}:",
+      "openApp": "Abrir Mujeeb AI"
+    },
+    "verify": {
+      "subject": "Confirma tu cuenta de Mujeeb AI",
+      "preview": "Un clic para activar tu cuenta.",
+      "heading": "Confirma tu dirección de correo",
+      "body": "Confirma esta dirección para activar tu cuenta de Mujeeb AI y empezar a conversar.",
+      "action": "Confirmar correo",
+      "footnote": "Este enlace caduca en 24 horas. Si no creaste una cuenta de Mujeeb AI, puedes ignorar este correo."
+    },
+    "reset": {
+      "subject": "Restablece tu contraseña de Mujeeb AI",
+      "preview": "Elige una nueva contraseña.",
+      "heading": "Restablecer la contraseña",
+      "body": "Usa el enlace de abajo para elegir una nueva contraseña. La actual sigue activa hasta entonces.",
+      "action": "Elegir nueva contraseña",
+      "footnote": "Este enlace caduca en 1 hora y solo puede usarse una vez. Si no lo solicitaste, ignora este correo y tu cuenta no cambiará."
+    },
+    "magicLink": {
+      "subject": "Tu enlace de acceso a Mujeeb AI",
+      "preview": "Inicia sesión sin contraseña.",
+      "heading": "Iniciar sesión en Mujeeb AI",
+      "body": "Usa el enlace de abajo para iniciar sesión. No hace falta contraseña.",
+      "action": "Iniciar sesión",
+      "footnote": "Este enlace caduca en 1 hora y solo puede usarse una vez. Si no lo pediste, ignora este correo."
+    },
+    "welcome": {
+      "subject": "Te damos la bienvenida a Mujeeb AI",
+      "preview": "Tu cuenta está lista.",
+      "heading": "Tu cuenta está lista",
+      "body": "Estás en Mujeeb AI Free. Empieza una conversación, adjunta un documento o genera una imagen cuando quieras.",
+      "action": "Abrir Mujeeb AI",
+      "footnote": "¿Necesitas más margen? Mujeeb AI Pro amplía tus límites diarios y desbloquea modelos adicionales."
+    },
+    "staffInvite": {
+      "subject": "Se te ha concedido acceso de moderador a Mujeeb AI",
+      "preview": "Inicia sesión y configura tu cuenta.",
+      "heading": "Acceso de moderador",
+      "body": "Un superadministrador ha creado una cuenta de moderador para ti en Mujeeb AI. Inicia sesión con la contraseña temporal de abajo: se te pedirá que elijas tu propia contraseña y configures una aplicación de autenticación antes de continuar.",
+      "action": "Iniciar sesión en el portal del personal",
+      "footnote": "Esta contraseña temporal funciona una sola vez. Si no esperabas este correo, avisa a tu administrador y no inicies sesión.",
+      "secretLabel": "Contraseña temporal"
+    },
+    "vipInvite": {
+      "subject": "Una invitación especial a Mujeeb AI",
+      "preview": "Te han invitado personalmente.",
+      "heading": "Una invitación especial, {name}",
+      "body": "Te han invitado personalmente a Mujeeb AI: no es un registro cualquiera. Ya hay una cuenta esperándote. Usa el botón de abajo para aceptarla y elegir tu contraseña.",
+      "action": "Aceptar tu invitación",
+      "footnote": "Este enlace de invitación caduca en 1 hora y solo puede usarse una vez. Se te ha enviado personalmente; por favor, no lo reenvíes."
+    },
+    "invite": {
+      "subject": "Te invitamos a Mujeeb AI",
+      "preview": "Tu invitación está lista.",
+      "heading": "Te invitamos a Mujeeb AI",
+      "body": "Se ha creado una cuenta para ti. Usa el botón de abajo para aceptar tu invitación y elegir tu contraseña.",
+      "action": "Aceptar invitación",
+      "footnote": "Este enlace de invitación caduca en 1 hora y solo puede usarse una vez. Si no lo esperabas, puedes ignorar este correo."
+    }
+  },
+  "moderator": {
+    "portalTitle": "Consola de moderador",
+    "roleLabel": "Moderador",
+    "roleLabelAdmin": "Superadministrador",
+    "nav": {
+      "dashboard": "Resumen",
+      "users": "Cuentas",
+      "moderation": "Registro de moderación",
+      "activity": "Mis acciones",
+      "security": "Seguridad"
+    },
+    "dashboard": {
+      "title": "Resumen",
+      "description": "Lo que puedes revisar y sobre lo que puedes actuar.",
+      "suspended": "Cuentas suspendidas",
+      "pending": "Verificación pendiente",
+      "actions7d": "Tus acciones esta semana",
+      "totalAccounts": "Cuentas"
+    },
+    "users": {
+      "title": "Cuentas",
+      "description": "Busca cuentas y aplica moderación. Las cuentas del equipo no se muestran.",
+      "inviteTitle": "Invitar a alguien"
+    },
+    "moderation": {
+      "title": "Registro de moderación",
+      "description": "Acciones sobre cuentas en toda la plataforma, las más recientes primero.",
+      "colTime": "Hora",
+      "colUser": "Cuenta",
+      "colAction": "Acción",
+      "colBy": "Por",
+      "colReason": "Motivo",
+      "empty": "Aún no se ha registrado ninguna acción de moderación.",
+      "action": {
+        "warned": "Advertida",
+        "suspended": "Suspendida",
+        "restored": "Restaurada",
+        "disabled": "Deshabilitada",
+        "deleted": "Eliminada",
+        "note": "Nota"
+      }
+    },
+    "note": {
+      "add": "Añadir nota",
+      "title": "Añadir una nota de moderación",
+      "body": "Las notas son visibles para moderadores y administradores y quedan registradas en esta cuenta.",
+      "placeholder": "¿Qué has observado?",
+      "save": "Guardar nota",
+      "saved": "Nota guardada."
+    },
+    "reason": {
+      "label": "Motivo",
+      "placeholder": "¿Por qué realizas esta acción?",
+      "required": "Es obligatorio indicar un motivo."
+    },
+    "activity": {
+      "title": "Mis acciones",
+      "description": "Lo que has cambiado recientemente y lo que puedes deshacer.",
+      "empty": "Aún no has realizado ninguna acción reversible."
+    }
+  },
+  "staffAuth": {
+    "title": "Acceso del equipo",
+    "subtitle": "Acceso de administradores y moderadores a las consolas de Mujeeb AI.",
+    "submit": "Entrar en la consola",
+    "errors": {
+      "invalidCredentials": "Ese correo o contraseña no es correcto.",
+      "notStaff": "Esta entrada es solo para administradores y moderadores.",
+      "inactive": "Esta cuenta del equipo no está activa. Contacta con otro administrador.",
+      "rateLimited": "Demasiados intentos. Espera un momento e inténtalo de nuevo.",
+      "mfaBadCode": "Ese código no es correcto. Revisa tu aplicación e inténtalo de nuevo.",
+      "mfaUnavailable": "No hay ninguna aplicación de autenticación configurada en esta cuenta.",
+      "idleTimeout": "Sesión cerrada tras 5 minutos de inactividad. Vuelve a iniciar sesión para continuar.",
+      "wrongEntrance": "Esta no es la entrada correcta para tu cuenta. Usa el enlace de acceso de tu propia consola.",
+      "mfaRateLimited": "Demasiados intentos. Espera un momento e inténtalo de nuevo.",
+      "mfaExpired": "Ese código ha caducado. Introduce el actual de tu autenticador.",
+      "sessionLost": "Tu inicio de sesión no se transfirió. Recarga la página e inicia sesión de nuevo.",
+      "mfaServerError": "La verificación falló de nuestro lado. Espera un momento e inténtalo de nuevo."
+    },
+    "onboarding": {
+      "passwordTitle": "Establece tu contraseña",
+      "passwordDescription": "Has iniciado sesión con una contraseña temporal. Elige la tuya antes de continuar.",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar nueva contraseña",
+      "passwordHint": "Al menos 12 caracteres. Las cuentas del personal pueden cambiar precios, suspender usuarios y leer el registro de auditoría, por eso el mínimo es mayor.",
+      "passwordSubmit": "Guardar y continuar",
+      "passwordMismatch": "Las contraseñas no coinciden.",
+      "passwordTooShort": "Usa al menos 12 caracteres.",
+      "passwordInvalid": "Revisa la contraseña e inténtalo de nuevo.",
+      "passwordRejected": "No pudimos establecer esa contraseña. Prueba con otra.",
+      "passwordSaved": "Contraseña guardada.",
+      "notStaff": "Esta cuenta no es una cuenta del personal.",
+      "mfaTitle": "Configura la autenticación en dos pasos",
+      "mfaDescription": "Escanea este código con una aplicación de autenticación e introduce el código de seis dígitos que muestra. Las cuentas del personal no se pueden usar sin esto.",
+      "mfaQrAlt": "Código QR para tu aplicación de autenticación",
+      "mfaSecretLabel": "O introduce esta clave manualmente",
+      "mfaCodeLabel": "Código de seis dígitos",
+      "mfaSubmit": "Verificar y finalizar",
+      "mfaEnrollFailed": "No pudimos iniciar el registro. Recarga e inténtalo de nuevo.",
+      "mfaBadCode": "Ese código no es correcto. Revisa tu aplicación e inténtalo de nuevo.",
+      "mfaNotVerified": "El registro aún no está completo.",
+      "mfaFailed": "Algo salió mal al finalizar el registro.",
+      "mfaEnrolled": "La autenticación en dos pasos está activada.",
+      "mfaNoRecoveryCodes": "No hay códigos de recuperación que guardar. Si pierdes tu autenticador, un Super Admin restablecerá tu cuenta para que registres uno nuevo."
+    },
+    "mfaTitle": "Introduce tu código",
+    "mfaSubtitle": "Abre tu aplicación de autenticación e introduce el código de seis dígitos.",
+    "mfaCodeLabel": "Código de seis dígitos",
+    "mfaSubmit": "Verificar",
+    "exit": {
+      "action": "Cerrar sesión y salir",
+      "title": "¿Salir de la consola?",
+      "description": "Se cerrará tu sesión y volverás a la página de inicio pública.",
+      "consequenceSignOut": "Esta sesión termina en este dispositivo.",
+      "consequenceReauth": "Necesitarás tu contraseña y tu código de autenticación para volver.",
+      "confirm": "Cerrar sesión",
+      "cancel": "Seguir conectado"
+    },
+    "portal": {
+      "adminEntrance": "Acceso de super admin",
+      "staffEntrance": "Acceso de moderador",
+      "sharedEntrance": "Acceso de personal"
+    }
+  }
+}

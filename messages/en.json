@@ -1,0 +1,1290 @@
+{
+  "metadata": {
+    "title": "Mujeeb AI",
+    "description": "A premium, multilingual AI workspace."
+  },
+  "common": {
+    "appName": "Mujeeb AI",
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "continue": "Continue",
+    "retry": "Retry",
+    "comingSoon": "Coming soon",
+    "locked": "Locked",
+    "error": "Something went wrong",
+    "language": "Language",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "skipToContent": "Skip to content",
+    "dismiss": "Dismiss"
+  },
+  "nav": {
+    "newChat": "New chat",
+    "search": "Search conversations",
+    "settings": "Settings",
+    "pricing": "Pricing",
+    "admin": "Admin console",
+    "signOut": "Sign out",
+    "signIn": "Sign in",
+    "signUp": "Create account",
+    "backToApp": "Back to Mujeeb AI",
+    "moderator": "Moderator console",
+    "openApp": "Open Mujeeb AI",
+    "openMenu": "Open menu",
+    "conversations": "Conversations",
+    "pinned": "Pinned",
+    "recent": "Recent",
+    "noConversations": "No conversations yet. Start one above.",
+    "noSearchResults": "No conversations match that search.",
+    "collapseSidebar": "Collapse sidebar",
+    "expandSidebar": "Expand sidebar"
+  },
+  "landing": {
+    "hero": {
+      "title": "An AI workspace that gets out of your way",
+      "subtitle": "Fast, streaming conversations in seven languages, with your documents and images alongside — and no lock-in to a single AI provider underneath.",
+      "priceNote": "Free to start. {plan} is {price} a month.",
+      "eyebrow": "Seven languages. Any model underneath."
+    },
+    "cta": {
+      "start": "Create your free account",
+      "pricing": "See pricing",
+      "continue": "Continue to Mujeeb AI"
+    },
+    "features": {
+      "title": "Built for real work",
+      "chat": {
+        "title": "Answers as they're written",
+        "body": "Responses stream in from the first token, so you're reading while the model is still thinking."
+      },
+      "files": {
+        "title": "Understands your files",
+        "body": "PDF, Word, Excel, PowerPoint, CSV and plain text, extracted server-side and handed to the model as data — never as instructions."
+      },
+      "vision": {
+        "title": "Sees your images",
+        "body": "Attach a screenshot or a photo and ask about what's in it."
+      },
+      "global": {
+        "title": "Seven languages, properly",
+        "body": "English, French, Arabic, Portuguese, Spanish, Japanese and Chinese — with real right-to-left layout, not a mirrored afterthought."
+      },
+      "images": {
+        "title": "Generates images",
+        "body": "Describe what you want and get an image back, kept in the conversation it came from."
+      },
+      "privacy": {
+        "title": "Your conversations stay yours",
+        "body": "Row-level security means one account cannot read another's history, and administrators do not get a window into your chats."
+      },
+      "subtitle": "Everything below works on the free plan. Nothing here is a demo."
+    },
+    "closing": {
+      "title": "Start a conversation",
+      "body": "No card required. The free plan is a real product, not a trial."
+    },
+    "stats": {
+      "languages": {
+        "value": "7",
+        "label": "Languages, with real RTL layout"
+      },
+      "providers": {
+        "value": "No lock-in",
+        "label": "Swap the model provider anytime"
+      },
+      "formats": {
+        "value": "9+",
+        "label": "Document formats read server-side"
+      },
+      "free": {
+        "value": "Free",
+        "label": "A real plan, not a trial"
+      }
+    },
+    "footer": {
+      "tagline": "An AI workspace that gets out of your way.",
+      "product": "Product",
+      "company": "About",
+      "rights": "All rights reserved."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to continue to Mujeeb AI",
+      "submit": "Sign in",
+      "magicLink": "Email me a sign-in link",
+      "noAccount": "Don't have an account?",
+      "magicLinkHint": "We'll email you a link that signs you in — no password needed.",
+      "useMagicLink": "Sign in with an email link instead",
+      "usePassword": "Sign in with a password instead"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Start with Mujeeb AI Free — no card required",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?"
+    },
+    "firstName": {
+      "label": "First name",
+      "placeholder": "John"
+    },
+    "lastName": {
+      "label": "Last name",
+      "placeholder": "Doe"
+    },
+    "email": {
+      "label": "Email address",
+      "placeholder": "you@example.com"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Min. 8 characters",
+      "hint": "At least 8 characters."
+    },
+    "confirmPassword": {
+      "label": "Confirm password",
+      "placeholder": "Repeat password"
+    },
+    "forgotPassword": "Forgot password?",
+    "reset": {
+      "title": "Reset your password",
+      "subtitle": "We'll email you a secure link",
+      "submit": "Send reset link",
+      "sent": "If an account exists for that address, a reset link is on its way."
+    },
+    "verify": {
+      "title": "Check your email",
+      "subtitle": "We sent a confirmation link to your email.",
+      "resend": "Resend verification email",
+      "resending": "Sending…",
+      "resendSuccess": "Verification email sent! Check your inbox.",
+      "instruction": "Click the verification link in your email to activate your account."
+    },
+    "magicLink": {
+      "sent": "If an account exists for that address, a sign-in link is on its way."
+    },
+    "errors": {
+      "invalidCredentials": "That email or password isn't right.",
+      "generic": "We couldn't complete that. Please try again.",
+      "invalidEmail": "That doesn't look like a valid email address.",
+      "weakPassword": "Password must be at least 8 characters.",
+      "passwordMismatch": "Passwords do not match.",
+      "userAlreadyExists": "An account with this email already exists. Try signing in.",
+      "nameRequired": "Please enter your first and last name.",
+      "rateLimited": "Too many attempts. Please wait a moment and try again.",
+      "emailNotConfirmed": "Your email is not verified yet. Please check your inbox or resend the verification link below.",
+      "registrationClosed": "New sign-ups are paused right now. Please check back soon.",
+      "emailDeliveryFailed": "We couldn't send your verification email. Please try again in a moment.",
+      "accountSuspended": "This account is suspended. Contact support if you think this is a mistake.",
+      "accountDisabled": "This account has been disabled.",
+      "sessionExpired": "Your session expired. Request a new link and try again.",
+      "invalidLink": "That link is not valid. Request a new one.",
+      "expiredLink": "That link has expired or was already used. Request a new one.",
+      "oauth": "Google sign-in is not available right now. Use your email and password instead."
+    },
+    "passwordStrength": {
+      "weak": "At least 8 characters required",
+      "medium": "Good password strength",
+      "strong": "Strong password"
+    },
+    "updatePassword": {
+      "title": "Choose a new password",
+      "subtitle": "Pick something you haven't used before.",
+      "submit": "Update password",
+      "success": "Password updated. You're signed in."
+    },
+    "passwordsMatch": "Passwords match",
+    "backToLogin": "Back to sign in",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "google": {
+      "continue": "Continue with Google"
+    },
+    "or": "or continue with"
+  },
+  "chat": {
+    "composer": {
+      "placeholder": "Message Mujeeb AI…",
+      "send": "Send",
+      "stop": "Stop",
+      "attach": "Attach file",
+      "generateImage": "Generate image",
+      "disclaimer": "Mujeeb AI can make mistakes. Check important information.",
+      "attachHint": "Attach a document or image (up to {size})",
+      "addContent": "Add files or create an image",
+      "uploadFiles": "Upload files",
+      "exitImageMode": "Leave image mode",
+      "attachmentLimit": "You can attach up to {count} files to one message.",
+      "dropHint": "Drop files to attach — up to {count}"
+    },
+    "empty": {
+      "title": "How can I help today?",
+      "subtitle": "Ask a question, attach a document, or pick a starting point below."
+    },
+    "regenerate": "Regenerate",
+    "edit": "Edit",
+    "copy": "Copy",
+    "copied": "Copied",
+    "variantOf": "Response {current} of {total}",
+    "thinking": "Thinking",
+    "stopped": "Generation stopped",
+    "errorGeneric": "Mujeeb AI is having trouble reaching this model. Try again or select another model.",
+    "quotaReached": {
+      "title": "You've reached today's free limit",
+      "body": "Upgrade to Mujeeb AI Pro for higher limits, or try again tomorrow.",
+      "upgrade": "Upgrade to Pro"
+    },
+    "conversation": {
+      "rename": "Rename",
+      "archive": "Archive",
+      "delete": "Delete conversation",
+      "deleteConfirm": "This will permanently delete this conversation.",
+      "untitled": "New conversation",
+      "actions": "Conversation actions",
+      "pin": "Pin",
+      "unpin": "Unpin",
+      "renameHint": "Give this conversation a name you'll recognize later."
+    },
+    "cancel": "Cancel",
+    "saveAndResend": "Save and resend",
+    "generating": "Generating…",
+    "previousVariant": "Previous response",
+    "nextVariant": "Next response",
+    "removeAttachment": "Remove attachment",
+    "a11y": {
+      "yourMessage": "Your message",
+      "assistantMessage": "Mujeeb AI's response"
+    },
+    "suggestions": {
+      "explain": {
+        "title": "Explain something",
+        "prompt": "Explain how database indexes work, and when adding one makes things slower."
+      },
+      "draft": {
+        "title": "Draft a message",
+        "prompt": "Draft a short, friendly email telling a customer their delivery is delayed by two days."
+      },
+      "analyze": {
+        "title": "Work through a document",
+        "prompt": "I'll attach a report — summarize the key findings and list anything that looks inconsistent."
+      },
+      "brainstorm": {
+        "title": "Think it through",
+        "prompt": "Help me weigh the trade-offs between hiring a contractor and training someone in-house."
+      }
+    },
+    "gatewayError": {
+      "provider_unavailable": "Mujeeb AI can't reach this model right now. Try again, or pick another model.",
+      "rate_limited": "That model is busy. Wait a moment and try again.",
+      "quota_exceeded": "You've reached today's limit.",
+      "model_unavailable": "That model isn't available right now. Pick another one.",
+      "invalid_request": "Mujeeb AI couldn't process that message.",
+      "provider_error": "The model returned an error. Try again.",
+      "not_configured": "This capability isn't configured on this deployment yet.",
+      "unknown": "Something went wrong. Try again."
+    },
+    "tooManyAttachments": "That's more files than this message allows.",
+    "image": {
+      "view": "View full size",
+      "close": "Close",
+      "copy": "Copy image",
+      "copied": "Copied",
+      "download": "Download",
+      "downloadFailed": "Couldn't download that image.",
+      "copyUnsupported": "Your browser won't let us copy images. Try downloading it instead."
+    }
+  },
+  "models": {
+    "selector": {
+      "freeGroup": "Mujeeb AI Free Models",
+      "moreGroup": "More models",
+      "available": "Available",
+      "lockedPro": "Mujeeb AI Pro",
+      "lockedComingSoon": "Coming soon"
+    }
+  },
+  "files": {
+    "unsupported": "That file type isn't supported yet.",
+    "tooLarge": "That file is larger than your plan's limit.",
+    "processing": "Processing file…",
+    "ready": "Ready",
+    "failed": "We couldn't process this file."
+  },
+  "images": {
+    "prompt": {
+      "placeholder": "Describe the image you want to generate…"
+    },
+    "generate": "Generate",
+    "generating": "Generating image…",
+    "failed": "Image generation failed. Please try again.",
+    "quotaReached": "You've used all of today's image generations."
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "profile": "Profile",
+    "displayName": "Display name",
+    "language": "Language",
+    "appearance": "Appearance",
+    "subscription": "Subscription",
+    "usage": "Usage",
+    "signOutEverywhere": "Sign out of all devices",
+    "description": "Your profile, plan and daily usage.",
+    "saved": "Saved.",
+    "saveFailed": "We couldn't save that. Please try again.",
+    "email": "Email address",
+    "emailHint": "Contact support to change the address on your account.",
+    "displayNameHint": "Shown in the app. Not visible to other users.",
+    "unlimited": "Unlimited",
+    "notIncluded": "Not included on your plan",
+    "quotaResetNote": "Daily limits reset at 00:00 UTC.",
+    "font": "Reading font",
+    "fontHint": "Applies across the app. All options use fonts already on your device — nothing is downloaded.",
+    "fonts": {
+      "system": "Default",
+      "grotesk": "Grotesk",
+      "humanist": "Humanist",
+      "serif": "Serif",
+      "mono": "Monospace",
+      "geometric": "Geometric",
+      "rounded": "Rounded",
+      "slab": "Slab",
+      "reading": "Reading"
+    },
+    "devices": {
+      "title": "Devices",
+      "description": "Where this account is signed in. If you don't recognise something here, sign it out and change your password.",
+      "thisDevice": "This device",
+      "twoFactor": "2FA",
+      "lastActive": "Last active {when}",
+      "signOutDevice": "Sign out",
+      "signOutOthers": "Sign out all other devices",
+      "signOutOthersConfirm": "Yes, sign them out",
+      "signOutOthersWarning": "This ends {count, plural, one {# other session} other {# other sessions}}. You'll stay signed in here.",
+      "othersRevoked": "Other devices signed out.",
+      "revoked": "Device signed out.",
+      "onlyThisDevice": "This is the only device signed in.",
+      "failed": "Couldn't sign that device out.",
+      "notFound": "That device is already signed out.",
+      "cancel": "Cancel",
+      "unknownLocation": "Unknown location"
+    },
+    "accents": {
+      "default": "Default blue",
+      "violet": "Violet",
+      "emerald": "Emerald",
+      "amber": "Amber",
+      "rose": "Rose",
+      "cyan": "Cyan",
+      "slate": "Slate"
+    },
+    "accent": "Accent colour",
+    "accentHint": "Colours buttons, links and highlights across the app."
+  },
+  "billing": {
+    "plan": {
+      "free": {
+        "name": "Mujeeb AI Free"
+      },
+      "pro": {
+        "name": "Mujeeb AI Pro"
+      }
+    },
+    "perMonth": "/month",
+    "currentPlan": "Current plan",
+    "manage": "Manage subscription",
+    "cancel": "Cancel subscription",
+    "cancelAtPeriodEnd": "Your plan will end on {date}",
+    "checkoutError": "We couldn't start checkout. Please try again.",
+    "pricing": {
+      "title": "Simple, transparent pricing",
+      "subtitle": "Start free. Upgrade when you need more room.",
+      "mostPopular": "Most popular",
+      "included": "What's included",
+      "everythingIn": "Everything in {plan}, plus",
+      "getStarted": "Get started free",
+      "currentPlan": "Your current plan",
+      "upgradeTo": "Upgrade to {plan}",
+      "free": "Free forever",
+      "perMonth": "per month",
+      "perYear": "per year",
+      "billedIn": "Billed in {currency} via Paystack.",
+      "noCard": "No card required to start.",
+      "unavailable": "Plans are unavailable right now. Please try again shortly.",
+      "priceUnavailable": "Price unavailable",
+      "priceUnavailableHint": "This plan has no price set in {currency} yet."
+    },
+    "features": {
+      "messages_per_day": "{count, plural, =0 {No messages} other {# messages}} per day",
+      "image_generations_per_day": "{count, plural, =0 {No image generation} other {# generated images}} per day",
+      "vision_requests_per_day": "{count, plural, =0 {No image analysis} other {# image analyses}} per day",
+      "file_processing_per_day": "{count, plural, =0 {No file uploads} other {# file uploads}} per day",
+      "max_file_size_mb": "Files up to {count} MB",
+      "premium_models": "Access to Pro models",
+      "advanced_models": "Access to advanced models",
+      "unlimitedMessages": "Unlimited messages",
+      "unlimitedImages": "Unlimited image generation",
+      "unlimitedVision": "Unlimited image analysis",
+      "unlimitedFiles": "Unlimited file uploads",
+      "core": "Streaming chat in 7 languages",
+      "history": "Full conversation history and search"
+    },
+    "cancelConfirm": {
+      "title": "Cancel your subscription?",
+      "body": "You keep Pro access until the end of the current billing period, then move back to {plan}.",
+      "confirm": "Cancel subscription"
+    },
+    "cancelled": "Subscription cancelled.",
+    "cancelError": "We couldn't cancel your subscription. Please try again.",
+    "success": "Payment received. Your plan is active.",
+    "pending": "We're still confirming your payment. This page will update once it clears.",
+    "notConfigured": "Payments aren't enabled on this deployment yet.",
+    "faq": {
+      "title": "Frequently asked questions",
+      "cancel": {
+        "q": "Can I cancel anytime?",
+        "a": "Yes. Cancel from Settings in one click and you keep Pro access until the end of the billing period you already paid for."
+      },
+      "payment": {
+        "q": "Which payment methods are supported?",
+        "a": "Card payments and bank transfers through Paystack, in your local currency where it is supported."
+      },
+      "limits": {
+        "q": "How do daily limits work?",
+        "a": "Every plan has a daily allowance that resets at 00:00 UTC. If you reach it, you can continue the next day or upgrade for a higher allowance."
+      }
+    },
+    "pastDue": "Your last payment didn't go through. Update your payment method to keep Pro access.",
+    "upgradePage": {
+      "title": "Upgrade",
+      "description": "Compare plans and upgrade without leaving the app.",
+      "yourPlan": "Your plan",
+      "upgradeTo": "Upgrade to {plan}",
+      "alreadyOnPlan": "You're on {plan}. Manage or cancel it from Settings.",
+      "securityNote": "Payment is handled by Paystack in their own secure window. Card details are never entered into, or seen by, this app."
+    },
+    "upgrade": "Upgrade",
+    "notice": {
+      "purchasedTitle": "You're on {plan}",
+      "grantedTitle": "You've been given {plan}",
+      "purchasedBody": "Thanks — your subscription is active and renews on {date}.",
+      "purchasedBodyPlain": "Thanks — your subscription is active.",
+      "grantedBodyDays": "{days, plural, one {# day} other {# days}} of complimentary access, until {date}.",
+      "grantedBody": "Complimentary access has been added to your account.",
+      "dismiss": "Dismiss"
+    },
+    "currency": {
+      "label": "Display currency"
+    },
+    "cycle": {
+      "started": "Current period started",
+      "renews": "Renews on",
+      "accessEnds": "Access until",
+      "daysLeft": "({count, plural, =0 {today} one {# day} other {# days}})",
+      "grantNote": "This is complimentary access granted by our team. There is nothing to pay and nothing to cancel."
+    }
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "Overview",
+      "users": "Users",
+      "moderation": "Moderation",
+      "usage": "Usage & quotas",
+      "plans": "Plans",
+      "subscriptions": "Subscriptions",
+      "models": "Models",
+      "providers": "Providers",
+      "systemPrompt": "System prompt",
+      "featureFlags": "Feature flags",
+      "settings": "Settings",
+      "auditLogs": "Audit log",
+      "status": "Platform status",
+      "moderators": "Moderators",
+      "security": "Security",
+      "announcements": "Announcements",
+      "emailTemplates": "Email templates"
+    },
+    "confirmDestructive": "Type {confirmText} to confirm.",
+    "unauthorized": "You don't have access to the admin console.",
+    "portalTitle": "Super admin console",
+    "roleLabel": "Super Admin",
+    "section": {
+      "people": "People",
+      "billing": "Billing",
+      "ai": "AI",
+      "platform": "Platform"
+    },
+    "dashboard": {
+      "title": "Overview",
+      "description": "Platform health and activity at a glance.",
+      "totalUsers": "Users",
+      "activeSubscriptions": "Active subscriptions",
+      "messagesToday": "Messages today",
+      "imagesToday": "Images today",
+      "newUsers7d": "New this week",
+      "recentSignups": "Recent sign-ups",
+      "recentAudit": "Recent admin activity",
+      "noActivity": "No administrative activity recorded yet.",
+      "noSignups": "No accounts have been created yet."
+    },
+    "users": {
+      "title": "Users",
+      "description": "Search accounts, review activity, and manage access.",
+      "searchPlaceholder": "Search by email or name…",
+      "search": "Search",
+      "filterRole": "Role",
+      "filterStatus": "Status",
+      "all": "All",
+      "colUser": "User",
+      "colRole": "Role",
+      "colStatus": "Status",
+      "colPlan": "Plan",
+      "colJoined": "Joined",
+      "colActions": "Actions",
+      "empty": "No accounts match these filters.",
+      "emptyHint": "Try a different search term or clear the filters.",
+      "showing": "Showing {from}–{to} of {total}",
+      "previous": "Previous",
+      "next": "Next",
+      "actions": "Actions for {name}",
+      "viewDetail": "View details",
+      "suspend": "Suspend account",
+      "restore": "Restore account",
+      "disable": "Disable account",
+      "delete": "Delete permanently",
+      "sendReset": "Send password reset",
+      "sendMagicLink": "Send sign-in link",
+      "sendVerification": "Resend verification",
+      "makeModerator": "Make moderator",
+      "removeModerator": "Remove moderator role",
+      "resetUsage": "Reset today's usage",
+      "you": "You",
+      "confirm": {
+        "suspend": {
+          "title": "Suspend this account?",
+          "body": "{name} will be signed out and blocked from using Mujeeb AI until an administrator restores the account.",
+          "consequence1": "Existing conversations are kept, not deleted.",
+          "consequence2": "Any active subscription continues to bill unless you also cancel it."
+        },
+        "disable": {
+          "title": "Disable this account?",
+          "body": "{name} will lose access entirely. Use this for accounts that should not return."
+        },
+        "delete": {
+          "title": "Permanently delete this account?",
+          "body": "This removes {name} from authentication and cascades to their profile.",
+          "consequence1": "Every conversation, message and uploaded file is deleted.",
+          "consequence2": "Payment records are retained for accounting, with the user detached.",
+          "consequence3": "This cannot be undone.",
+          "phraseHint": "Type DELETE to confirm."
+        },
+        "role": {
+          "title": "Change this account's role?",
+          "body": "{name} will be granted the {role} role and gain access to the matching console."
+        }
+      },
+      "detail": {
+        "title": "Account",
+        "overview": "Overview",
+        "usageToday": "Usage today",
+        "overrides": "Quota overrides",
+        "noOverrides": "No overrides. This account uses its plan's limits.",
+        "addOverride": "Add override",
+        "removeOverride": "Remove",
+        "conversations": "Conversations",
+        "joined": "Joined",
+        "locale": "Language",
+        "notFound": "That account no longer exists.",
+        "back": "Back to users",
+        "devices": "Devices",
+        "noDevices": "No active sessions.",
+        "ofLimit": "of {limit}"
+      },
+      "grantPro": "Grant Pro for 30 days",
+      "resetStaffAccount": "Reset staff account",
+      "inviteTitle": "Invite someone",
+      "revokeSessions": "Sign out everywhere",
+      "revokeSessionsConfirm": "This ends every active session for this account. They will need to sign in again on each device. Nothing is deleted.",
+      "sessionsRevoked": "Signed out of all devices",
+      "activity": {
+        "title": "Account history",
+        "empty": "Nothing has happened to this account yet.",
+        "failed": "Refused",
+        "by": "by {name}",
+        "bySystem": "by the system"
+      },
+      "moderation": {
+        "title": "Moderation",
+        "noteLabel": "Internal note",
+        "notePlaceholder": "What happened, and what you did about it.",
+        "noteHint": "Visible to staff only. It appears in this account's history.",
+        "addNote": "Add note",
+        "noteSaved": "Note added.",
+        "grantExplainer": "This account is on complimentary access granted by staff, not a paid subscription.",
+        "revokeGrant": "End complimentary access",
+        "grantRevoked": "Complimentary access ended.",
+        "revokeGrantConfirm": "This ends the complimentary plan now, before its scheduled expiry.",
+        "revokeConsequenceAccess": "They drop to the free plan immediately.",
+        "revokeConsequenceNoRefund": "Paid subscriptions are never touched by this."
+      }
+    },
+    "usage": {
+      "title": "Usage & quotas",
+      "description": "Daily consumption across the platform, and the controls to adjust it.",
+      "for": "For {date}",
+      "totals": "Totals",
+      "topConsumers": "Top consumers",
+      "noUsage": "Nothing recorded for this day yet.",
+      "resetUserDone": "Reset usage for this account.",
+      "category": "Category",
+      "used": "Used",
+      "activeUsers": "Accounts",
+      "overrideTitle": "Set a quota override",
+      "overrideBody": "Overrides sit on top of the account's plan limit and take precedence over it.",
+      "overrideFeature": "Quota",
+      "overrideValue": "New limit",
+      "overrideValueHint": "Use -1 for unlimited.",
+      "overrideReason": "Reason",
+      "overrideReasonHint": "Recorded in the audit log.",
+      "overrideSave": "Save override",
+      "overrideSaved": "Override saved.",
+      "overrideRemoved": "Override removed."
+    },
+    "category": {
+      "messages": "Messages",
+      "image_generations": "Image generations",
+      "vision_requests": "Image analyses",
+      "file_processing": "File uploads",
+      "audio_processing": "Audio processing",
+      "video_processing": "Video processing"
+    },
+    "feature": {
+      "messages_per_day": "Messages per day",
+      "image_generations_per_day": "Image generations per day",
+      "vision_requests_per_day": "Image analyses per day",
+      "file_processing_per_day": "File uploads per day",
+      "audio_processing_per_day": "Audio jobs per day",
+      "video_processing_per_day": "Video jobs per day",
+      "max_file_size_mb": "Maximum file size (MB)",
+      "premium_models": "Pro model access",
+      "advanced_models": "Advanced model access",
+      "max_attachments_per_message": "Files per message"
+    },
+    "plans": {
+      "title": "Plans",
+      "description": "Prices and entitlements. These values drive the pricing page, checkout and every quota check.",
+      "price": "Price (USD / {interval})",
+      "entitlements": "Entitlements",
+      "saved": "Saved.",
+      "saveFailed": "Could not save. Please try again.",
+      "paystackCode": "Paystack plan code",
+      "paystackCodeHint": "Optional. Set this to bill through a Paystack subscription plan instead of a one-off charge.",
+      "save": "Save prices",
+      "currencyPrices": "Price per currency",
+      "currencyPricesHint": "Set the amount charged in each currency. Leave blank for currencies you don't sell in — checkout refuses those rather than converting. Switching the billing currency in Settings uses the figure set here.",
+      "charging": "Charging",
+      "missingChargingCurrency": "No price set in {currency} — the currency checkout uses. Customers cannot buy this plan until you set one."
+    },
+    "subscriptions": {
+      "title": "Subscriptions",
+      "description": "Active and past subscriptions, reconciled from verified Paystack events.",
+      "colUser": "User",
+      "colPlan": "Plan",
+      "colStatus": "Status",
+      "colRenews": "Renews",
+      "colStarted": "Started",
+      "empty": "No subscriptions yet.",
+      "cancelAtPeriodEnd": "Ends at period end"
+    },
+    "models": {
+      "title": "Models",
+      "description": "Which models exist, who can reach them, and in what order the gateway falls back.",
+      "colModel": "Model",
+      "colProvider": "Provider",
+      "colTier": "Tier",
+      "colAvailability": "Availability",
+      "colPriority": "Priority",
+      "updated": "Model updated."
+    },
+    "providers": {
+      "title": "Providers",
+      "description": "Upstream AI providers. Credentials live in server environment variables and are never shown here.",
+      "colProvider": "Provider",
+      "colKind": "Type",
+      "colCredentials": "Credentials",
+      "colEnabled": "Enabled",
+      "configured": "Configured",
+      "missing": "Not configured",
+      "missingHint": "Set this provider's environment variables to enable it.",
+      "toggled": "Provider updated."
+    },
+    "systemPrompt": {
+      "title": "System prompt",
+      "description": "The instruction prepended to every conversation. Server-controlled and versioned.",
+      "active": "Active version {version}",
+      "editor": "Prompt",
+      "publish": "Publish new version",
+      "published": "Published version {version}.",
+      "history": "Version history",
+      "restore": "Restore",
+      "restored": "Restored as a new version.",
+      "by": "by {name}",
+      "empty": "Prompt cannot be empty.",
+      "confirmTitle": "Publish this system prompt?",
+      "confirmBody": "It takes effect on the next message every user sends, across every model."
+    },
+    "featureFlags": {
+      "title": "Feature flags",
+      "description": "Turn capabilities on and off without deploying. Flags cannot override security controls.",
+      "updated": "Flag updated."
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Operational configuration. Security boundaries stay enforced in code.",
+      "updated": "Setting updated."
+    },
+    "auditLogs": {
+      "title": "Audit log",
+      "description": "Every privileged action, append-only.",
+      "colTime": "Time",
+      "colActor": "Actor",
+      "colAction": "Action",
+      "colTarget": "Target",
+      "colResult": "Result",
+      "empty": "No administrative actions recorded yet.",
+      "system": "System",
+      "filterAction": "Filter by action…",
+      "colUndo": "",
+      "resultSuccess": "Success",
+      "resultFailure": "Failed"
+    },
+    "status": {
+      "title": "Platform status",
+      "description": "Whether each external dependency is configured and reachable from this deployment.",
+      "service": "Service",
+      "state": "State",
+      "detail": "Detail",
+      "operational": "Operational",
+      "degraded": "Degraded",
+      "notConfigured": "Not configured",
+      "error": "Error",
+      "refresh": "Re-check",
+      "checkedAt": "Checked {time}"
+    },
+    "moderation": {
+      "title": "Moderation history",
+      "description": "Account actions taken by moderators and administrators."
+    },
+    "common": {
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving…",
+      "actionFailed": "That action could not be completed.",
+      "notPermitted": "You do not have permission to do that.",
+      "never": "Never",
+      "none": "None",
+      "unlimited": "Unlimited",
+      "enabled": "Enabled",
+      "disabled": "Disabled"
+    },
+    "role": {
+      "user": "User",
+      "moderator": "Moderator",
+      "super_admin": "Super Admin"
+    },
+    "status_": {
+      "active": "Active",
+      "suspended": "Suspended",
+      "disabled": "Disabled",
+      "pending_verification": "Pending verification",
+      "deleted": "Deleted"
+    },
+    "moderators": {
+      "title": "Moderators",
+      "description": "Create and remove moderator accounts. A new moderator gets a temporary password by email and must set their own password and an authenticator app before they can sign in.",
+      "createTitle": "Add a moderator",
+      "listTitle": "Current moderators",
+      "emailLabel": "Email address",
+      "nameLabel": "Display name (optional)",
+      "createHint": "We email a temporary password to this address. The account can't reach the console until the password is replaced and two-factor authentication is set up.",
+      "createSubmit": "Create moderator",
+      "createdFor": "Invite sent to {email}.",
+      "created": "Moderator created.",
+      "colModerator": "Moderator",
+      "colSetup": "Setup",
+      "colInvited": "Invited",
+      "colActions": "",
+      "none": "No moderators yet.",
+      "pendingPassword": "Password not set",
+      "pendingMfa": "2FA not set up",
+      "ready": "Ready",
+      "remove": "Remove",
+      "removed": "Moderator removed.",
+      "removeFailed": "Could not remove that moderator.",
+      "createFailed": "Could not create that moderator.",
+      "emailFailed": "We couldn't send the invite email, so the account wasn't created. Check the email settings and try again.",
+      "alreadyExists": "An account already exists with that address. Change its role from Users instead.",
+      "notModerator": "That account is not a moderator.",
+      "invalid": "Check the details and try again.",
+      "resetDone": "Reset. A new temporary password has been emailed.",
+      "resetFailed": "Could not reset that account.",
+      "cannotResetSelf": "You can't reset your own account. Use the CLI."
+    },
+    "security": {
+      "title": "Security",
+      "description": "Your account's sign-in state, and where it is signed in.",
+      "account": "This account",
+      "signedInAs": "Signed in as",
+      "twoFactor": "Two-factor authentication",
+      "twoFactorOn": "On",
+      "twoFactorOff": "Off",
+      "assurance": "Session assurance level",
+      "lastSignIn": "Last sign-in",
+      "sessionSince": "This session started",
+      "sessions": "Sessions",
+      "sessionsExplainer": "Supabase does not expose a per-device inventory, so this cannot list your devices individually without inventing them. What it can do is end every session for this account — use it if you have signed in somewhere you no longer control.",
+      "signOutHere": "Sign out of this browser",
+      "signOutAll": "Sign out everywhere",
+      "signOutAllConfirm": "Yes, sign out everywhere",
+      "signOutAllWarning": "This ends every session including this one. You'll sign in again with your authenticator.",
+      "cancel": "Cancel",
+      "assurancePassword": "Password only",
+      "assuranceTwoFactor": "Password + two-factor",
+      "password": "Password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "changePassword": "Change password",
+      "passwordHint": "At least {min} characters.",
+      "passwordTooShort": "Use at least {min} characters.",
+      "passwordMismatch": "These passwords do not match.",
+      "passwordChanged": "Your password has been changed.",
+      "passwordInvalid": "Check both fields and try again.",
+      "passwordWrong": "That current password is not correct.",
+      "passwordSame": "The new password must be different from the current one.",
+      "passwordRejected": "That password was rejected. Try a longer or less common one.",
+      "passwordFailed": "The password could not be changed.",
+      "recovery": "If you lose your authenticator",
+      "recoveryBody": "There are no printable recovery codes. If you lose access to your authenticator app, a Super Admin resets your account and you enrol a new one — every reset is recorded in the audit log.",
+      "deviceRevoked": "That device has been signed out.",
+      "passwordThrottled": "Too many attempts. Wait 15 minutes and try again.",
+      "idleWarning": "Signing out in {seconds}s — move the mouse or press a key to stay signed in."
+    },
+    "auditAction": {
+      "admin": {
+        "user_suspended": "Account suspended",
+        "user_disabled": "Account disabled",
+        "user_restored": "Account restored",
+        "user_deleted": "Account deleted",
+        "moderator_created": "Moderator added",
+        "moderator_removed": "Moderator removed",
+        "password_reset": "Password reset sent",
+        "magic_link_created": "Sign-in link sent",
+        "verification_resent": "Verification email resent",
+        "quota_changed": "Quota override changed",
+        "quota_reset": "Usage reset",
+        "plan_updated": "Plan price changed",
+        "plan_currency_prices_updated": "Plan currency prices changed",
+        "feature_flag_changed": "Feature flag toggled",
+        "system_setting_changed": "Setting changed",
+        "provider_changed": "Provider changed",
+        "model_changed": "Model changed",
+        "prompt_changed": "System prompt published",
+        "prompt_restored": "System prompt restored",
+        "action_undone": "Action undone",
+        "moderator_reset": "Staff account reset",
+        "plan_granted": "Complimentary plan granted",
+        "plan_grant_revoked": "Complimentary plan ended",
+        "user_invited": "Account invited",
+        "sessions_revoked": "All sessions revoked",
+        "email_template_saved": "Email template saved",
+        "email_template_restored": "Email template restored",
+        "email_template_reset": "Email template reset to default"
+      },
+      "billing": {
+        "subscription_activated": "Subscription activated",
+        "subscription_created": "Subscription created",
+        "subscription_cancelled": "Subscription cancelled"
+      },
+      "staff": {
+        "signin": "Staff signed in",
+        "signin_failed": "Staff sign-in failed",
+        "signin_denied": "Staff sign-in denied",
+        "password_set": "Staff password set",
+        "mfa_enrolled": "Two-factor enrolled",
+        "sessions_revoked": "All sessions revoked",
+        "password_changed": "Staff password changed",
+        "password_change_failed": "Staff password change failed"
+      },
+      "account": {
+        "device_revoked": "Device signed out",
+        "other_devices_revoked": "Other devices signed out",
+        "all_devices_revoked": "All devices signed out"
+      }
+    },
+    "undo": {
+      "action": "Undo",
+      "confirm": "Confirm undo",
+      "done": "Action reversed.",
+      "undoneBadge": "Undone",
+      "failed": "Could not reverse that action.",
+      "notFound": "That log entry no longer exists.",
+      "notUndoable": "That action can't be reversed.",
+      "alreadyUndone": "That action has already been reversed.",
+      "noPriorState": "The original value wasn't recorded, so this can't be reversed.",
+      "invite": "delete the invited account",
+      "inviteRedeemed": "This invitation has already been used, so the account can no longer be removed this way.",
+      "alreadyGone": "That account no longer exists."
+    },
+    "settingKey": {
+      "billing_currency": "Billing currency",
+      "default_model_slug": "Default chat model",
+      "default_vision_model_slug": "Default vision model",
+      "default_locale": "Default language",
+      "support_email": "Support email",
+      "free_plan_slug": "Free plan",
+      "max_upload_size_mb": "Maximum upload size",
+      "chat_rate_limit_per_minute": "Chat rate limit",
+      "max_conversation_messages": "Conversation history length",
+      "supported_locales": "Enabled languages",
+      "announcement": "Announcement banner",
+      "max_attachments_per_message": "Files per message",
+      "staff_require_mfa_each_signin": "Ask staff for a 2FA code every sign-in"
+    },
+    "grants": {
+      "granted": "Pro access granted for 30 days.",
+      "revoked": "Complimentary access ended.",
+      "failed": "Could not grant access.",
+      "invalid": "Check the details and try again.",
+      "planNotFound": "That plan doesn't exist or isn't active.",
+      "hasPaidSubscription": "This account has a paid subscription — granting would detach it from billing.",
+      "notAGrant": "This account has no complimentary access to end.",
+      "dialogTitle": "Grant complimentary access to {user}",
+      "duration": "How long",
+      "days": "{days} days",
+      "customDays": "Or set a number of days",
+      "customDaysHint": "1 to 365. The subscription lapses on its own at the end — nothing to remember to switch off.",
+      "reason": "Reason (optional)",
+      "reasonHint": "Recorded in the audit log. Useful months later when someone asks why this account has Pro.",
+      "reasonPlaceholder": "Apology for the 12 Aug outage",
+      "confirm": "Grant {days} days",
+      "cancel": "Cancel",
+      "grantedFor": "Granted for {days} days."
+    },
+    "targetType": {
+      "user": "Account",
+      "plan": "Plan",
+      "model": "Model",
+      "provider": "Provider",
+      "feature_flag": "Feature flag",
+      "system_setting": "Setting",
+      "system_prompt_version": "System prompt",
+      "subscription": "Subscription",
+      "plan_entitlement": "Entitlement",
+      "email": "Email",
+      "platform": "Platform",
+      "deleted": "deleted account",
+      "email_template": "Email"
+    },
+    "announcements": {
+      "title": "Announcements",
+      "description": "A banner shown to every signed-in user. Use it sparingly — one that is always there stops being read.",
+      "editorTitle": "Message",
+      "body": "Announcement",
+      "placeholder": "Scheduled maintenance on Sunday, 02:00–04:00 WAT.",
+      "formattingHint": "Supports **bold**, _italic_, `code` and [links](https://example.com).",
+      "preview": "Preview",
+      "previewEmpty": "Nothing to preview yet.",
+      "liveNow": "An announcement is live and visible to every signed-in user right now.",
+      "noneLive": "No announcement is live.",
+      "publish": "Publish",
+      "update": "Update",
+      "clear": "Take it down",
+      "published": "Announcement published.",
+      "cleared": "Announcement taken down.",
+      "failed": "Couldn't save that."
+    },
+    "invite": {
+      "emailLabel": "Email address",
+      "nameLabel": "Display name (optional)",
+      "submit": "Send invitation",
+      "hint": "They'll get a link to set their own password.",
+      "sentTo": "Invitation sent to {email}.",
+      "sent": "Invitation sent",
+      "invalid": "Enter a valid email address.",
+      "alreadyExists": "An account already uses that email address.",
+      "failed": "The invitation could not be created.",
+      "emailFailed": "The invitation email could not be delivered, so no account was created.",
+      "throttled": "Too many invitations sent. Try again later.",
+      "vipLabel": "Send as a special invitation",
+      "vipHint": "Sends a welcome-style invitation instead of the standard one. It changes the email only — the account gets exactly the same permissions.",
+      "submitVip": "Send special invitation",
+      "sentVip": "Special invitation sent"
+    },
+    "moderationAction": {
+      "warned": "Warning issued",
+      "suspended": "Account suspended",
+      "restored": "Account restored",
+      "disabled": "Account disabled",
+      "deleted": "Account deleted",
+      "note": "Note added"
+    },
+    "emailTemplates": {
+      "title": "Email templates",
+      "description": "The wording of every email the platform sends automatically. Each change is a new version, and any version can be restored.",
+      "kindLabel": "Email",
+      "localeLabel": "Language",
+      "subject": "Subject",
+      "preview": "Preview text",
+      "previewHint": "The line shown after the subject in most inboxes.",
+      "heading": "Heading",
+      "body": "Body",
+      "actionLabel": "Button label",
+      "footnote": "Footnote",
+      "changeNote": "What changed (optional)",
+      "changeNoteHint": "Recorded with this version so the history reads as a story.",
+      "blankMeansDefault": "Leave a field blank to keep the built-in wording for this language. You can override just the subject and let everything else stay translated.",
+      "placeholderHint": "Placeholders: {list}",
+      "usingDefault": "Using built-in copy",
+      "versionBadge": "Version {version}",
+      "live": "Live",
+      "restoredFrom": "restored from v{version}",
+      "noSubject": "(no subject)",
+      "systemAuthor": "System",
+      "save": "Save new version",
+      "history": "History ({count})",
+      "restore": "Restore",
+      "resetToDefault": "Reset to default",
+      "resetConfirm": "This removes the override, and this email goes back to its built-in wording.",
+      "resetConsequenceCopy": "The shipped translation applies again immediately.",
+      "resetConsequenceHistory": "This template's saved version history is deleted with it.",
+      "saved": "Saved as version {version}.",
+      "restored": "Restored version {version} as the live copy.",
+      "reset": "Reset to the built-in wording.",
+      "invalid": "Check the fields and try again.",
+      "empty": "A template needs at least a subject, heading or body.",
+      "failed": "The template could not be saved.",
+      "notFound": "That template is not configured yet.",
+      "versionNotFound": "That version no longer exists.",
+      "kind": {
+        "verify": "Verify your email",
+        "reset": "Password reset",
+        "magicLink": "Sign-in link",
+        "welcome": "Welcome",
+        "staffInvite": "Moderator invitation",
+        "vipInvite": "Special invitation",
+        "invite": "Invitation"
+      }
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "Page not found",
+      "body": "The page you're looking for doesn't exist or moved."
+    },
+    "serverError": {
+      "title": "Something went wrong",
+      "body": "Please try again in a moment."
+    },
+    "maintenance": {
+      "title": "Mujeeb AI is undergoing maintenance",
+      "body": "We'll be back shortly. Thank you for your patience."
+    }
+  },
+  "emails": {
+    "common": {
+      "greeting": "Hi {name},",
+      "openApp": "Open Mujeeb AI"
+    },
+    "verify": {
+      "subject": "Confirm your Mujeeb AI account",
+      "preview": "One click to activate your account.",
+      "heading": "Confirm your email address",
+      "body": "Confirm this address to activate your Mujeeb AI account and start chatting.",
+      "action": "Confirm email address",
+      "footnote": "This link expires in 24 hours. If you did not create a Mujeeb AI account, you can safely ignore this email."
+    },
+    "reset": {
+      "subject": "Reset your Mujeeb AI password",
+      "preview": "Choose a new password for your account.",
+      "heading": "Reset your password",
+      "body": "Use the link below to choose a new password. Your current password stays active until you do.",
+      "action": "Choose a new password",
+      "footnote": "This link expires in 1 hour and can be used once. If you did not request a password reset, ignore this email and your account stays unchanged."
+    },
+    "magicLink": {
+      "subject": "Your Mujeeb AI sign-in link",
+      "preview": "Sign in without a password.",
+      "heading": "Sign in to Mujeeb AI",
+      "body": "Use the link below to sign in. No password needed.",
+      "action": "Sign in",
+      "footnote": "This link expires in 1 hour and can be used once. If you did not request it, ignore this email."
+    },
+    "welcome": {
+      "subject": "Welcome to Mujeeb AI",
+      "preview": "Your account is ready.",
+      "heading": "Your account is ready",
+      "body": "You are on Mujeeb AI Free. Start a conversation, attach a document, or generate an image whenever you are ready.",
+      "action": "Open Mujeeb AI",
+      "footnote": "Need more room? Mujeeb AI Pro raises your daily limits and unlocks additional models."
+    },
+    "staffInvite": {
+      "subject": "You've been given moderator access to Mujeeb AI",
+      "preview": "Sign in and set up your account.",
+      "heading": "Moderator access",
+      "body": "A super admin has created a moderator account for you on Mujeeb AI. Sign in with the temporary password below — you'll be asked to choose your own password and set up an authenticator app before you can continue.",
+      "action": "Sign in to the staff portal",
+      "footnote": "This temporary password works once. If you were not expecting this email, tell your administrator — do not sign in.",
+      "secretLabel": "Temporary password"
+    },
+    "vipInvite": {
+      "subject": "A special invitation to Mujeeb AI",
+      "preview": "You've been personally invited.",
+      "heading": "A special invitation, {name}",
+      "body": "You've been personally invited to Mujeeb AI — this isn't a general sign-up. An account is already waiting for you. Use the button below to accept and choose your password.",
+      "action": "Accept your invitation",
+      "footnote": "This invitation link expires in 1 hour and can be used once. It was sent to you personally; please don't forward it."
+    },
+    "invite": {
+      "subject": "You're invited to Mujeeb AI",
+      "preview": "Your invitation is ready.",
+      "heading": "You're invited to Mujeeb AI",
+      "body": "An account has been set up for you. Use the button below to accept your invitation and choose your password.",
+      "action": "Accept invitation",
+      "footnote": "This invitation link expires in 1 hour and can be used once. If you did not expect it, you can ignore this email."
+    }
+  },
+  "moderator": {
+    "portalTitle": "Moderator console",
+    "roleLabel": "Moderator",
+    "roleLabelAdmin": "Super Admin",
+    "nav": {
+      "dashboard": "Overview",
+      "users": "Accounts",
+      "moderation": "Moderation log",
+      "activity": "My actions",
+      "security": "Security"
+    },
+    "dashboard": {
+      "title": "Overview",
+      "description": "What you can review and act on.",
+      "suspended": "Suspended accounts",
+      "pending": "Pending verification",
+      "actions7d": "Your actions this week",
+      "totalAccounts": "Accounts"
+    },
+    "users": {
+      "title": "Accounts",
+      "description": "Search accounts and apply moderation. Staff accounts are not shown.",
+      "inviteTitle": "Invite someone"
+    },
+    "moderation": {
+      "title": "Moderation log",
+      "description": "Account actions taken across the platform, newest first.",
+      "colTime": "Time",
+      "colUser": "Account",
+      "colAction": "Action",
+      "colBy": "By",
+      "colReason": "Reason",
+      "empty": "No moderation actions recorded yet.",
+      "action": {
+        "warned": "Warned",
+        "suspended": "Suspended",
+        "restored": "Restored",
+        "disabled": "Disabled",
+        "deleted": "Deleted",
+        "note": "Note"
+      }
+    },
+    "note": {
+      "add": "Add note",
+      "title": "Add a moderation note",
+      "body": "Notes are visible to moderators and administrators and are recorded against this account.",
+      "placeholder": "What did you observe?",
+      "save": "Save note",
+      "saved": "Note saved."
+    },
+    "reason": {
+      "label": "Reason",
+      "placeholder": "Why are you taking this action?",
+      "required": "A reason is required."
+    },
+    "activity": {
+      "title": "My actions",
+      "description": "What you've changed recently, and anything you can reverse.",
+      "empty": "You haven't taken any reversible actions yet."
+    }
+  },
+  "staffAuth": {
+    "title": "Staff sign-in",
+    "subtitle": "Administrator and moderator access to the Mujeeb AI consoles.",
+    "submit": "Sign in to console",
+    "errors": {
+      "invalidCredentials": "That email or password isn't right.",
+      "notStaff": "This entrance is for administrators and moderators only.",
+      "inactive": "This staff account is not active. Contact another administrator.",
+      "rateLimited": "Too many attempts. Wait a moment and try again.",
+      "mfaBadCode": "That code isn't right. Check your authenticator and try again.",
+      "mfaUnavailable": "No authenticator is set up on this account.",
+      "idleTimeout": "Signed out after 5 minutes of inactivity. Sign in again to continue.",
+      "wrongEntrance": "This isn't the right entrance for your account. Use the sign-in link for your own console.",
+      "mfaRateLimited": "Too many attempts. Wait a moment and try again.",
+      "mfaExpired": "That code expired. Enter the current one from your authenticator.",
+      "sessionLost": "Your sign-in didn't carry over. Reload the page and sign in again.",
+      "mfaServerError": "Verification failed on our side. Wait a moment and try again."
+    },
+    "onboarding": {
+      "passwordTitle": "Set your password",
+      "passwordDescription": "You signed in with a temporary password. Choose your own before continuing.",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "passwordHint": "At least 12 characters. Staff accounts can change prices, suspend users and read the audit log, so this is longer than the customer minimum.",
+      "passwordSubmit": "Save password and continue",
+      "passwordMismatch": "Those passwords don't match.",
+      "passwordTooShort": "Use at least 12 characters.",
+      "passwordInvalid": "Check the password and try again.",
+      "passwordRejected": "We couldn't set that password. Try a different one.",
+      "passwordSaved": "Password saved.",
+      "notStaff": "This account is not a staff account.",
+      "mfaTitle": "Set up two-factor authentication",
+      "mfaDescription": "Scan this code with an authenticator app, then enter the six-digit code it shows. Staff accounts cannot be used without it.",
+      "mfaQrAlt": "QR code for your authenticator app",
+      "mfaSecretLabel": "Or enter this key manually",
+      "mfaCodeLabel": "Six-digit code",
+      "mfaSubmit": "Verify and finish",
+      "mfaEnrollFailed": "We couldn't start enrolment. Reload and try again.",
+      "mfaBadCode": "That code isn't right. Check your authenticator and try again.",
+      "mfaNotVerified": "Enrolment isn't complete yet.",
+      "mfaFailed": "Something went wrong finishing enrolment.",
+      "mfaEnrolled": "Two-factor authentication is on.",
+      "mfaNoRecoveryCodes": "There are no recovery codes to save. If you lose your authenticator, a Super Admin will reset your account so you can enrol a new one."
+    },
+    "mfaTitle": "Enter your code",
+    "mfaSubtitle": "Open your authenticator app and enter the six-digit code.",
+    "mfaCodeLabel": "Six-digit code",
+    "mfaSubmit": "Verify",
+    "exit": {
+      "action": "Sign out and leave",
+      "title": "Sign out of the console?",
+      "description": "You'll be signed out and returned to the public homepage.",
+      "consequenceSignOut": "This session ends on this device.",
+      "consequenceReauth": "You'll need your password and authenticator code to get back in.",
+      "confirm": "Sign out",
+      "cancel": "Stay signed in"
+    },
+    "portal": {
+      "adminEntrance": "Super admin access",
+      "staffEntrance": "Moderator access",
+      "sharedEntrance": "Staff access"
+    }
+  }
+}

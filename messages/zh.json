@@ -1,0 +1,1290 @@
+{
+  "metadata": {
+    "title": "Mujeeb AI",
+    "description": "高端的多语言人工智能工作平台。"
+  },
+  "common": {
+    "appName": "Mujeeb AI",
+    "loading": "加载中…",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "confirm": "确认",
+    "close": "关闭",
+    "back": "返回",
+    "continue": "继续",
+    "retry": "重试",
+    "comingSoon": "即将推出",
+    "locked": "已锁定",
+    "error": "出现问题",
+    "language": "语言",
+    "theme": "主题",
+    "themeLight": "浅色",
+    "themeDark": "深色",
+    "themeSystem": "跟随系统",
+    "skipToContent": "跳到正文",
+    "dismiss": "关闭"
+  },
+  "nav": {
+    "newChat": "新建对话",
+    "search": "搜索对话",
+    "settings": "设置",
+    "pricing": "价格",
+    "admin": "管理后台",
+    "signOut": "退出登录",
+    "signIn": "登录",
+    "signUp": "注册",
+    "backToApp": "返回 Mujeeb AI",
+    "moderator": "审核控制台",
+    "openApp": "打开 Mujeeb AI",
+    "openMenu": "打开菜单",
+    "conversations": "对话",
+    "pinned": "已置顶",
+    "recent": "最近",
+    "noConversations": "还没有对话，请在上方开始一个。",
+    "noSearchResults": "没有符合该搜索的对话。",
+    "collapseSidebar": "收起侧边栏",
+    "expandSidebar": "展开侧边栏"
+  },
+  "landing": {
+    "hero": {
+      "title": "不碍事的 AI 工作空间",
+      "subtitle": "支持七种语言的高速流式对话，文档与图片随手可用，且不会被单一 AI 供应商锁定。",
+      "priceNote": "免费开始使用。{plan} 每月 {price}。",
+      "eyebrow": "七种语言。底层模型任选。"
+    },
+    "cta": {
+      "start": "创建免费账户",
+      "pricing": "查看价格",
+      "continue": "继续使用 Mujeeb AI"
+    },
+    "features": {
+      "title": "为真实工作而建",
+      "chat": {
+        "title": "边生成边阅读",
+        "body": "回答从第一个词就开始流式输出，模型还在思考时您已经能读。"
+      },
+      "files": {
+        "title": "读得懂您的文件",
+        "body": "PDF、Word、Excel、PowerPoint、CSV 与纯文本在服务端解析，作为数据交给模型 —— 而非指令。"
+      },
+      "vision": {
+        "title": "看得见您的图片",
+        "body": "上传截图或照片，直接询问画面中的内容。"
+      },
+      "global": {
+        "title": "七种语言，认真对待",
+        "body": "英语、法语、阿拉伯语、葡萄牙语、西班牙语、日语与中文 —— 从右到左的排版是真正实现的，而非简单镜像。"
+      },
+      "images": {
+        "title": "生成图片",
+        "body": "描述您想要的画面即可获得图片，并保留在原对话中。"
+      },
+      "privacy": {
+        "title": "对话始终属于您",
+        "body": "行级安全策略确保任何账户都无法读取他人的历史记录，管理员也无法查看您的聊天内容。"
+      },
+      "subtitle": "以下功能在免费套餐中均可使用，并非演示。"
+    },
+    "closing": {
+      "title": "开始一段对话",
+      "body": "无需银行卡。免费方案是完整产品，不是试用。"
+    },
+    "stats": {
+      "languages": {
+        "value": "7",
+        "label": "种语言，支持真正的从右至左排版"
+      },
+      "providers": {
+        "value": "无锁定",
+        "label": "随时更换模型服务商"
+      },
+      "formats": {
+        "value": "9+",
+        "label": "种文档格式，服务端解析"
+      },
+      "free": {
+        "value": "免费",
+        "label": "真正的套餐，而非试用"
+      }
+    },
+    "footer": {
+      "tagline": "不打扰你的 AI 工作空间。",
+      "product": "产品",
+      "company": "关于",
+      "rights": "保留所有权利。"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "欢迎回来",
+      "subtitle": "登录以继续使用 Mujeeb AI",
+      "submit": "登录",
+      "magicLink": "通过邮件发送登录链接",
+      "noAccount": "还没有账户?",
+      "magicLinkHint": "我们会通过邮件发送登录链接，无需密码。",
+      "useMagicLink": "改用邮件链接登录",
+      "usePassword": "改用密码登录"
+    },
+    "register": {
+      "title": "创建你的账户",
+      "subtitle": "从 Mujeeb AI 免费版开始 — 无需信用卡",
+      "submit": "创建账户",
+      "haveAccount": "已经有账户了?"
+    },
+    "email": {
+      "label": "电子邮箱",
+      "placeholder": "you@example.com"
+    },
+    "password": {
+      "label": "密码",
+      "placeholder": "至少 8 个字符",
+      "hint": "至少 8 个字符。"
+    },
+    "forgotPassword": "忘记密码?",
+    "reset": {
+      "title": "重置密码",
+      "subtitle": "我们将向你发送一个安全链接",
+      "submit": "发送重置链接",
+      "sent": "如果该邮箱存在账户,重置链接即将发出。"
+    },
+    "verify": {
+      "title": "请查收邮件",
+      "subtitle": "我们已向您的邮箱发送了确认链接。",
+      "resend": "重新发送验证邮件",
+      "resending": "正在发送…",
+      "resendSuccess": "验证邮件已发送！请查收您的收件箱。",
+      "instruction": "点击邮件中的确认链接以激活您的账号。"
+    },
+    "magicLink": {
+      "sent": "如果该邮箱存在账户,登录链接即将发出。"
+    },
+    "errors": {
+      "invalidCredentials": "邮箱或密码不正确。",
+      "generic": "无法完成该操作,请重试。",
+      "invalidEmail": "该邮箱地址似乎无效。",
+      "weakPassword": "密码至少需要 8 个字符。",
+      "rateLimited": "尝试次数过多,请稍候再试。",
+      "passwordMismatch": "两次输入的密码不一致。",
+      "userAlreadyExists": "该邮箱已注册账号，请尝试直接登录。",
+      "nameRequired": "请输入您的名字和姓氏。",
+      "emailNotConfirmed": "您的邮箱尚未验证。请查收收件箱或在下方重新发送验证邮件。",
+      "registrationClosed": "目前暂停新用户注册，请稍后再试。",
+      "emailDeliveryFailed": "验证邮件发送失败，请稍后重试。",
+      "accountSuspended": "该账户已被暂停。如有疑问请联系支持团队。",
+      "accountDisabled": "该账户已被停用。",
+      "sessionExpired": "会话已过期。请重新获取链接后再试。",
+      "invalidLink": "该链接无效，请重新获取。",
+      "expiredLink": "该链接已过期或已被使用，请重新获取。",
+      "oauth": "当前无法使用 Google 登录。请改用邮箱和密码。"
+    },
+    "firstName": {
+      "label": "名字",
+      "placeholder": "三"
+    },
+    "lastName": {
+      "label": "姓氏",
+      "placeholder": "张"
+    },
+    "confirmPassword": {
+      "label": "确认密码",
+      "placeholder": "再次输入密码"
+    },
+    "passwordStrength": {
+      "weak": "至少需 8 个字符",
+      "medium": "密码强度良好",
+      "strong": "强密码"
+    },
+    "updatePassword": {
+      "title": "设置新密码",
+      "subtitle": "请选择一个未使用过的密码。",
+      "submit": "更新密码",
+      "success": "密码已更新，您已登录。"
+    },
+    "passwordsMatch": "密码一致",
+    "backToLogin": "返回登录",
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码",
+    "google": {
+      "continue": "使用 Google 账号继续"
+    },
+    "or": "或使用以下方式"
+  },
+  "chat": {
+    "composer": {
+      "placeholder": "给 Mujeeb AI 发消息…",
+      "send": "发送",
+      "stop": "停止",
+      "attach": "添加附件",
+      "generateImage": "生成图片",
+      "disclaimer": "Mujeeb AI 可能会出错,请核实重要信息。",
+      "attachHint": "上传文档或图片（最大 {size}）",
+      "addContent": "添加文件或生成图片",
+      "uploadFiles": "上传文件",
+      "exitImageMode": "退出图片模式",
+      "attachmentLimit": "一条消息最多可附加 {count} 个文件。",
+      "dropHint": "拖放文件以附加——最多 {count} 个"
+    },
+    "empty": {
+      "title": "今天需要什么帮助？",
+      "subtitle": "提出问题、上传文档，或从下方选择一个起点。"
+    },
+    "regenerate": "重新生成",
+    "edit": "编辑",
+    "copy": "复制",
+    "copied": "已复制",
+    "variantOf": "回复 {current} / {total}",
+    "thinking": "思考中",
+    "stopped": "已停止生成",
+    "errorGeneric": "Mujeeb AI 暂时无法连接该模型,请重试或选择其他模型。",
+    "quotaReached": {
+      "title": "已达到今日免费额度",
+      "body": "升级到 Mujeeb AI Pro 以获得更高额度,或明天再试。",
+      "upgrade": "升级到 Pro"
+    },
+    "conversation": {
+      "rename": "重命名",
+      "archive": "归档",
+      "delete": "删除对话",
+      "deleteConfirm": "此对话将被永久删除。",
+      "untitled": "新对话",
+      "actions": "对话操作",
+      "pin": "置顶",
+      "unpin": "取消置顶",
+      "renameHint": "取一个方便日后辨认的名称。"
+    },
+    "cancel": "取消",
+    "saveAndResend": "保存并重新发送",
+    "generating": "生成中…",
+    "previousVariant": "上一个回答",
+    "nextVariant": "下一个回答",
+    "removeAttachment": "移除附件",
+    "a11y": {
+      "yourMessage": "您的消息",
+      "assistantMessage": "Mujeeb AI 的回答"
+    },
+    "suggestions": {
+      "explain": {
+        "title": "讲解一个概念",
+        "prompt": "讲解数据库索引的工作原理，以及在哪些情况下加索引反而会变慢。"
+      },
+      "draft": {
+        "title": "起草一封消息",
+        "prompt": "起草一封简短友好的邮件，告知客户配送将延迟两天。"
+      },
+      "analyze": {
+        "title": "梳理一份文档",
+        "prompt": "我会上传一份报告 —— 请总结主要结论，并列出看起来前后不一致的地方。"
+      },
+      "brainstorm": {
+        "title": "一起权衡",
+        "prompt": "帮我权衡外包给承包商与在内部培养人手之间的利弊。"
+      }
+    },
+    "gatewayError": {
+      "provider_unavailable": "Mujeeb AI 暂时无法连接此模型，请重试或换一个模型。",
+      "rate_limited": "该模型繁忙，请稍候再试。",
+      "quota_exceeded": "您已达到今日额度上限。",
+      "model_unavailable": "该模型当前不可用，请选择其他模型。",
+      "invalid_request": "Mujeeb AI 无法处理该消息。",
+      "provider_error": "模型返回了错误，请重试。",
+      "not_configured": "此部署尚未配置该功能。",
+      "unknown": "出了点问题，请重试。"
+    },
+    "tooManyAttachments": "文件数量超过此消息的上限。",
+    "image": {
+      "view": "查看原图",
+      "close": "关闭",
+      "copy": "复制图片",
+      "copied": "已复制",
+      "download": "下载",
+      "downloadFailed": "无法下载该图片。",
+      "copyUnsupported": "您的浏览器不支持复制图片，请尝试下载。"
+    }
+  },
+  "models": {
+    "selector": {
+      "freeGroup": "Mujeeb AI 免费模型",
+      "moreGroup": "更多模型",
+      "available": "可用",
+      "lockedPro": "Mujeeb AI Pro",
+      "lockedComingSoon": "即将推出"
+    }
+  },
+  "files": {
+    "unsupported": "暂不支持该文件类型。",
+    "tooLarge": "该文件超出你当前套餐的限制。",
+    "processing": "正在处理文件…",
+    "ready": "已就绪",
+    "failed": "无法处理该文件。"
+  },
+  "images": {
+    "prompt": {
+      "placeholder": "描述你想生成的图片…"
+    },
+    "generate": "生成",
+    "generating": "正在生成图片…",
+    "failed": "图片生成失败,请重试。",
+    "quotaReached": "今日图片生成次数已用完。"
+  },
+  "settings": {
+    "title": "设置",
+    "account": "账户",
+    "profile": "个人资料",
+    "displayName": "显示名称",
+    "language": "语言",
+    "appearance": "外观",
+    "subscription": "订阅",
+    "usage": "使用情况",
+    "signOutEverywhere": "退出所有设备登录",
+    "description": "您的资料、方案与每日用量。",
+    "saved": "已保存。",
+    "saveFailed": "保存失败，请重试。",
+    "email": "邮箱地址",
+    "emailHint": "如需更改账户邮箱，请联系支持团队。",
+    "displayNameHint": "在应用内显示，其他用户不可见。",
+    "unlimited": "不限量",
+    "notIncluded": "您的方案不包含此项",
+    "quotaResetNote": "每日额度于 UTC 00:00 重置。",
+    "font": "阅读字体",
+    "fontHint": "应用于整个应用。所有选项均使用您设备上已有的字体，不会下载任何内容。",
+    "fonts": {
+      "system": "默认",
+      "grotesk": "哥特无衬线",
+      "humanist": "人文无衬线",
+      "serif": "衬线",
+      "mono": "等宽",
+      "geometric": "几何无衬线",
+      "rounded": "圆体",
+      "slab": "粗衬线",
+      "reading": "阅读"
+    },
+    "devices": {
+      "title": "设备",
+      "description": "此账户已登录的位置。如果有不认识的设备，请将其退出并更改密码。",
+      "thisDevice": "当前设备",
+      "twoFactor": "双重验证",
+      "lastActive": "最近活动 {when}",
+      "signOutDevice": "退出",
+      "signOutOthers": "退出所有其他设备",
+      "signOutOthersConfirm": "是的，全部退出",
+      "signOutOthersWarning": "这将结束其他 {count} 个会话。您在此设备上将保持登录。",
+      "othersRevoked": "已退出其他设备。",
+      "revoked": "已退出该设备。",
+      "onlyThisDevice": "这是唯一已登录的设备。",
+      "failed": "无法退出该设备。",
+      "notFound": "该设备已退出。",
+      "cancel": "取消",
+      "unknownLocation": "位置未知"
+    },
+    "accents": {
+      "default": "默认蓝",
+      "violet": "紫罗兰",
+      "emerald": "翡翠绿",
+      "amber": "琥珀",
+      "rose": "玫瑰",
+      "cyan": "青色",
+      "slate": "石板灰"
+    },
+    "accent": "强调色",
+    "accentHint": "影响整个应用的按钮、链接与高亮颜色。"
+  },
+  "billing": {
+    "plan": {
+      "free": {
+        "name": "Mujeeb AI 免费版"
+      },
+      "pro": {
+        "name": "Mujeeb AI Pro"
+      }
+    },
+    "perMonth": "/月",
+    "currentPlan": "当前套餐",
+    "manage": "管理订阅",
+    "cancel": "取消订阅",
+    "cancelAtPeriodEnd": "你的套餐将于 {date} 结束",
+    "checkoutError": "无法启动结账流程,请重试。",
+    "pricing": {
+      "title": "简单透明的定价",
+      "subtitle": "先免费开始，需要更多额度时再升级。",
+      "mostPopular": "最受欢迎",
+      "included": "包含内容",
+      "everythingIn": "包含 {plan} 的全部内容，另加",
+      "getStarted": "免费开始",
+      "currentPlan": "您当前的方案",
+      "upgradeTo": "升级到 {plan}",
+      "free": "永久免费",
+      "perMonth": "每月",
+      "perYear": "每年",
+      "billedIn": "通过 Paystack 以 {currency} 结算。",
+      "noCard": "开始使用无需绑定银行卡。",
+      "unavailable": "暂时无法加载方案，请稍后再试。",
+      "priceUnavailable": "价格不可用",
+      "priceUnavailableHint": "此套餐尚未设置 {currency} 价格。"
+    },
+    "features": {
+      "messages_per_day": "{count, plural, =0 {不含消息} other {每天 # 条消息}}",
+      "image_generations_per_day": "{count, plural, =0 {不含图片生成} other {每天生成 # 张图片}}",
+      "vision_requests_per_day": "{count, plural, =0 {不含图片分析} other {每天 # 次图片分析}}",
+      "file_processing_per_day": "{count, plural, =0 {不含文件上传} other {每天 # 个文件}}",
+      "max_file_size_mb": "单个文件最大 {count} MB",
+      "premium_models": "可使用 Pro 模型",
+      "advanced_models": "可使用进阶模型",
+      "unlimitedMessages": "消息不限量",
+      "unlimitedImages": "图片生成不限量",
+      "unlimitedVision": "图片分析不限量",
+      "unlimitedFiles": "文件上传不限量",
+      "core": "支持 7 种语言的流式对话",
+      "history": "完整的对话历史与搜索"
+    },
+    "cancelConfirm": {
+      "title": "要取消订阅吗？",
+      "body": "您可继续使用 Pro 直到当前计费周期结束，之后将回到 {plan}。",
+      "confirm": "取消订阅"
+    },
+    "cancelled": "订阅已取消。",
+    "cancelError": "取消订阅失败，请重试。",
+    "success": "已收到付款，您的方案已生效。",
+    "pending": "我们仍在确认您的付款，确认后此页面会自动更新。",
+    "notConfigured": "此部署尚未启用支付功能。",
+    "faq": {
+      "title": "常见问题",
+      "cancel": {
+        "q": "可以随时取消吗？",
+        "a": "可以。在设置中一键取消，且在已付费周期结束前仍可使用 Pro。"
+      },
+      "payment": {
+        "q": "支持哪些支付方式？",
+        "a": "通过 Paystack 支持银行卡支付与银行转账，在支持的地区可使用当地货币。"
+      },
+      "limits": {
+        "q": "每日额度如何计算？",
+        "a": "每个方案都有每日额度，于 UTC 00:00 重置。用完后可次日继续，或升级获得更高额度。"
+      }
+    },
+    "pastDue": "上次付款未成功。请更新支付方式以继续使用 Pro。",
+    "upgradePage": {
+      "title": "升级",
+      "description": "无需离开应用即可比较套餐并升级。",
+      "yourPlan": "当前套餐",
+      "upgradeTo": "升级到 {plan}",
+      "alreadyOnPlan": "您当前使用 {plan}。可在设置中管理或取消。",
+      "securityNote": "付款由 Paystack 在其安全窗口中处理。银行卡信息绝不会进入本应用，也不会被本应用看到。"
+    },
+    "upgrade": "升级",
+    "notice": {
+      "purchasedTitle": "您已开通 {plan}",
+      "grantedTitle": "您已获赠 {plan}",
+      "purchasedBody": "感谢订阅——您的订阅已生效，将于 {date} 续订。",
+      "purchasedBodyPlain": "感谢订阅——您的订阅已生效。",
+      "grantedBodyDays": "{days} 天赠送访问权限，有效期至 {date}。",
+      "grantedBody": "已为您的账户添加赠送访问权限。",
+      "dismiss": "关闭"
+    },
+    "currency": {
+      "label": "显示货币"
+    },
+    "cycle": {
+      "started": "当前周期开始于",
+      "renews": "续订日期",
+      "accessEnds": "可用至",
+      "daysLeft": "（{count, plural, =0 {今天} other {还有 # 天}}）",
+      "grantNote": "这是我们团队赠送的访问权限。无需付款，也无需取消。"
+    }
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "仪表盘",
+      "users": "用户",
+      "moderation": "内容管理",
+      "usage": "使用情况",
+      "plans": "套餐",
+      "subscriptions": "订阅",
+      "models": "模型",
+      "providers": "服务商",
+      "systemPrompt": "系统提示词",
+      "featureFlags": "功能开关",
+      "settings": "系统设置",
+      "auditLogs": "审计日志",
+      "status": "平台状态",
+      "moderators": "审核员",
+      "security": "安全",
+      "announcements": "公告",
+      "emailTemplates": "邮件模板"
+    },
+    "confirmDestructive": "输入 {confirmText} 以确认。",
+    "unauthorized": "你没有访问管理后台的权限。",
+    "portalTitle": "超级管理员控制台",
+    "roleLabel": "超级管理员",
+    "section": {
+      "people": "人员",
+      "billing": "账务",
+      "ai": "AI",
+      "platform": "平台"
+    },
+    "dashboard": {
+      "title": "总览",
+      "description": "一眼掌握平台状态与活动。",
+      "totalUsers": "用户",
+      "activeSubscriptions": "有效订阅",
+      "messagesToday": "今日消息",
+      "imagesToday": "今日图片",
+      "newUsers7d": "本周新增",
+      "recentSignups": "最近注册",
+      "recentAudit": "最近的管理操作",
+      "noActivity": "暂无管理操作记录。",
+      "noSignups": "尚未创建任何账户。"
+    },
+    "users": {
+      "title": "用户",
+      "description": "搜索账户、查看活动并管理访问权限。",
+      "searchPlaceholder": "按邮箱或姓名搜索…",
+      "search": "搜索",
+      "filterRole": "角色",
+      "filterStatus": "状态",
+      "all": "全部",
+      "colUser": "用户",
+      "colRole": "角色",
+      "colStatus": "状态",
+      "colPlan": "方案",
+      "colJoined": "注册时间",
+      "colActions": "操作",
+      "empty": "没有账户符合这些筛选条件。",
+      "emptyHint": "换个关键词，或清除筛选条件。",
+      "showing": "显示第 {from}–{to} 条，共 {total} 条",
+      "previous": "上一页",
+      "next": "下一页",
+      "actions": "{name} 的操作",
+      "viewDetail": "查看详情",
+      "suspend": "暂停账户",
+      "restore": "恢复账户",
+      "disable": "停用账户",
+      "delete": "永久删除",
+      "sendReset": "发送密码重置",
+      "sendMagicLink": "发送登录链接",
+      "sendVerification": "重新发送验证邮件",
+      "makeModerator": "设为审核员",
+      "removeModerator": "移除审核员角色",
+      "resetUsage": "重置今日用量",
+      "you": "你",
+      "confirm": {
+        "suspend": {
+          "title": "要暂停该账户吗？",
+          "body": "{name} 将被登出，且在管理员恢复该账户之前无法使用 Mujeeb AI。",
+          "consequence1": "现有对话会保留，不会被删除。",
+          "consequence2": "若不同时取消订阅，有效订阅仍将继续扣费。"
+        },
+        "disable": {
+          "title": "要停用该账户吗？",
+          "body": "{name} 将彻底失去访问权限。适用于不应再回来的账户。"
+        },
+        "delete": {
+          "title": "要永久删除该账户吗？",
+          "body": "此操作会将 {name} 从认证系统中移除，并连带删除其个人资料。",
+          "consequence1": "所有对话、消息和已上传文件都会被删除。",
+          "consequence2": "支付记录会出于账务需要保留，但与该用户解除关联。",
+          "consequence3": "此操作无法撤销。",
+          "phraseHint": "请输入 DELETE 以确认。"
+        },
+        "role": {
+          "title": "要更改该账户的角色吗？",
+          "body": "{name} 将获得 {role} 角色，并可进入对应的控制台。"
+        }
+      },
+      "detail": {
+        "title": "账户",
+        "overview": "总览",
+        "usageToday": "今日用量",
+        "overrides": "额度例外",
+        "noOverrides": "无例外设置，该账户使用其方案的额度。",
+        "addOverride": "添加例外",
+        "removeOverride": "移除",
+        "conversations": "对话数",
+        "joined": "注册时间",
+        "locale": "语言",
+        "notFound": "该账户已不存在。",
+        "back": "返回用户列表",
+        "devices": "设备",
+        "noDevices": "没有活动会话。",
+        "ofLimit": "/ {limit}"
+      },
+      "grantPro": "授予 Pro 30 天",
+      "resetStaffAccount": "重置员工账户",
+      "inviteTitle": "邀请用户",
+      "revokeSessions": "退出所有设备",
+      "revokeSessionsConfirm": "这将结束该账户的所有活动会话。对方需要在每台设备上重新登录。不会删除任何数据。",
+      "sessionsRevoked": "已从所有设备退出",
+      "activity": {
+        "title": "账户历史",
+        "empty": "该账户尚无任何记录。",
+        "failed": "已拒绝",
+        "by": "由 {name}",
+        "bySystem": "由系统"
+      },
+      "moderation": {
+        "title": "审核",
+        "noteLabel": "内部备注",
+        "notePlaceholder": "发生了什么，以及你的处理。",
+        "noteHint": "仅员工可见。会显示在该账户的历史记录中。",
+        "addNote": "添加备注",
+        "noteSaved": "备注已添加。",
+        "grantExplainer": "该账户是员工授予的赠送访问权限，而非付费订阅。",
+        "revokeGrant": "结束赠送访问",
+        "grantRevoked": "赠送访问已结束。",
+        "revokeGrantConfirm": "这将在预定到期前立即结束赠送套餐。",
+        "revokeConsequenceAccess": "将立即降为免费套餐。",
+        "revokeConsequenceNoRefund": "付费订阅绝不会受到影响。"
+      }
+    },
+    "usage": {
+      "title": "用量与额度",
+      "description": "全平台的每日消耗，以及相应的调整入口。",
+      "for": "{date} 的数据",
+      "totals": "合计",
+      "topConsumers": "用量最高",
+      "noUsage": "该日期暂无记录。",
+      "resetUserDone": "已重置该账户的用量。",
+      "category": "类别",
+      "used": "已使用",
+      "activeUsers": "账户数",
+      "overrideTitle": "设置额度例外",
+      "overrideBody": "例外设置叠加在方案额度之上，并优先于方案额度。",
+      "overrideFeature": "额度项",
+      "overrideValue": "新额度",
+      "overrideValueHint": "填 -1 表示不限量。",
+      "overrideReason": "原因",
+      "overrideReasonHint": "会记入审计日志。",
+      "overrideSave": "保存例外",
+      "overrideSaved": "例外已保存。",
+      "overrideRemoved": "例外已移除。"
+    },
+    "category": {
+      "messages": "消息",
+      "image_generations": "图片生成",
+      "vision_requests": "图片分析",
+      "file_processing": "文件上传",
+      "audio_processing": "音频处理",
+      "video_processing": "视频处理"
+    },
+    "feature": {
+      "messages_per_day": "每日消息数",
+      "image_generations_per_day": "每日图片生成数",
+      "vision_requests_per_day": "每日图片分析数",
+      "file_processing_per_day": "每日文件上传数",
+      "audio_processing_per_day": "每日音频任务数",
+      "video_processing_per_day": "每日视频任务数",
+      "max_file_size_mb": "单个文件大小上限（MB）",
+      "premium_models": "Pro 模型访问权限",
+      "advanced_models": "进阶模型访问权限",
+      "max_attachments_per_message": "每条消息的文件数"
+    },
+    "plans": {
+      "title": "方案",
+      "description": "价格与权益。这些数值驱动价格页、结算流程以及每一次额度校验。",
+      "price": "价格（美元 / {interval}）",
+      "entitlements": "权益",
+      "saved": "已保存。",
+      "saveFailed": "保存失败，请重试。",
+      "paystackCode": "Paystack 方案代码",
+      "paystackCodeHint": "可选。填写后将通过 Paystack 订阅计划扣费，而非单次收费。",
+      "save": "保存价格",
+      "currencyPrices": "各币种价格",
+      "currencyPricesHint": "设置每种币种的收费金额。不销售的币种请留空——结账将拒绝而不会换算。在设置中切换结算币种时会使用此处设定的金额。",
+      "charging": "当前结算",
+      "missingChargingCurrency": "未设置结账所用币种 {currency} 的价格。在设置之前，客户无法购买此套餐。"
+    },
+    "subscriptions": {
+      "title": "订阅",
+      "description": "根据已验证的 Paystack 事件还原的当前与历史订阅。",
+      "colUser": "用户",
+      "colPlan": "方案",
+      "colStatus": "状态",
+      "colRenews": "续订",
+      "colStarted": "开始时间",
+      "empty": "暂无订阅。",
+      "cancelAtPeriodEnd": "将在周期结束时终止"
+    },
+    "models": {
+      "title": "模型",
+      "description": "有哪些模型、谁可以使用，以及网关的降级顺序。",
+      "colModel": "模型",
+      "colProvider": "供应商",
+      "colTier": "层级",
+      "colAvailability": "可用状态",
+      "colPriority": "优先级",
+      "updated": "模型已更新。"
+    },
+    "providers": {
+      "title": "供应商",
+      "description": "上游 AI 供应商。凭据保存在服务端环境变量中，绝不会在此显示。",
+      "colProvider": "供应商",
+      "colKind": "类型",
+      "colCredentials": "凭据",
+      "colEnabled": "已启用",
+      "configured": "已配置",
+      "missing": "未配置",
+      "missingHint": "配置该供应商的环境变量后即可启用。",
+      "toggled": "供应商已更新。"
+    },
+    "systemPrompt": {
+      "title": "系统提示词",
+      "description": "置于每段对话最前的指令。由服务端控制并进行版本管理。",
+      "active": "当前版本 {version}",
+      "editor": "提示词",
+      "publish": "发布新版本",
+      "published": "已发布版本 {version}。",
+      "history": "版本历史",
+      "restore": "恢复",
+      "restored": "已作为新版本恢复。",
+      "by": "由 {name}",
+      "empty": "提示词不能为空。",
+      "confirmTitle": "要发布该系统提示词吗？",
+      "confirmBody": "它将从每位用户的下一条消息起，对所有模型生效。"
+    },
+    "featureFlags": {
+      "title": "功能开关",
+      "description": "无需部署即可启停功能。开关无法绕过安全控制。",
+      "updated": "开关已更新。"
+    },
+    "settings": {
+      "title": "设置",
+      "description": "运行配置。安全边界仍由代码强制执行。",
+      "updated": "设置已更新。"
+    },
+    "auditLogs": {
+      "title": "审计日志",
+      "description": "记录每一次特权操作，仅可追加。",
+      "colTime": "时间",
+      "colActor": "操作者",
+      "colAction": "操作",
+      "colTarget": "目标",
+      "colResult": "结果",
+      "empty": "暂无管理操作记录。",
+      "system": "系统",
+      "filterAction": "按操作筛选…",
+      "colUndo": "",
+      "resultSuccess": "成功",
+      "resultFailure": "失败"
+    },
+    "status": {
+      "title": "平台状态",
+      "description": "各外部依赖是否已配置，以及能否从此部署访问。",
+      "service": "服务",
+      "state": "状态",
+      "detail": "详情",
+      "operational": "正常",
+      "degraded": "降级",
+      "notConfigured": "未配置",
+      "error": "错误",
+      "refresh": "重新检查",
+      "checkedAt": "检查于 {time}"
+    },
+    "moderation": {
+      "title": "审核记录",
+      "description": "审核员与管理员对账户执行的操作。"
+    },
+    "common": {
+      "confirm": "确认",
+      "cancel": "取消",
+      "save": "保存",
+      "saving": "保存中…",
+      "actionFailed": "该操作未能完成。",
+      "notPermitted": "你没有执行该操作的权限。",
+      "never": "从不",
+      "none": "无",
+      "unlimited": "不限量",
+      "enabled": "已启用",
+      "disabled": "已停用"
+    },
+    "role": {
+      "user": "用户",
+      "moderator": "审核员",
+      "super_admin": "超级管理员"
+    },
+    "status_": {
+      "active": "正常",
+      "suspended": "已暂停",
+      "disabled": "已停用",
+      "pending_verification": "待验证",
+      "deleted": "已删除"
+    },
+    "moderators": {
+      "title": "审核员",
+      "description": "创建和移除审核员账户。新审核员会通过邮件收到临时密码，并且必须先设置自己的密码和身份验证器应用才能登录。",
+      "createTitle": "添加审核员",
+      "listTitle": "当前审核员",
+      "emailLabel": "电子邮箱",
+      "nameLabel": "显示名称（可选）",
+      "createHint": "我们会向此地址发送临时密码。在更换密码并设置双重验证之前，该账户无法访问控制台。",
+      "createSubmit": "创建审核员",
+      "createdFor": "邀请已发送至 {email}。",
+      "created": "审核员已创建。",
+      "colModerator": "审核员",
+      "colSetup": "设置状态",
+      "colInvited": "邀请时间",
+      "colActions": "",
+      "none": "暂无审核员。",
+      "pendingPassword": "未设置密码",
+      "pendingMfa": "未设置双重验证",
+      "ready": "就绪",
+      "remove": "移除",
+      "removed": "审核员已移除。",
+      "removeFailed": "无法移除该审核员。",
+      "createFailed": "无法创建该审核员。",
+      "emailFailed": "邀请邮件发送失败，因此未创建账户。请检查邮件设置后重试。",
+      "alreadyExists": "该地址已存在账户。请从“用户”页面更改其角色。",
+      "notModerator": "该账户不是审核员。",
+      "invalid": "请检查信息后重试。",
+      "resetDone": "已重置。新的临时密码已发送。",
+      "resetFailed": "无法重置该账户。",
+      "cannotResetSelf": "无法重置自己的账户，请使用 CLI。"
+    },
+    "security": {
+      "title": "安全",
+      "description": "您账户的登录状态，以及在何处处于登录状态。",
+      "account": "此账户",
+      "signedInAs": "登录身份",
+      "twoFactor": "双重验证",
+      "twoFactorOn": "已开启",
+      "twoFactorOff": "未开启",
+      "assurance": "会话保证级别",
+      "lastSignIn": "上次登录",
+      "sessionSince": "本次会话开始于",
+      "sessions": "会话",
+      "sessionsExplainer": "Supabase 未提供按设备的清单，因此本页无法在不虚构的情况下逐一列出您的设备。但它可以结束此账户的所有会话——如果您曾在已不受控制的地方登录，请使用此功能。",
+      "signOutHere": "退出此浏览器",
+      "signOutAll": "退出所有设备",
+      "signOutAllConfirm": "是的，全部退出",
+      "signOutAllWarning": "这将结束包括当前会话在内的所有会话。您需要使用身份验证器重新登录。",
+      "cancel": "取消",
+      "assurancePassword": "仅密码",
+      "assuranceTwoFactor": "密码 + 双重验证",
+      "password": "密码",
+      "currentPassword": "当前密码",
+      "newPassword": "新密码",
+      "confirmPassword": "确认新密码",
+      "changePassword": "修改密码",
+      "passwordHint": "至少 {min} 个字符。",
+      "passwordTooShort": "请至少使用 {min} 个字符。",
+      "passwordMismatch": "两次输入的密码不一致。",
+      "passwordChanged": "密码已修改。",
+      "passwordInvalid": "请检查两个字段后重试。",
+      "passwordWrong": "当前密码不正确。",
+      "passwordSame": "新密码必须与当前密码不同。",
+      "passwordRejected": "该密码被拒绝。请尝试更长或更不常见的密码。",
+      "passwordFailed": "无法修改密码。",
+      "recovery": "如果丢失身份验证器",
+      "recoveryBody": "没有可打印的恢复代码。如果你无法访问身份验证器应用，超级管理员会重置你的账户，你再重新注册一个——每次重置都会记入审计日志。",
+      "deviceRevoked": "该设备已退出登录。",
+      "passwordThrottled": "尝试次数过多。请等待 15 分钟后重试。",
+      "idleWarning": "{seconds} 秒后将退出登录——移动鼠标或按任意键即可保持登录。"
+    },
+    "auditAction": {
+      "admin": {
+        "user_suspended": "账户已停用",
+        "user_disabled": "账户已禁用",
+        "user_restored": "账户已恢复",
+        "user_deleted": "账户已删除",
+        "moderator_created": "已添加审核员",
+        "moderator_removed": "已移除审核员",
+        "password_reset": "已发送密码重置",
+        "magic_link_created": "已发送登录链接",
+        "verification_resent": "已重发验证邮件",
+        "quota_changed": "已更改配额覆盖",
+        "quota_reset": "已重置用量",
+        "plan_updated": "已更改套餐价格",
+        "plan_currency_prices_updated": "已更改各币种价格",
+        "feature_flag_changed": "已切换功能开关",
+        "system_setting_changed": "已更改设置",
+        "provider_changed": "已更改服务商",
+        "model_changed": "已更改模型",
+        "prompt_changed": "已发布系统提示词",
+        "prompt_restored": "已恢复系统提示词",
+        "action_undone": "已撤销操作",
+        "moderator_reset": "重置员工账户",
+        "plan_granted": "授予赠送套餐",
+        "plan_grant_revoked": "结束赠送套餐",
+        "user_invited": "已邀请账户",
+        "sessions_revoked": "已撤销所有会话",
+        "email_template_saved": "已保存邮件模板",
+        "email_template_restored": "已恢复邮件模板",
+        "email_template_reset": "已将邮件模板恢复默认"
+      },
+      "billing": {
+        "subscription_activated": "订阅已激活",
+        "subscription_created": "订阅已创建",
+        "subscription_cancelled": "订阅已取消"
+      },
+      "staff": {
+        "signin": "员工登录",
+        "signin_failed": "登录失败",
+        "signin_denied": "登录被拒绝",
+        "password_set": "已设置密码",
+        "mfa_enrolled": "已启用双重验证",
+        "sessions_revoked": "已撤销所有会话",
+        "password_changed": "员工密码已修改",
+        "password_change_failed": "员工密码修改失败"
+      },
+      "account": {
+        "device_revoked": "设备已退出",
+        "other_devices_revoked": "其他设备已退出",
+        "all_devices_revoked": "所有设备已退出"
+      }
+    },
+    "undo": {
+      "action": "撤销",
+      "confirm": "确认撤销",
+      "done": "操作已撤销。",
+      "undoneBadge": "已撤销",
+      "failed": "无法撤销该操作。",
+      "notFound": "该日志条目已不存在。",
+      "notUndoable": "该操作无法撤销。",
+      "alreadyUndone": "该操作已被撤销。",
+      "noPriorState": "未记录原始值，因此无法撤销。",
+      "invite": "删除受邀账户",
+      "inviteRedeemed": "该邀请已被使用，因此无法再以此方式移除该账户。",
+      "alreadyGone": "该账户已不存在。"
+    },
+    "settingKey": {
+      "billing_currency": "结算币种",
+      "default_model_slug": "默认聊天模型",
+      "default_vision_model_slug": "默认视觉模型",
+      "default_locale": "默认语言",
+      "support_email": "支持邮箱",
+      "free_plan_slug": "免费套餐",
+      "max_upload_size_mb": "最大上传大小",
+      "chat_rate_limit_per_minute": "聊天速率限制",
+      "max_conversation_messages": "会话历史长度",
+      "supported_locales": "已启用语言",
+      "announcement": "公告横幅",
+      "max_attachments_per_message": "每条消息的文件数",
+      "staff_require_mfa_each_signin": "每次登录都要求双重验证码"
+    },
+    "grants": {
+      "granted": "已授予 30 天 Pro 访问权限。",
+      "revoked": "赠送访问权限已结束。",
+      "failed": "无法授予访问权限。",
+      "invalid": "请检查信息后重试。",
+      "planNotFound": "该套餐不存在或未启用。",
+      "hasPaidSubscription": "此账户已有付费订阅——授予会使其脱离计费。",
+      "notAGrant": "此账户没有可结束的赠送访问权限。",
+      "dialogTitle": "为 {user} 授予赠送访问权限",
+      "duration": "时长",
+      "days": "{days} 天",
+      "customDays": "或自定义天数",
+      "customDaysHint": "1 至 365 天。订阅会自动到期，无需事后手动关闭。",
+      "reason": "原因（可选）",
+      "reasonHint": "记录在审计日志中。几个月后有人问起该账户为何拥有 Pro 时会很有用。",
+      "reasonPlaceholder": "8 月 12 日故障的补偿",
+      "confirm": "授予 {days} 天",
+      "cancel": "取消",
+      "grantedFor": "已授予 {days} 天。"
+    },
+    "targetType": {
+      "user": "账户",
+      "plan": "套餐",
+      "model": "模型",
+      "provider": "服务商",
+      "feature_flag": "功能开关",
+      "system_setting": "设置",
+      "system_prompt_version": "系统提示词",
+      "subscription": "订阅",
+      "plan_entitlement": "权益",
+      "email": "邮箱",
+      "platform": "平台",
+      "deleted": "已删除账户",
+      "email_template": "邮件"
+    },
+    "announcements": {
+      "title": "公告",
+      "description": "向所有已登录用户显示的横幅。请谨慎使用——长期显示的公告会被忽略。",
+      "editorTitle": "消息",
+      "body": "公告",
+      "placeholder": "计划维护：周日 02:00–04:00（西非时间）。",
+      "formattingHint": "支持 **粗体**、_斜体_、`代码` 和 [链接](https://example.com)。",
+      "preview": "预览",
+      "previewEmpty": "暂无可预览内容。",
+      "liveNow": "当前有一条公告正在向所有已登录用户显示。",
+      "noneLive": "当前没有公告。",
+      "publish": "发布",
+      "update": "更新",
+      "clear": "撤下",
+      "published": "公告已发布。",
+      "cleared": "公告已撤下。",
+      "failed": "保存失败。"
+    },
+    "invite": {
+      "emailLabel": "电子邮件地址",
+      "nameLabel": "显示名称（可选）",
+      "submit": "发送邀请",
+      "hint": "对方会收到一个链接来设置自己的密码。",
+      "sentTo": "邀请已发送至 {email}。",
+      "sent": "邀请已发送",
+      "invalid": "请输入有效的电子邮件地址。",
+      "alreadyExists": "该电子邮件地址已被某个账户使用。",
+      "failed": "无法创建邀请。",
+      "emailFailed": "邀请邮件无法送达，因此未创建任何账户。",
+      "throttled": "发送的邀请过多。请稍后再试。",
+      "vipLabel": "作为特别邀请发送",
+      "vipHint": "发送欢迎式邀请而非标准邀请。仅改变邮件内容——账户权限完全相同。",
+      "submitVip": "发送特别邀请",
+      "sentVip": "特别邀请已发送"
+    },
+    "moderationAction": {
+      "warned": "已发出警告",
+      "suspended": "账户已暂停",
+      "restored": "账户已恢复",
+      "disabled": "账户已停用",
+      "deleted": "账户已删除",
+      "note": "已添加备注"
+    },
+    "emailTemplates": {
+      "title": "邮件模板",
+      "description": "平台自动发送的每封邮件的文案。每次修改都会生成一个版本，任何版本都可恢复。",
+      "kindLabel": "邮件",
+      "localeLabel": "语言",
+      "subject": "主题",
+      "preview": "预览文字",
+      "previewHint": "在多数收件箱中显示于主题之后的一行。",
+      "heading": "标题",
+      "body": "正文",
+      "actionLabel": "按钮文字",
+      "footnote": "脚注",
+      "changeNote": "改动说明（可选）",
+      "changeNoteHint": "与该版本一同记录，让历史读起来是一条脉络。",
+      "blankMeansDefault": "留空即保留该语言的内置文案。你可以只改主题，其余保持已翻译状态。",
+      "placeholderHint": "变量：{list}",
+      "usingDefault": "正在使用内置文案",
+      "versionBadge": "版本 {version}",
+      "live": "生效中",
+      "restoredFrom": "恢复自 v{version}",
+      "noSubject": "（无主题）",
+      "systemAuthor": "系统",
+      "save": "保存新版本",
+      "history": "历史（{count}）",
+      "restore": "恢复",
+      "resetToDefault": "恢复默认",
+      "resetConfirm": "这将删除自定义内容，该邮件恢复为内置文案。",
+      "resetConsequenceCopy": "随附的翻译将立即重新生效。",
+      "resetConsequenceHistory": "该模板的版本历史也会一并删除。",
+      "saved": "已保存为版本 {version}。",
+      "restored": "已将版本 {version} 恢复为当前文案。",
+      "reset": "已恢复为内置文案。",
+      "invalid": "请检查字段后重试。",
+      "empty": "模板至少需要主题、标题或正文之一。",
+      "failed": "无法保存模板。",
+      "notFound": "该模板尚未配置。",
+      "versionNotFound": "该版本已不存在。",
+      "kind": {
+        "verify": "验证邮箱",
+        "reset": "重置密码",
+        "magicLink": "登录链接",
+        "welcome": "欢迎",
+        "staffInvite": "版主邀请",
+        "vipInvite": "专属邀请",
+        "invite": "邀请"
+      }
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "页面未找到",
+      "body": "你要查找的页面不存在或已被移动。"
+    },
+    "serverError": {
+      "title": "出现问题",
+      "body": "请稍后重试。"
+    },
+    "maintenance": {
+      "title": "Mujeeb AI 正在维护中",
+      "body": "我们很快就会回来,感谢你的耐心等待。"
+    }
+  },
+  "emails": {
+    "common": {
+      "greeting": "{name}，您好：",
+      "openApp": "打开 Mujeeb AI"
+    },
+    "verify": {
+      "subject": "确认您的 Mujeeb AI 账户",
+      "preview": "一键激活您的账户。",
+      "heading": "确认您的邮箱地址",
+      "body": "确认此地址即可激活您的 Mujeeb AI 账户并开始对话。",
+      "action": "确认邮箱地址",
+      "footnote": "此链接将在 24 小时后失效。如果您没有注册 Mujeeb AI 账户，可忽略本邮件。"
+    },
+    "reset": {
+      "subject": "重置您的 Mujeeb AI 密码",
+      "preview": "为账户设置新密码。",
+      "heading": "重置密码",
+      "body": "请通过下方链接设置新密码。在此之前，您当前的密码仍然有效。",
+      "action": "设置新密码",
+      "footnote": "此链接 1 小时后失效，且仅可使用一次。若非本人操作，请忽略本邮件，您的账户不会有任何变动。"
+    },
+    "magicLink": {
+      "subject": "您的 Mujeeb AI 登录链接",
+      "preview": "无需密码即可登录。",
+      "heading": "登录 Mujeeb AI",
+      "body": "请通过下方链接登录，无需输入密码。",
+      "action": "登录",
+      "footnote": "此链接 1 小时后失效，且仅可使用一次。若非本人操作，请忽略本邮件。"
+    },
+    "welcome": {
+      "subject": "欢迎使用 Mujeeb AI",
+      "preview": "您的账户已就绪。",
+      "heading": "您的账户已就绪",
+      "body": "您正在使用 Mujeeb AI Free。随时可以开始对话、上传文档或生成图片。",
+      "action": "打开 Mujeeb AI",
+      "footnote": "需要更多额度？Mujeeb AI Pro 可提高每日上限并解锁更多模型。"
+    },
+    "staffInvite": {
+      "subject": "您已获得 Mujeeb AI 的审核员权限",
+      "preview": "登录并设置您的账户。",
+      "heading": "审核员权限",
+      "body": "超级管理员已在 Mujeeb AI 为您创建了审核员账户。请使用下方的临时密码登录——在继续之前，系统会要求您设置自己的密码并配置身份验证器应用。",
+      "action": "登录员工门户",
+      "footnote": "此临时密码仅可使用一次。如果您并未预期收到此邮件，请告知管理员，不要登录。",
+      "secretLabel": "临时密码"
+    },
+    "vipInvite": {
+      "subject": "来自 Mujeeb AI 的专属邀请",
+      "preview": "你受到了个人邀请。",
+      "heading": "专属邀请，{name}",
+      "body": "你受到 Mujeeb AI 的个人邀请——这不是普通注册。已经有一个账户在等你。请使用下方按钮接受邀请并设置密码。",
+      "action": "接受你的邀请",
+      "footnote": "该邀请链接 1 小时后过期且只能使用一次。这是发给你个人的，请勿转发。"
+    },
+    "invite": {
+      "subject": "诚邀你加入 Mujeeb AI",
+      "preview": "你的邀请已就绪。",
+      "heading": "诚邀你加入 Mujeeb AI",
+      "body": "已为你创建账户。请使用下方按钮接受邀请并设置密码。",
+      "action": "接受邀请",
+      "footnote": "该邀请链接 1 小时后过期且只能使用一次。如果你并未预期收到，可以忽略这封邮件。"
+    }
+  },
+  "moderator": {
+    "portalTitle": "版主控制台",
+    "roleLabel": "审核员",
+    "roleLabelAdmin": "超级管理员",
+    "nav": {
+      "dashboard": "总览",
+      "users": "账户",
+      "moderation": "审核记录",
+      "activity": "我的操作",
+      "security": "安全"
+    },
+    "dashboard": {
+      "title": "总览",
+      "description": "你可以查看和处理的内容。",
+      "suspended": "已暂停的账户",
+      "pending": "待验证",
+      "actions7d": "你本周的操作",
+      "totalAccounts": "账户数"
+    },
+    "users": {
+      "title": "账户",
+      "description": "搜索账户并执行审核操作。团队成员账户不会显示。",
+      "inviteTitle": "邀请用户"
+    },
+    "moderation": {
+      "title": "审核记录",
+      "description": "全平台的账户操作，最新在前。",
+      "colTime": "时间",
+      "colUser": "账户",
+      "colAction": "操作",
+      "colBy": "操作者",
+      "colReason": "原因",
+      "empty": "暂无审核操作记录。",
+      "action": {
+        "warned": "已警告",
+        "suspended": "已暂停",
+        "restored": "已恢复",
+        "disabled": "已停用",
+        "deleted": "已删除",
+        "note": "备注"
+      }
+    },
+    "note": {
+      "add": "添加备注",
+      "title": "添加审核备注",
+      "body": "备注对审核员和管理员可见，并会记录在该账户下。",
+      "placeholder": "你观察到了什么？",
+      "save": "保存备注",
+      "saved": "备注已保存。"
+    },
+    "reason": {
+      "label": "原因",
+      "placeholder": "为什么执行此操作？",
+      "required": "必须填写原因。"
+    },
+    "activity": {
+      "title": "我的操作",
+      "description": "您最近的更改，以及可以撤销的操作。",
+      "empty": "您尚未执行任何可撤销的操作。"
+    }
+  },
+  "staffAuth": {
+    "title": "员工登录",
+    "subtitle": "管理员与审核员访问 Mujeeb AI 控制台。",
+    "submit": "登录控制台",
+    "errors": {
+      "invalidCredentials": "邮箱或密码不正确。",
+      "notStaff": "此入口仅供管理员与审核员使用。",
+      "inactive": "该员工账户未启用，请联系其他管理员。",
+      "rateLimited": "尝试次数过多，请稍后再试。",
+      "mfaBadCode": "代码不正确。请检查身份验证器后重试。",
+      "mfaUnavailable": "此账户未设置身份验证器。",
+      "idleTimeout": "因 5 分钟无操作已退出登录。请重新登录以继续。",
+      "wrongEntrance": "这不是你账户对应的入口。请使用你自己控制台的登录链接。",
+      "mfaRateLimited": "尝试次数过多。请稍候再试。",
+      "mfaExpired": "该验证码已过期。请输入身份验证器上当前的验证码。",
+      "sessionLost": "登录状态未传递。请刷新页面后重新登录。",
+      "mfaServerError": "我们这边验证失败。请稍候再试。"
+    },
+    "onboarding": {
+      "passwordTitle": "设置您的密码",
+      "passwordDescription": "您使用临时密码登录。请在继续之前设置自己的密码。",
+      "newPassword": "新密码",
+      "confirmPassword": "确认新密码",
+      "passwordHint": "至少 12 个字符。员工账户可以更改价格、停用用户并查看审计日志，因此最小长度高于客户账户。",
+      "passwordSubmit": "保存并继续",
+      "passwordMismatch": "两次输入的密码不一致。",
+      "passwordTooShort": "请至少使用 12 个字符。",
+      "passwordInvalid": "请检查密码后重试。",
+      "passwordRejected": "无法设置该密码，请换一个。",
+      "passwordSaved": "密码已保存。",
+      "notStaff": "此账户不是员工账户。",
+      "mfaTitle": "设置双重验证",
+      "mfaDescription": "使用身份验证器应用扫描此二维码，然后输入显示的六位数代码。未设置前无法使用员工账户。",
+      "mfaQrAlt": "身份验证器应用的二维码",
+      "mfaSecretLabel": "或手动输入此密钥",
+      "mfaCodeLabel": "六位数代码",
+      "mfaSubmit": "验证并完成",
+      "mfaEnrollFailed": "无法开始注册。请重新加载后重试。",
+      "mfaBadCode": "代码不正确。请检查身份验证器后重试。",
+      "mfaNotVerified": "注册尚未完成。",
+      "mfaFailed": "完成注册时出现问题。",
+      "mfaEnrolled": "双重验证已开启。",
+      "mfaNoRecoveryCodes": "没有需要保存的恢复代码。如果丢失身份验证器，超级管理员会重置你的账户，让你重新注册。"
+    },
+    "mfaTitle": "输入您的代码",
+    "mfaSubtitle": "打开身份验证器应用并输入六位数代码。",
+    "mfaCodeLabel": "六位数代码",
+    "mfaSubmit": "验证",
+    "exit": {
+      "action": "退出登录并离开",
+      "title": "退出控制台？",
+      "description": "你将退出登录并返回公开首页。",
+      "consequenceSignOut": "此设备上的会话将结束。",
+      "consequenceReauth": "重新进入需要你的密码和身份验证码。",
+      "confirm": "退出登录",
+      "cancel": "保持登录"
+    },
+    "portal": {
+      "adminEntrance": "超级管理员入口",
+      "staffEntrance": "版主入口",
+      "sharedEntrance": "员工入口"
+    }
+  }
+}
