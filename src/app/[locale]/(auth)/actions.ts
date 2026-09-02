@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { logger } from "@/lib/logger";
 import { recordSessionLocation } from "@/auth/session-location";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { FONT_COOKIE, FONT_COOKIE_MAX_AGE, toFontChoice } from "@/lib/fonts";
 
 export interface ActionResult {
@@ -310,11 +310,16 @@ export async function signInWithGoogleAction(formData: FormData): Promise<void> 
     : routing.defaultLocale;
   const next = safeNextPath(String(formData.get("next") ?? ""), "/chat");
 
+  const headerList = await headers();
+  const host = headerList.get("x-forwarded-host") ?? headerList.get("host");
+  const proto = headerList.get("x-forwarded-proto") ?? (host?.includes("localhost") ? "http" : "https");
+  const origin = host ? `${proto}://${host}` : clientEnv.NEXT_PUBLIC_SITE_URL;
+
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${clientEnv.NEXT_PUBLIC_SITE_URL}/api/auth/callback?locale=${locale}&next=${encodeURIComponent(next)}`,
+      redirectTo: `${origin}/api/auth/callback?locale=${locale}&next=${encodeURIComponent(next)}`,
       // Ask for a refresh token and force the account chooser, so someone
       // signed into several Google accounts is not silently put into the
       // wrong one.
@@ -323,10 +328,6 @@ export async function signInWithGoogleAction(formData: FormData): Promise<void> 
   });
 
   if (error || !data?.url) {
-    // Most often "provider not enabled" in the Supabase dashboard. Bounce
-    // back to the form with a message rather than returning a value: a
-    // form action has to return void, and the person needs to end up
-    // somewhere they can try another way in.
     logger.warn("google_oauth_start_failed", { error: error?.message });
     redirect(`/${locale}/login?error=oauth`);
   }
