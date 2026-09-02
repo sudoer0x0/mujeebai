@@ -137,6 +137,7 @@ export function formatPrice(amount: number, currency: string, locale: string): s
   return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: currency.toUpperCase(),
+    currencyDisplay: "narrowSymbol",
     // Whole prices read better without ".00"; fractional ones still show.
     minimumFractionDigits: Number.isInteger(amount) ? 0 : 2,
     maximumFractionDigits: 2,

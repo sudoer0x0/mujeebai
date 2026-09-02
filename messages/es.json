@@ -49,8 +49,8 @@
   "landing": {
     "hero": {
       "title": "Un espacio de trabajo con IA que no estorba",
-      "subtitle": "Conversaciones rápidas en streaming en siete idiomas, con tus documentos e imágenes al lado, y sin quedar atado a un único proveedor de IA.",
-      "priceNote": "Empieza gratis. {plan} cuesta {price} al mes.",
+      "subtitle": "Una plataforma de IA diseñada para inteligencia multimodelo.",
+      "priceNote": "Empieza gratis. Pasa a Pro por {price}/mes.",
       "eyebrow": "Siete idiomas. Cualquier modelo por debajo."
     },
     "cta": {

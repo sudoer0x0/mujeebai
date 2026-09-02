@@ -49,8 +49,8 @@
   "landing": {
     "hero": {
       "title": "不碍事的 AI 工作空间",
-      "subtitle": "支持七种语言的高速流式对话，文档与图片随手可用，且不会被单一 AI 供应商锁定。",
-      "priceNote": "免费开始使用。{plan} 每月 {price}。",
+      "subtitle": "专为多模型智能而构建的 AI 平台。",
+      "priceNote": "免费开始。升级至 Pro 仅需 {price}/月。",
       "eyebrow": "七种语言。底层模型任选。"
     },
     "cta": {

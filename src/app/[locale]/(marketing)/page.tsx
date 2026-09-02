@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type * as React from "react";
 import { Reveal } from "@/components/marketing/reveal";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Sparkles, ArrowRight, MessagesSquare, FileText, Eye, Globe, ImageIcon, ShieldCheck } from "lucide-react";
+import { ArrowRight, MessagesSquare, FileText, Eye, Globe, ImageIcon, ShieldCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { getCurrentUser } from "@/auth/session";
@@ -55,33 +55,23 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
           the panel lit. The hero carries itself on type instead. */}
       <section className="relative isolate py-20 sm:py-28 lg:py-36">
         <div className="mx-auto max-w-4xl text-center">
-          {/* Eyebrow pill: a small, quiet label above a large headline,
-              which is what stops the type from starting cold. */}
-          <div
-            className="hero-step mb-7 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 text-[13px] text-muted sm:mb-9"
-            style={{ "--hero-delay": "0ms" } as React.CSSProperties}
-          >
-            <Sparkles className="size-3.5 text-foreground" aria-hidden />
-            {t("hero.eyebrow")}
-          </div>
-
           <h1
             className="hero-step text-display text-balance font-bold leading-[1.02] tracking-[-0.03em] text-foreground"
-            style={{ "--hero-delay": "80ms" } as React.CSSProperties}
+            style={{ "--hero-delay": "0ms" } as React.CSSProperties}
           >
             {t("hero.title")}
           </h1>
 
           <p
             className="hero-step measure-wide mx-auto mt-6 text-pretty text-lead leading-relaxed text-muted sm:mt-7"
-            style={{ "--hero-delay": "160ms" } as React.CSSProperties}
+            style={{ "--hero-delay": "80ms" } as React.CSSProperties}
           >
             {t("hero.subtitle")}
           </p>
 
           <div
             className="hero-step mt-9 flex flex-col items-center justify-center gap-3 sm:mt-11"
-            style={{ "--hero-delay": "240ms" } as React.CSSProperties}
+            style={{ "--hero-delay": "160ms" } as React.CSSProperties}
           >
             {/* White on black for the one action that matters, outlined
                 for the secondary. Stacked on phones and kept stacked: two

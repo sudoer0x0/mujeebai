@@ -49,8 +49,8 @@
   "landing": {
     "hero": {
       "title": "An AI workspace that gets out of your way",
-      "subtitle": "Fast, streaming conversations in seven languages, with your documents and images alongside — and no lock-in to a single AI provider underneath.",
-      "priceNote": "Free to start. {plan} is {price} a month.",
+      "subtitle": "An AI platform built for multi-model intelligence.",
+      "priceNote": "Start free. Upgrade to Pro for {price}/month.",
       "eyebrow": "Seven languages. Any model underneath."
     },
     "cta": {
