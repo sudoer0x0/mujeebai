@@ -58,12 +58,21 @@ export async function* readNdjsonStream(body: ReadableStream<Uint8Array>): Async
       const lines = buffer.split("\n");
       buffer = lines.pop() ?? "";
       for (const line of lines) {
-        if (!line.trim()) continue;
+        const trimmed = line.trim();
+        if (!trimmed) continue;
         try {
-          yield JSON.parse(line) as StreamChunk;
+          yield JSON.parse(trimmed) as StreamChunk;
         } catch {
           // ignore malformed line
         }
+      }
+    }
+    const remainder = buffer.trim();
+    if (remainder) {
+      try {
+        yield JSON.parse(remainder) as StreamChunk;
+      } catch {
+        // ignore malformed line
       }
     }
   } finally {

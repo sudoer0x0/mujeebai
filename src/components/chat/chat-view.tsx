@@ -86,19 +86,19 @@ export function ChatView({
   const [isStreaming, setIsStreaming] = React.useState(false);
   const abortRef = React.useRef<AbortController | null>(null);
 
+  const currentConvIdRef = React.useRef(initialConversationId);
+
   /**
-   * Re-seed only when the route's conversation actually changes.
-   *
-   * The previous version also depended on the `initialMessages` array
-   * identity, which is a fresh array on every server render — a
-   * `router.refresh()` mid-stream would replace the live message list
-   * with the server's stale copy and the reply would visibly vanish.
+   * Re-seed only when navigating to a different conversation from outside
+   * (e.g. user clicked a different chat in the sidebar).
    */
   React.useEffect(() => {
-    setConversationId(initialConversationId);
-    setMessages(initialMessages.map(mapRawMessage));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialConversationId]);
+    if (initialConversationId !== currentConvIdRef.current) {
+      currentConvIdRef.current = initialConversationId;
+      setConversationId(initialConversationId);
+      setMessages(initialMessages.map(mapRawMessage));
+    }
+  }, [initialConversationId, initialMessages]);
 
   /** Translates a server-sent message key, falling back to a generic one. */
   const translateServerError = React.useCallback(
@@ -154,10 +154,12 @@ export function ChatView({
           );
         }
 
-        const isNewConversation = Boolean(newConversationId && newConversationId !== conversationId);
-        if (newConversationId && isNewConversation) {
+        if (newConversationId && newConversationId !== conversationId) {
+          currentConvIdRef.current = newConversationId;
           setConversationId(newConversationId);
-          router.replace(`/chat/${newConversationId}`, { scroll: false });
+          if (typeof window !== "undefined") {
+            window.history.replaceState(null, "", `/chat/${newConversationId}`);
+          }
         }
 
         let text = "";
@@ -168,8 +170,8 @@ export function ChatView({
             text += chunk.text;
             setMessages((previous) =>
               previous.map((message) =>
-                message.id === settledMessageId
-                  ? { ...message, content: text, status: "streaming", ...withActiveVariantContent(message, text) }
+                message.id === settledMessageId || message.id === assistantMessageId
+                  ? { ...message, id: settledMessageId, content: text, status: "streaming", ...withActiveVariantContent(message, text) }
                   : message,
               ),
             );
@@ -177,37 +179,55 @@ export function ChatView({
             reasoning += chunk.text;
             setMessages((previous) =>
               previous.map((message) =>
-                message.id === settledMessageId ? { ...message, reasoning } : message,
+                message.id === settledMessageId || message.id === assistantMessageId ? { ...message, id: settledMessageId, reasoning } : message,
               ),
             );
           } else if (chunk.type === "done") {
             setMessages((previous) =>
               previous.map((message) =>
-                message.id === settledMessageId ? { ...message, status: "complete" } : message,
+                message.id === settledMessageId || message.id === assistantMessageId
+                  ? {
+                      ...message,
+                      id: settledMessageId,
+                      content: text || message.content,
+                      status: "complete",
+                      ...withActiveVariantContent(message, text || message.content || ""),
+                    }
+                  : message,
               ),
             );
           } else if (chunk.type === "error") {
             toast.error(translateServerError(`chat.gatewayError.${chunk.code}`));
             setMessages((previous) =>
               previous.map((message) =>
-                message.id === settledMessageId ? { ...message, status: "error" } : message,
+                message.id === settledMessageId || message.id === assistantMessageId ? { ...message, id: settledMessageId, status: "error" } : message,
               ),
             );
           }
         }
 
-        // Refresh once the stream finishes so the sidebar picks up the new
-        // conversation and its derived title. Doing this on *completion*
-        // rather than on creation avoids a re-render mid-stream.
-        if (isNewConversation) router.refresh();
+        // Guarantee completion status when stream closes cleanly
+        setMessages((previous) =>
+          previous.map((message) =>
+            (message.id === settledMessageId || message.id === assistantMessageId) && message.status === "streaming"
+              ? {
+                  ...message,
+                  id: settledMessageId,
+                  content: text || message.content,
+                  status: "complete",
+                  ...withActiveVariantContent(message, text || message.content || ""),
+                }
+              : message,
+          ),
+        );
       } catch (error) {
         if ((error as Error).name === "AbortError") {
           // Stopped deliberately: keep whatever streamed in, mark it as
           // stopped rather than failed.
           setMessages((previous) =>
             previous.map((message) =>
-              message.id === settledMessageId && message.status !== "complete"
-                ? { ...message, status: "stopped" }
+              (message.id === settledMessageId || message.id === assistantMessageId) && message.status !== "complete"
+                ? { ...message, id: settledMessageId, status: "stopped" }
                 : message,
             ),
           );
@@ -215,7 +235,7 @@ export function ChatView({
           toast.error(t("errorGeneric"));
           setMessages((previous) =>
             previous.map((message) =>
-              message.id === settledMessageId ? { ...message, status: "error" } : message,
+              message.id === settledMessageId || message.id === assistantMessageId ? { ...message, id: settledMessageId, status: "error" } : message,
             ),
           );
         }
@@ -224,7 +244,7 @@ export function ChatView({
         abortRef.current = null;
       }
     },
-    [conversationId, router, t, translateServerError],
+    [conversationId, t, translateServerError],
   );
 
   function handleSend(content: string, attachments: UiAttachment[] = []) {
@@ -393,9 +413,11 @@ export function ChatView({
       }
 
       if (data.conversationId && data.conversationId !== conversationId) {
+        currentConvIdRef.current = data.conversationId;
         setConversationId(data.conversationId);
-        router.replace(`/chat/${data.conversationId}`, { scroll: false });
-        router.refresh();
+        if (typeof window !== "undefined") {
+          window.history.replaceState(null, "", `/chat/${data.conversationId}`);
+        }
       }
 
       setMessages((previous) =>
