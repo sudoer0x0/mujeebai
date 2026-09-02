@@ -60,16 +60,29 @@ async function main(){
     // answer from a batching provider legitimately arrives as one. What
     // this has to prove is that *our* transport is incremental, which is
     // the number of separate network reads.
-    ok(deltas>=1,"text deltas received",`${deltas} deltas`);
+    // Distinguish "the app is broken" from "the provider said no".
+    // An exhausted OpenRouter free-tier quota produces an empty reply and
+    // an error frame, which is the app behaving correctly — reporting it
+    // as a failure sends someone hunting for a bug that is not there.
+    const rateLimited = buf.includes('"code":"rate_limited"');
+    if (rateLimited) {
+      console.log("  NOTE  provider returned rate_limited (OpenRouter free-tier quota).");
+      console.log("        The transport assertions above still apply; content ones are skipped.");
+    }
+    if (!rateLimited) ok(deltas>=1,"text deltas received",`${deltas} deltas`);
     ok(arrivals.length>1,"body delivered in multiple network reads (not buffered)",`${arrivals.length} reads`);
     ok(arrivals[0] < arrivals[arrivals.length-1],"reads are spread over time, not flushed at the end",
        `first ${arrivals[0]}ms, last ${arrivals[arrivals.length-1]}ms`);
-    ok(text.trim().length>0,"visible text was produced",JSON.stringify(text.slice(0,60)));
+    if (!rateLimited) ok(text.trim().length>0,"visible text was produced",JSON.stringify(text.slice(0,60)));
 
     // And the same text is what got persisted — the reload path.
     await new Promise(r=>setTimeout(r,1500));
     const { data:row }=await admin.from("messages").select("content,status").eq("id",msgId!).single();
-    ok(row?.status==="complete","message persisted as complete",String(row?.status));
+    ok(
+      rateLimited ? row?.status === "error" : row?.status === "complete",
+      rateLimited ? "a refused turn is persisted as an error, not left streaming" : "message persisted as complete",
+      String(row?.status),
+    );
     ok((row?.content??"").trim()===text.trim(),"persisted text matches what streamed");
 
     // The user's message must appear exactly once in the conversation.

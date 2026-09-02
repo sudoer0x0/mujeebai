@@ -15,6 +15,23 @@ const updateSchema = z.object({
   availability: z.enum(["available", "locked", "disabled", "maintenance", "deprecated"]).optional(),
   tier: z.enum(["free", "pro", "premium", "experimental"]).optional(),
   priority: z.number().int().min(0).max(1000).optional(),
+  /**
+   * The provider's own model id, e.g. `openrouter/free` or
+   * `nvidia/nemotron-3.5-lightning:free`.
+   *
+   * Editable so a slot can be repointed without a deploy — which is the
+   * only way to get consistency out of a router that changes what it
+   * picks. Constrained to the characters provider ids actually use, so
+   * this cannot become a way to put arbitrary text into an upstream URL.
+   */
+  providerModelId: z
+    .string()
+    .trim()
+    .min(1)
+    .max(120)
+    .regex(/^[A-Za-z0-9._\/@:-]+$/, "invalid model id")
+    .optional(),
+  reasoningMode: z.enum(["auto", "exclude", "require"]).optional(),
 });
 
 export async function updateModelAction(input: unknown): Promise<ActionResponse> {
@@ -25,13 +42,19 @@ export async function updateModelAction(input: unknown): Promise<ActionResponse>
     const parsed = updateSchema.safeParse(input);
     if (!parsed.success) return { ok: false, message: "admin.common.actionFailed" };
 
-    const { modelId, ...updates } = parsed.data;
+    const { modelId, providerModelId, reasoningMode, ...rest } = parsed.data;
+    // Column names, not camelCase, from here down.
+    const updates = {
+      ...rest,
+      ...(providerModelId !== undefined ? { provider_model_id: providerModelId } : {}),
+      ...(reasoningMode !== undefined ? { reasoning_mode: reasoningMode } : {}),
+    };
     if (Object.keys(updates).length === 0) return { ok: true };
 
     const supabase = createServiceRoleClient();
     const { data: before } = await supabase
       .from("models")
-      .select("slug, availability, tier, priority")
+      .select("slug, availability, tier, priority, provider_model_id, reasoning_mode")
       .eq("id", modelId)
       .maybeSingle();
 

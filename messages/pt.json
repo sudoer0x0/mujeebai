@@ -300,7 +300,8 @@
       "download": "Transferir",
       "downloadFailed": "Não foi possível transferir essa imagem.",
       "copyUnsupported": "O seu navegador não permite copiar imagens. Tente transferi-la."
-    }
+    },
+    "modelCannotSeeImages": "Esse modelo não consegue ler imagens. Escolha outro ou remova a imagem."
   },
   "models": {
     "selector": {
@@ -712,7 +713,14 @@
       "colTier": "Nível",
       "colAvailability": "Disponibilidade",
       "colPriority": "Prioridade",
-      "updated": "Modelo atualizado."
+      "updated": "Modelo atualizado.",
+      "colProviderModel": "ID do modelo",
+      "colThinking": "Raciocínio",
+      "thinking": {
+        "auto": "Conforme o modelo",
+        "exclude": "Nunca mostrar",
+        "require": "Mostrar sempre"
+      }
     },
     "providers": {
       "title": "Fornecedores",

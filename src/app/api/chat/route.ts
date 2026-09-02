@@ -3,7 +3,7 @@ import { getEffectiveNumber } from "@/billing/entitlements";
 import { z } from "zod";
 import { requireUser } from "@/auth/session";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { getDefaultModel, getDefaultVisionModel, getModelBySlug } from "@/ai/registry";
+import { getDefaultModel, getModelBySlug } from "@/ai/registry";
 import { checkModelAccess } from "@/ai/access";
 import { checkQuota, consumeQuota } from "@/usage/quota";
 import { runAssistantTurn } from "@/ai/run-turn";
@@ -136,8 +136,15 @@ async function handleChat(request: Request) {
 
   const hasImage = attachments.some((a) => a.kind === "image");
   if (hasImage && !model.capabilities.includes("vision")) {
-    const visionModel = await getDefaultVisionModel();
-    if (visionModel) model = visionModel;
+    // Say so, rather than silently answering with a different model.
+    //
+    // There used to be a separate "Vision" slot that this quietly swapped
+    // in. It was redundant — every free model the router reaches handles
+    // images, and both remaining free slots already declare `vision` — so
+    // the swap only ever fired for a text-only paid model, and when it
+    // did the person got an answer from a model they had not chosen and
+    // were never told about. Refusing is the honest behaviour.
+    return NextResponse.json({ error: "chat.modelCannotSeeImages" }, { status: 400 });
   }
 
   const category = hasImage && model.capabilities.includes("vision") ? "vision_requests" : "messages";

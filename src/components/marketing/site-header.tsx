@@ -40,7 +40,7 @@ export async function SiteHeader() {
           <span aria-hidden className="mx-1.5 hidden h-5 w-px bg-line sm:block" />
 
           {user ? (
-            <Button size="sm" asChild>
+            <Button size="sm" asChild className="h-9 rounded-full bg-foreground px-4 text-[14px] font-semibold text-canvas hover:bg-foreground/90">
               <Link href="/chat">{t("openApp")}</Link>
             </Button>
           ) : (
@@ -48,7 +48,7 @@ export async function SiteHeader() {
               <Button variant="ghost" size="sm" asChild className="hidden sm:inline-flex">
                 <Link href="/login">{t("signIn")}</Link>
               </Button>
-              <Button size="sm" asChild>
+              <Button size="sm" asChild className="h-9 rounded-full bg-foreground px-4 text-[14px] font-semibold text-canvas hover:bg-foreground/90">
                 <Link href="/register">{t("signUp")}</Link>
               </Button>
             </>

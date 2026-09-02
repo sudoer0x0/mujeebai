@@ -300,7 +300,8 @@
       "download": "下载",
       "downloadFailed": "无法下载该图片。",
       "copyUnsupported": "您的浏览器不支持复制图片，请尝试下载。"
-    }
+    },
+    "modelCannotSeeImages": "该模型无法读取图片。请更换模型或移除图片。"
   },
   "models": {
     "selector": {
@@ -712,7 +713,14 @@
       "colTier": "层级",
       "colAvailability": "可用状态",
       "colPriority": "优先级",
-      "updated": "模型已更新。"
+      "updated": "模型已更新。",
+      "colProviderModel": "模型 ID",
+      "colThinking": "思考过程",
+      "thinking": {
+        "auto": "由模型决定",
+        "exclude": "从不显示",
+        "require": "始终显示"
+      }
     },
     "providers": {
       "title": "供应商",

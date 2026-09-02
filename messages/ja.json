@@ -300,7 +300,8 @@
       "download": "ダウンロード",
       "downloadFailed": "その画像をダウンロードできませんでした。",
       "copyUnsupported": "お使いのブラウザは画像のコピーに対応していません。ダウンロードをお試しください。"
-    }
+    },
+    "modelCannotSeeImages": "このモデルは画像を読み取れません。別のモデルを選ぶか、画像を外してください。"
   },
   "models": {
     "selector": {
@@ -712,7 +713,14 @@
       "colTier": "ティア",
       "colAvailability": "提供状況",
       "colPriority": "優先度",
-      "updated": "モデルを更新しました。"
+      "updated": "モデルを更新しました。",
+      "colProviderModel": "モデルID",
+      "colThinking": "思考",
+      "thinking": {
+        "auto": "モデルに任せる",
+        "exclude": "表示しない",
+        "require": "常に表示"
+      }
     },
     "providers": {
       "title": "プロバイダー",

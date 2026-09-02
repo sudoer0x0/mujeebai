@@ -300,7 +300,8 @@
       "download": "Download",
       "downloadFailed": "Couldn't download that image.",
       "copyUnsupported": "Your browser won't let us copy images. Try downloading it instead."
-    }
+    },
+    "modelCannotSeeImages": "That model can't read images. Pick a different one, or remove the image."
   },
   "models": {
     "selector": {
@@ -712,7 +713,14 @@
       "colTier": "Tier",
       "colAvailability": "Availability",
       "colPriority": "Priority",
-      "updated": "Model updated."
+      "updated": "Model updated.",
+      "colProviderModel": "Model ID",
+      "colThinking": "Thinking",
+      "thinking": {
+        "auto": "As the model does",
+        "exclude": "Never show",
+        "require": "Always show"
+      }
     },
     "providers": {
       "title": "Providers",

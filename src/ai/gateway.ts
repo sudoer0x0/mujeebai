@@ -3,6 +3,7 @@ import { logger } from "@/lib/logger";
 import { openRouterAdapter } from "@/ai/providers/openrouter";
 import { getProviderById, resolveFallbackChain, type ModelRow } from "@/ai/registry";
 import { getActiveSystemPrompt } from "@/ai/system-prompt";
+import type { ReasoningMode } from "@/ai/types";
 import { GatewayError, type ChatMessageInput, type StreamChunk, type TextProviderAdapter } from "@/ai/types";
 
 const TEXT_ADAPTERS: Record<string, TextProviderAdapter> = {
@@ -58,6 +59,11 @@ export async function streamAssistantResponse(params: AssistantStreamParams): Pr
         providerModelId: candidate.provider_model_id,
         messages,
         signal: params.signal,
+        // Read from the candidate, not the requested model: a fallback
+        // must behave like the slot the person chose. Falling back from a
+        // no-thinking slot to a model that thinks out loud would be a
+        // visible change in behaviour they never asked for.
+        reasoningMode: (candidate.reasoning_mode as ReasoningMode | undefined) ?? "auto",
       });
 
       // Force the first chunk now so failures during connection setup

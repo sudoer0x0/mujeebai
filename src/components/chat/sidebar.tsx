@@ -66,22 +66,40 @@ export function Sidebar(props: SidebarProps) {
 
   return (
     <>
-      {/* Mobile header. The drawer is a Sheet, so it traps focus and
-          closes on Escape rather than being a div that happens to slide. */}
-      <header className="flex items-center gap-2 border-b border-line bg-surface px-2 py-1.5 md:hidden">
+      {/* Mobile header.
+          Borderless and on the page's own black, so the app reads as one
+          surface on a phone rather than a stack of panels — a hairline
+          under a header is a seam you notice on an OLED screen. The
+          drawer is a Sheet, so it traps focus and closes on Escape rather
+          than being a div that happens to slide. `env(safe-area-inset-top)`
+          keeps it clear of the notch when launched from the home screen.
+          A new-chat button sits opposite the menu: it is the action people
+          reach for most, and burying it in the drawer costs two taps. */}
+      <header
+        className="flex items-center gap-1 bg-canvas px-1.5 md:hidden"
+        style={{ paddingTop: "max(0.375rem, env(safe-area-inset-top))", paddingBottom: "0.375rem" }}
+      >
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <Button variant="ghost" size="icon" onClick={() => setMobileOpen(true)} aria-label={t("openMenu")}>
-            <Menu />
+            <Menu className="size-[22px]" />
           </Button>
-          <SheetContent side="start" className="p-0" showClose={false}>
+          <SheetContent side="start" className="w-[86vw] max-w-sm p-0" showClose={false}>
             <SheetTitle className="sr-only">{t("conversations")}</SheetTitle>
             <SidebarContent {...props} onNavigate={() => setMobileOpen(false)} />
           </SheetContent>
         </Sheet>
-        <Link href="/chat" className="flex items-center gap-2">
-          <BrandMark />
-          <span className="text-[13px] font-semibold tracking-tight">Mujeeb AI</span>
+
+        <Link href="/chat" className="flex min-w-0 items-center gap-2">
+          <span className="truncate text-[17px] font-semibold tracking-tight">Mujeeb AI</span>
         </Link>
+
+        <div className="flex-1" />
+
+        <Button variant="ghost" size="icon" asChild aria-label={t("newChat")}>
+          <Link href="/chat">
+            <MessageSquarePlus className="size-[22px]" />
+          </Link>
+        </Button>
       </header>
 
       {/* Desktop. Width is animated rather than the element being
@@ -292,14 +310,20 @@ function SidebarContent({
       </div>
 
       <div className="flex flex-col gap-2 p-2">
+        {/* A quiet row, not a filled accent button.
+            On a true-black sidebar a solid accent block is the brightest
+            thing on screen, and it competes with the conversation the
+            person is actually reading. It is still the first item and
+            still full width — prominent by position rather than colour. */}
         <Button
-          className="w-full justify-start"
+          variant="ghost"
+          className="w-full justify-start gap-2.5 rounded-lg bg-surface-raised text-[14px] font-medium hover:bg-line"
           onClick={() => {
             router.push("/chat");
             onNavigate?.();
           }}
         >
-          <MessageSquarePlus />
+          <MessageSquarePlus className="size-[18px]" />
           {t("newChat")}
         </Button>
 

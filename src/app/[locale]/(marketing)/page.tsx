@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type * as React from "react";
 import { Reveal } from "@/components/marketing/reveal";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { MessagesSquare, FileText, Eye, Globe, ImageIcon, ShieldCheck } from "lucide-react";
+import { Sparkles, ArrowRight, MessagesSquare, FileText, Eye, Globe, ImageIcon, ShieldCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { getCurrentUser } from "@/auth/session";
@@ -49,30 +49,60 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
           is ~34px on a phone and ~60px on a wide monitor without a jump at
           any breakpoint, and the copy is capped to a readable measure
           rather than running the full width of a large screen. */}
-      {/* An accent wash behind the hero, drawn from the theme token so it
-          follows light/dark and any accent change. Purely decorative. */}
-      <section className="relative isolate py-16 sm:py-24 lg:py-28">
-        <div className="hero-glow" aria-hidden />
+      {/* No glow on a true-black ground.
+          A radial accent wash reads as a grey smudge against #000 rather
+          than as light, and on an OLED screen it is the one thing keeping
+          the panel lit. The hero carries itself on type instead. */}
+      <section className="relative isolate py-20 sm:py-28 lg:py-36">
         <div className="mx-auto max-w-4xl text-center">
-          <h1 className="hero-step text-display text-balance font-semibold text-foreground" style={{ "--hero-delay": "0ms" } as React.CSSProperties}>
+          {/* Eyebrow pill: a small, quiet label above a large headline,
+              which is what stops the type from starting cold. */}
+          <div
+            className="hero-step mb-7 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 text-[13px] text-muted sm:mb-9"
+            style={{ "--hero-delay": "0ms" } as React.CSSProperties}
+          >
+            <Sparkles className="size-3.5 text-foreground" aria-hidden />
+            {t("hero.eyebrow")}
+          </div>
+
+          <h1
+            className="hero-step text-display text-balance font-bold leading-[1.02] tracking-[-0.03em] text-foreground"
+            style={{ "--hero-delay": "80ms" } as React.CSSProperties}
+          >
             {t("hero.title")}
           </h1>
 
           <p
-            className="hero-step measure-wide mx-auto mt-5 text-pretty text-lead text-muted sm:mt-6"
-            style={{ "--hero-delay": "90ms" } as React.CSSProperties}
+            className="hero-step measure-wide mx-auto mt-6 text-pretty text-lead leading-relaxed text-muted sm:mt-7"
+            style={{ "--hero-delay": "160ms" } as React.CSSProperties}
           >
             {t("hero.subtitle")}
           </p>
 
           <div
-            className="hero-step mt-8 flex flex-col items-center justify-center gap-2.5 sm:mt-10 sm:flex-row sm:gap-3"
-            style={{ "--hero-delay": "180ms" } as React.CSSProperties}
+            className="hero-step mt-9 flex flex-col items-center justify-center gap-3 sm:mt-11"
+            style={{ "--hero-delay": "240ms" } as React.CSSProperties}
           >
-            <Button size="lg" asChild className="h-12 w-full px-6 text-[15px] sm:w-auto">
-              <Link href={user ? "/chat" : "/register"}>{user ? t("cta.continue") : t("cta.start")}</Link>
+            {/* White on black for the one action that matters, outlined
+                for the secondary. Stacked on phones and kept stacked: two
+                full-width targets are easier to hit than a side-by-side
+                pair squeezed onto a narrow screen. */}
+            <Button
+              size="lg"
+              asChild
+              className="h-[52px] w-full max-w-xs gap-2 rounded-full bg-foreground px-7 text-[15px] font-semibold text-canvas hover:bg-foreground/90"
+            >
+              <Link href={user ? "/chat" : "/register"}>
+                {user ? t("cta.continue") : t("cta.start")}
+                <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
+              </Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="h-12 w-full px-6 text-[15px] sm:w-auto">
+            <Button
+              size="lg"
+              variant="outline"
+              asChild
+              className="h-[52px] w-full max-w-xs rounded-full border-line-strong px-7 text-[15px]"
+            >
               <Link href="/pricing">{t("cta.pricing")}</Link>
             </Button>
           </div>

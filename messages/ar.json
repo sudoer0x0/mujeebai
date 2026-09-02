@@ -300,7 +300,8 @@
       "download": "تنزيل",
       "downloadFailed": "تعذّر تنزيل هذه الصورة.",
       "copyUnsupported": "متصفحك لا يسمح بنسخ الصور. جرّب تنزيلها بدلًا من ذلك."
-    }
+    },
+    "modelCannotSeeImages": "هذا النموذج لا يستطيع قراءة الصور. اختر نموذجًا آخر أو أزل الصورة."
   },
   "models": {
     "selector": {
@@ -712,7 +713,14 @@
       "colTier": "المستوى",
       "colAvailability": "التوفر",
       "colPriority": "الأولوية",
-      "updated": "تم تحديث النموذج."
+      "updated": "تم تحديث النموذج.",
+      "colProviderModel": "معرّف النموذج",
+      "colThinking": "التفكير",
+      "thinking": {
+        "auto": "حسب النموذج",
+        "exclude": "عدم الإظهار أبدًا",
+        "require": "الإظهار دائمًا"
+      }
     },
     "providers": {
       "title": "المزوّدون",

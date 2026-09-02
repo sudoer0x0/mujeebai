@@ -81,6 +81,11 @@ export const openRouterAdapter: TextProviderAdapter = {
           stream: true,
           temperature: request.temperature ?? 0.7,
           max_tokens: request.maxOutputTokens,
+          // Ask the provider first. Cheaper than filtering, and on a
+          // model that honours it the tokens are never generated — which
+          // is the difference between a fast answer and a slow one.
+          ...(request.reasoningMode === "exclude" ? { reasoning: { exclude: true } } : {}),
+          ...(request.reasoningMode === "require" ? { reasoning: { enabled: true } } : {}),
         }),
         signal: request.signal,
       });
@@ -104,7 +109,11 @@ export const openRouterAdapter: TextProviderAdapter = {
       if (!choice) continue;
 
       const delta = choice.delta as { content?: string; reasoning?: string } | undefined;
-      if (delta?.reasoning) {
+      // Asking was not enough: measured over four calls, `openrouter/free`
+      // returned reasoning once despite `exclude: true`. Dropping it here
+      // is what makes "this slot never shows thinking" actually true,
+      // whichever model the router happens to pick.
+      if (delta?.reasoning && request.reasoningMode !== "exclude") {
         yield { type: "reasoning_delta", text: delta.reasoning };
       }
       if (delta?.content) {

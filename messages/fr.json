@@ -300,7 +300,8 @@
       "download": "Télécharger",
       "downloadFailed": "Impossible de télécharger cette image.",
       "copyUnsupported": "Votre navigateur n'autorise pas la copie d'images. Essayez de la télécharger."
-    }
+    },
+    "modelCannotSeeImages": "Ce modèle ne peut pas lire les images. Choisissez-en un autre ou retirez l'image."
   },
   "models": {
     "selector": {
@@ -712,7 +713,14 @@
       "colTier": "Niveau",
       "colAvailability": "Disponibilité",
       "colPriority": "Priorité",
-      "updated": "Modèle mis à jour."
+      "updated": "Modèle mis à jour.",
+      "colProviderModel": "ID du modèle",
+      "colThinking": "Raisonnement",
+      "thinking": {
+        "auto": "Selon le modèle",
+        "exclude": "Ne jamais afficher",
+        "require": "Toujours afficher"
+      }
     },
     "providers": {
       "title": "Fournisseurs",

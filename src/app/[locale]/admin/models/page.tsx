@@ -52,6 +52,8 @@ export default async function AdminModelsPage({ params }: { params: Promise<{ lo
                     modelId={model.id}
                     availability={model.availability}
                     tier={model.tier}
+                    providerModelId={model.provider_model_id}
+                    reasoningMode={model.reasoning_mode ?? "auto"}
                   />
                 </TD>
                 <TD className="text-end tabular-nums text-muted">{model.priority}</TD>

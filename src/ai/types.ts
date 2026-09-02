@@ -60,7 +60,19 @@ export interface ProviderModelRef {
   providerModelId: string;
 }
 
+/**
+ * How a slot treats chain-of-thought.
+ *
+ * `exclude` is enforced twice — asked of the provider, and applied again
+ * to the stream — because asking is not enough. Over four calls to
+ * `openrouter/free` with `reasoning: {exclude: true}`, one still came
+ * back with reasoning: the router picks a different underlying model each
+ * time and they do not all honour it.
+ */
+export type ReasoningMode = "auto" | "exclude" | "require";
+
 export interface TextGenerationRequest extends ProviderModelRef {
+  reasoningMode?: ReasoningMode;
   messages: ChatMessageInput[];
   maxOutputTokens?: number;
   temperature?: number;

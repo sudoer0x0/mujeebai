@@ -300,7 +300,8 @@
       "download": "Descargar",
       "downloadFailed": "No se pudo descargar esa imagen.",
       "copyUnsupported": "Tu navegador no permite copiar imágenes. Prueba a descargarla."
-    }
+    },
+    "modelCannotSeeImages": "Ese modelo no puede leer imágenes. Elige otro o quita la imagen."
   },
   "models": {
     "selector": {
@@ -712,7 +713,14 @@
       "colTier": "Nivel",
       "colAvailability": "Disponibilidad",
       "colPriority": "Prioridad",
-      "updated": "Modelo actualizado."
+      "updated": "Modelo actualizado.",
+      "colProviderModel": "ID del modelo",
+      "colThinking": "Razonamiento",
+      "thinking": {
+        "auto": "Según el modelo",
+        "exclude": "No mostrar nunca",
+        "require": "Mostrar siempre"
+      }
     },
     "providers": {
       "title": "Proveedores",

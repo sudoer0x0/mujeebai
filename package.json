@@ -17,7 +17,8 @@
     "verify": "npm run typecheck && npm run lint && npm run check-i18n && npm run test && npm run build",
     "smoke:staff": "tsx --conditions=react-server --env-file=.env.local scripts/smoke-staff-routes.ts",
     "predev": "node scripts/dev-guard.mjs",
-    "smoke:chat": "tsx --conditions=react-server --env-file=.env.local scripts/smoke-chat.ts"
+    "smoke:chat": "tsx --conditions=react-server --env-file=.env.local scripts/smoke-chat.ts",
+    "smoke:models": "tsx --env-file=.env.local scripts/smoke-models.ts"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.2.6",

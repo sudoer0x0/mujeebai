@@ -113,7 +113,7 @@ export default async function LocaleLayout({
     // including the marketing pages — to render dynamically.
     <html lang={locale} dir={dir} suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#0e0f11" />
+        <meta name="theme-color" content="#000000" />
         {/* A plain <script src> rather than next/script: it must run
             before first paint to avoid a light/dark flash, which is
             exactly what a synchronous script in <head> does, and it
@@ -131,7 +131,7 @@ export default async function LocaleLayout({
             and same-origin, so the parser stall is negligible. */}
         <script src="/theme-init.js" />
       </head>
-      <body className="min-h-screen antialiased bg-canvas text-foreground">
+      <body className="min-h-dvh antialiased bg-canvas text-foreground">
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>
             <ServiceWorkerRegistration />

@@ -59,11 +59,3 @@ export async function getDefaultModel(): Promise<ModelRow | null> {
   return models.find((m) => m.is_default && m.availability === "available") ?? models[0] ?? null;
 }
 
-export async function getDefaultVisionModel(): Promise<ModelRow | null> {
-  const models = await listModels();
-  return (
-    models.find((m) => m.is_default_vision && m.availability === "available") ??
-    models.find((m) => m.capabilities.includes("vision") && m.availability === "available") ??
-    null
-  );
-}

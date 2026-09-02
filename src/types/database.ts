@@ -126,6 +126,7 @@ export interface Database {
           output_limit: number | null;
           tier: "free" | "pro" | "premium" | "experimental";
           availability: "available" | "locked" | "disabled" | "maintenance" | "deprecated";
+          reasoning_mode: "auto" | "exclude" | "require";
           priority: number;
           fallback_model_id: string | null;
           is_default: boolean;
@@ -137,6 +138,7 @@ export interface Database {
         Partial<{
           slug: string;
           display_name: string;
+          reasoning_mode: "auto" | "exclude" | "require";
           provider_id: string;
           provider_model_id: string;
           description: string | null;
