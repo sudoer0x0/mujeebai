@@ -59,11 +59,15 @@ export async function streamAssistantResponse(params: AssistantStreamParams): Pr
         providerModelId: candidate.provider_model_id,
         messages,
         signal: params.signal,
-        // Read from the candidate, not the requested model: a fallback
-        // must behave like the slot the person chose. Falling back from a
-        // no-thinking slot to a model that thinks out loud would be a
-        // visible change in behaviour they never asked for.
-        reasoningMode: (candidate.reasoning_mode as ReasoningMode | undefined) ?? "auto",
+        // From the *requested* slot, not the candidate.
+        //
+        // I had this the other way round, with a comment arguing for it,
+        // and the argument was wrong. The person picked "Mujeeb AI Free",
+        // which promises no visible thinking. If that call fails and the
+        // chain falls through to a slot configured to show thinking, then
+        // reading the candidate's mode breaks exactly the promise the
+        // fallback exists to preserve. The slot they chose decides.
+        reasoningMode: (params.model.reasoning_mode as ReasoningMode | undefined) ?? "auto",
       });
 
       // Force the first chunk now so failures during connection setup

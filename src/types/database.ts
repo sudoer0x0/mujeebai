@@ -197,6 +197,16 @@ export interface Database {
           status?: "pending" | "streaming" | "complete" | "error" | "stopped";
           content?: string | null;
           active_variant_id?: string | null;
+          /**
+           * Writable on purpose.
+           *
+           * The two rows of a turn are inserted concurrently, so leaving
+           * this to the database's `now()` made their order a race — and
+           * messages are read back `order by created_at`. The route
+           * stamps the pair a millisecond apart so a reply can never sort
+           * above the question that prompted it.
+           */
+          created_at?: string;
         }
       >;
       message_variants: Table<

@@ -51,7 +51,7 @@ export async function loadConversationMessages(conversationId: string): Promise<
   const { data: messages, error } = await supabase
     .from("messages")
     .select(
-      "id, role, status, content, active_variant_id, " +
+      "id, role, status, content, created_at, active_variant_id, " +
         "message_variants!message_variants_message_id_fkey(id, sequence, content, reasoning_summary, finish_reason, error)",
     )
     .eq("conversation_id", conversationId)
@@ -69,8 +69,31 @@ export async function loadConversationMessages(conversationId: string): Promise<
     throw new Error("Could not load this conversation.");
   }
 
-  const rows = (messages ?? []) as unknown as Array<Omit<LoadedMessage, "attachments">>;
+  const rows = (messages ?? []) as unknown as Array<Omit<LoadedMessage, "attachments"> & { created_at: string }>;
   if (rows.length === 0) return [];
+
+  // A reply that stopped mid-flight must not read as one still arriving.
+  //
+  // An assistant row is created as `streaming` and settled when the turn
+  // finishes. If the turn never finishes — the process is replaced, the
+  // connection dies, the tab is closed before the abort lands — the row
+  // stays `streaming` for good, and every later visit renders a
+  // "Generating…" that will never resolve. There were 21 such rows in
+  // this database.
+  //
+  // The route caps a turn at `maxDuration` (120s), so anything older than
+  // that provably is not still running: nothing is waiting on it, and
+  // saying otherwise is simply wrong. A younger one is left alone — it may
+  // genuinely be streaming into another tab right now.
+  const STALE_AFTER_MS = 150_000;
+  const now = Date.now();
+  for (const row of rows) {
+    if (row.status !== "streaming") continue;
+    if (now - new Date(row.created_at).getTime() < STALE_AFTER_MS) continue;
+    // Whatever arrived is kept; only the claim that more is coming is
+    // dropped. With no text at all it was a failure, not an interruption.
+    row.status = (row.content ?? "").trim() ? "stopped" : "error";
+  }
 
   const { data: links, error: linkError } = await supabase
     .from("message_attachments")

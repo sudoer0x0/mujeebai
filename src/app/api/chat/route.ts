@@ -193,15 +193,45 @@ async function handleChat(request: Request) {
     signal: request.signal,
   });
   pendingStream.catch(() => undefined);
+  // The two rows of this turn, written concurrently but ordered explicitly.
+  //
+  // Concurrency here is only safe because the timestamps are set by us.
+  // Left to the database's own `now()`, whichever transaction arrived
+  // first won — measured, the assistant row won 2 times in 5 — and
+  // messages are loaded `order by created_at`. So the reply sorted above
+  // the question that prompted it: conversations rendered scrambled after
+  // a reload, and `loadConversationHistory` handed the model its turns
+  // out of order, so it answered the wrong message.
+  //
+  // A question genuinely happens before its answer. Treating the two as
+  // independent was the mistake; stamping them keeps the round trip saved
+  // without pretending otherwise.
+  const turnAt = Date.now();
+
   const [userMessageResult, assistantResult] = await Promise.all([
     supabase
       .from("messages")
-      .insert({ conversation_id: conversation.id, user_id: user.id, role: "user", content, status: "complete" })
+      .insert({
+        conversation_id: conversation.id,
+        user_id: user.id,
+        role: "user",
+        content,
+        status: "complete",
+        created_at: new Date(turnAt).toISOString(),
+      })
       .select("id")
       .single(),
     supabase
       .from("messages")
-      .insert({ conversation_id: conversation.id, user_id: user.id, role: "assistant", status: "streaming" })
+      .insert({
+        conversation_id: conversation.id,
+        user_id: user.id,
+        role: "assistant",
+        status: "streaming",
+        // One millisecond after the question, always. `timestamptz` keeps
+        // microseconds, so this is a real orderable gap.
+        created_at: new Date(turnAt + 1).toISOString(),
+      })
       .select("id")
       .single(),
   ]);
@@ -226,9 +256,13 @@ async function handleChat(request: Request) {
 
   const variant = variantResult.data;
   if (variant) {
-    // Not awaited: nothing before the first token depends on it, and the
-    // persistence step at the end of the turn re-reads the variant by id.
-    void supabase.from("messages").update({ active_variant_id: variant.id }).eq("id", assistantMessage.id);
+    // Awaited. This was fire-and-forget on the theory that nothing before
+    // the first token needs it — true of *this* turn, and wrong for the
+    // next one: the link is how the following turn finds this reply, and
+    // a write that had not landed left the reply out of the history
+    // entirely. It runs while the model connection is still opening, so
+    // awaiting it costs nothing on the critical path.
+    await supabase.from("messages").update({ active_variant_id: variant.id }).eq("id", assistantMessage.id);
   }
   try {
     await consumeQuota(user.id, category);

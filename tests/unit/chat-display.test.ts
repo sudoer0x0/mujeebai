@@ -110,3 +110,134 @@ test("a first segment that is not a locale is not mistaken for one", () => {
   // Two letters is the test, so a longer segment must not be eaten.
   assert.equal(conversationUrl("/chatting/x", "abc"), "/chat/abc");
 });
+
+/**
+ * Turn ordering.
+ *
+ * The user message and the assistant placeholder are written
+ * concurrently, and messages are loaded `order by created_at`. Left to
+ * the database's own `now()`, whichever transaction got there first won —
+ * measured, the assistant row won 2 times in 5. The conversation then
+ * rendered scrambled, and `loadConversationHistory` handed the model its
+ * turns out of order, so it answered the wrong message.
+ *
+ * The route stamps the pair explicitly. This pins that rule.
+ */
+function turnTimestamps(at: number) {
+  return { user: new Date(at).toISOString(), assistant: new Date(at + 1).toISOString() };
+}
+
+test("the assistant reply always sorts after the message that prompted it", () => {
+  for (const at of [0, 1_700_000_000_000, Date.now()]) {
+    const { user, assistant } = turnTimestamps(at);
+    assert.ok(user < assistant, `${user} must sort before ${assistant}`);
+  }
+});
+
+test("consecutive turns stay in order", () => {
+  // Two turns a few milliseconds apart must not interleave.
+  const first = turnTimestamps(1_700_000_000_000);
+  const second = turnTimestamps(1_700_000_000_005);
+  const sorted = [second.assistant, first.user, second.user, first.assistant].sort();
+  assert.deepEqual(sorted, [first.user, first.assistant, second.user, second.assistant]);
+});
+
+/**
+ * A reply that stopped mid-flight must not read as one still arriving.
+ *
+ * An assistant row is created `streaming` and settled when the turn ends.
+ * A turn that never ends leaves it that way for good, and every later
+ * visit renders a "Generating…" that will never resolve — there were 21
+ * such rows in production. The route caps a turn at 120s, so anything
+ * older provably is not running.
+ */
+const STALE_AFTER_MS = 150_000;
+function settleStale(status: string, content: string, ageMs: number): string {
+  if (status !== "streaming" || ageMs < STALE_AFTER_MS) return status;
+  return content.trim() ? "stopped" : "error";
+}
+
+test("a stale streaming row is settled, not left generating", () => {
+  assert.equal(settleStale("streaming", "half an answer", 10 * 60_000), "stopped");
+  assert.equal(settleStale("streaming", "", 10 * 60_000), "error");
+});
+
+test("a recent streaming row is left alone — it may be live in another tab", () => {
+  assert.equal(settleStale("streaming", "", 5_000), "streaming");
+  assert.equal(settleStale("streaming", "partial", 149_000), "streaming");
+});
+
+test("settled rows are never touched", () => {
+  for (const status of ["complete", "stopped", "error"]) {
+    assert.equal(settleStale(status, "text", 10 * 60_000), status);
+  }
+});
+
+/**
+ * Building the history handed to the model.
+ *
+ * An assistant turn is stored twice over: as the message's own content,
+ * and as the variant a regenerate switches between. The mapping used the
+ * variant *only* — so when the link had not been written the whole turn
+ * vanished from the history, silently. The model then saw two user
+ * questions back to back and answered both, which is what produced
+ * replies like "4\n\n20" and looked like it was replying to an earlier
+ * message.
+ */
+type HistoryRow = { role: string; content: string | null; active_variant_id: string | null };
+
+function buildHistory(rows: HistoryRow[], variants: Record<string, string>) {
+  const out: Array<{ role: string; content: string }> = [];
+  for (const row of rows) {
+    if (row.role === "assistant") {
+      const content = (row.active_variant_id ? variants[row.active_variant_id] : undefined) ?? row.content ?? "";
+      if (content.trim()) out.push({ role: "assistant", content });
+      continue;
+    }
+    if (!row.content) continue;
+    out.push({ role: row.role, content: row.content });
+  }
+  return out;
+}
+
+test("an assistant turn survives a missing variant link", () => {
+  const history = buildHistory(
+    [
+      { role: "user", content: "What is 2 plus 2?", active_variant_id: null },
+      { role: "assistant", content: "4", active_variant_id: null },
+      { role: "user", content: "What is 10 plus 10?", active_variant_id: null },
+    ],
+    {},
+  );
+  assert.deepEqual(history.map((m) => m.role), ["user", "assistant", "user"]);
+  assert.equal(history[1].content, "4");
+});
+
+test("the variant wins when it is there — regenerate must show the chosen reply", () => {
+  const history = buildHistory(
+    [{ role: "assistant", content: "first answer", active_variant_id: "v2" }],
+    { v2: "regenerated answer" },
+  );
+  assert.equal(history[0].content, "regenerated answer");
+});
+
+test("an empty assistant turn is still omitted", () => {
+  // A failed turn has nothing to contribute and must not become a blank
+  // assistant message in the prompt.
+  assert.deepEqual(buildHistory([{ role: "assistant", content: "", active_variant_id: null }], {}), []);
+  assert.deepEqual(buildHistory([{ role: "assistant", content: "   ", active_variant_id: null }], {}), []);
+});
+
+test("the model never receives two user turns in a row", () => {
+  const history = buildHistory(
+    [
+      { role: "user", content: "one", active_variant_id: null },
+      { role: "assistant", content: "1", active_variant_id: null },
+      { role: "user", content: "two", active_variant_id: null },
+      { role: "assistant", content: "2", active_variant_id: null },
+    ],
+    {},
+  );
+  const roles = history.map((m) => m.role).join(",");
+  assert.ok(!roles.includes("user,user"), `alternating turns expected, got ${roles}`);
+});

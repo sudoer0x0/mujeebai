@@ -52,8 +52,24 @@ export async function loadConversationHistory(conversationId: string): Promise<C
   const history: ChatMessageInput[] = [];
   for (const message of messages ?? []) {
     if (message.role === "assistant") {
-      const content = message.active_variant_id ? variantContent.get(message.active_variant_id) : undefined;
-      if (content) history.push({ role: "assistant", content });
+      // The variant is the better source — it is what a regenerate
+      // switches between — but the message's own content is the same text
+      // and is always written. Falling back to it matters because the
+      // link is set by a second write: if that had not landed, or failed,
+      // this dropped the whole assistant turn *silently*.
+      //
+      // The model then saw two user questions back to back with no answer
+      // between them, and answered both. That is what produced replies
+      // like "4\n\n20" and made it look as though the model was replying
+      // to an earlier message.
+      //
+      // Losing which *variant* was showing is a cosmetic loss. Losing the
+      // turn corrupts the conversation, so content wins over provenance.
+      const fromVariant = message.active_variant_id
+        ? variantContent.get(message.active_variant_id)
+        : undefined;
+      const content = fromVariant ?? message.content ?? "";
+      if (content.trim()) history.push({ role: "assistant", content });
       continue;
     }
 

@@ -455,16 +455,18 @@ export function Composer({
         <div
           data-expanded={expanded ? "true" : "false"}
           className={cn(
-            "composer-shell bg-surface-raised px-2",
-            expanded ? "flex flex-col gap-1 rounded-3xl py-2" : "flex items-center gap-1 rounded-full py-1.5",
+            "composer-shell bg-surface-raised px-2.5 sm:px-2 transition-all duration-150",
+            // Mobile (<sm): always stacked so textarea gets full width and controls sit comfortably below
+            "flex flex-col gap-1.5 rounded-2xl py-2 sm:rounded-full sm:py-1.5",
+            expanded
+              ? "sm:flex-col sm:gap-1 sm:rounded-3xl sm:py-2"
+              : "sm:flex-row sm:items-center sm:gap-1",
           )}
         >
           {fileUploadsEnabled && !imageMode ? (
             <input
               ref={fileInputRef}
               type="file"
-              // `multiple` is what lets a user pick several documents at
-              // once; the count is still bounded by the entitlement.
               multiple
               className="sr-only"
               onChange={handleFileSelect}
@@ -473,10 +475,12 @@ export function Composer({
             />
           ) : null}
 
-          {/* Collapsed: the add button leads the row. Expanded: it moves
-              to the control row below, so it is rendered twice and only
-              one is mounted at a time. */}
-          {!expanded ? <ComposerAddButton /> : null}
+          {/* Desktop single-line: plus button leads the row */}
+          {!expanded ? (
+            <div className="hidden sm:block shrink-0">
+              <ComposerAddButton />
+            </div>
+          ) : null}
 
           <label htmlFor="composer-input" className="sr-only">
             {imageMode ? tImages("prompt.placeholder") : t("composer.placeholder")}
@@ -487,9 +491,6 @@ export function Composer({
             value={value}
             onChange={(event) => setValue(event.target.value)}
             onKeyDown={(event) => {
-              // Enter sends, Shift+Enter inserts a newline. `isComposing`
-              // matters for Japanese and Chinese input: without it, Enter
-              // to accept an IME candidate would send the message instead.
               if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) {
                 event.preventDefault();
                 submit();
@@ -498,27 +499,32 @@ export function Composer({
             placeholder={imageMode ? tImages("prompt.placeholder") : t("composer.placeholder")}
             rows={1}
             className={cn(
-              "composer-input w-full resize-none bg-transparent text-[14px] leading-relaxed text-foreground",
-              "placeholder:text-faint focus:outline-none [field-sizing:content]",
-              expanded ? "max-h-[200px] px-2 py-1.5" : "max-h-[200px] min-h-6 flex-1 px-1.5 py-1",
+              "composer-input w-full resize-none bg-transparent leading-relaxed text-foreground",
+              "text-[15px] sm:text-[14px] placeholder:text-faint focus:outline-none [field-sizing:content]",
+              "max-h-[180px] sm:max-h-[200px] min-h-[40px] px-2 py-1",
+              expanded ? "sm:px-2 sm:py-1.5" : "sm:min-h-6 sm:flex-1 sm:px-1.5 sm:py-1",
             )}
           />
 
-          <div className={cn("flex items-center gap-1", expanded && "justify-between")}>
-            {expanded ? (
-              <div className="flex items-center gap-1">
-                {fileUploadsEnabled && !imageMode ? <ComposerAddButton /> : null}
-              </div>
-            ) : null}
+          <div
+            className={cn(
+              "flex items-center justify-between gap-1 pt-0.5 sm:pt-0",
+              !expanded && "sm:justify-end",
+            )}
+          >
+            {/* Mobile (always) and Desktop (when expanded): Add button sits on the left */}
+            <div className={cn("flex items-center gap-1", !expanded && "sm:hidden")}>
+              {fileUploadsEnabled && !imageMode ? <ComposerAddButton /> : null}
+            </div>
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5 ms-auto sm:ms-0">
               {!imageMode ? <ModelSelector value={modelSlug} onChange={onModelChange} compact /> : null}
 
               {isStreaming ? (
                 <Button
                   variant="danger"
                   size="icon"
-                  className="rounded-full"
+                  className="size-8 sm:size-7 rounded-full shrink-0"
                   onClick={onStop}
                   aria-label={t("composer.stop")}
                 >
@@ -528,11 +534,11 @@ export function Composer({
                 <Button
                   type="submit"
                   size="icon"
-                  className="rounded-full"
+                  className="size-8 sm:size-7 rounded-full shrink-0"
                   disabled={!canSend}
                   aria-label={t("composer.send")}
                 >
-                  <ArrowUp />
+                  <ArrowUp className="size-4 sm:size-3.5" />
                 </Button>
               )}
             </div>

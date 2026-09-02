@@ -53,24 +53,24 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
           A radial accent wash reads as a grey smudge against #000 rather
           than as light, and on an OLED screen it is the one thing keeping
           the panel lit. The hero carries itself on type instead. */}
-      <section className="relative isolate py-20 sm:py-28 lg:py-36">
+      <section className="relative isolate py-14 sm:py-24 lg:py-32">
         <div className="mx-auto max-w-4xl text-center">
           <h1
-            className="hero-step text-display text-balance font-bold leading-[1.02] tracking-[-0.03em] text-foreground"
+            className="hero-step text-display text-balance font-bold leading-[1.14] sm:leading-[1.04] tracking-[-0.03em] text-foreground"
             style={{ "--hero-delay": "0ms" } as React.CSSProperties}
           >
             {t("hero.title")}
           </h1>
 
           <p
-            className="hero-step measure-wide mx-auto mt-6 text-pretty text-lead leading-relaxed text-muted sm:mt-7"
+            className="hero-step mx-auto mt-5 max-w-md sm:max-w-xl text-pretty text-[15px] sm:text-lead leading-relaxed text-muted sm:mt-7"
             style={{ "--hero-delay": "80ms" } as React.CSSProperties}
           >
             {t("hero.subtitle")}
           </p>
 
           <div
-            className="hero-step mt-9 flex flex-col items-center justify-center gap-3 sm:mt-11"
+            className="hero-step mt-8 flex flex-col items-center justify-center gap-3.5 sm:mt-11 sm:gap-4"
             style={{ "--hero-delay": "160ms" } as React.CSSProperties}
           >
             {/* White on black for the one action that matters, outlined
@@ -80,7 +80,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             <Button
               size="lg"
               asChild
-              className="h-[52px] w-full max-w-xs gap-2 rounded-full bg-foreground px-7 text-[15px] font-semibold text-canvas hover:bg-foreground/90"
+              className="h-12 sm:h-[52px] w-full max-w-[280px] sm:max-w-xs gap-2 rounded-full bg-foreground px-6 sm:px-7 text-[15px] font-semibold text-canvas shadow-sm hover:bg-foreground/90"
             >
               <Link href={user ? "/chat" : "/register"}>
                 {user ? t("cta.continue") : t("cta.start")}
@@ -91,13 +91,13 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
               size="lg"
               variant="outline"
               asChild
-              className="h-[52px] w-full max-w-xs rounded-full border-line-strong px-7 text-[15px]"
+              className="h-12 sm:h-[52px] w-full max-w-[280px] sm:max-w-xs rounded-full border-line-strong px-6 sm:px-7 text-[15px]"
             >
               <Link href="/pricing">{t("cta.pricing")}</Link>
             </Button>
           </div>
 
-          <p className="hero-step mt-5 text-[13px] text-faint" style={{ "--hero-delay": "270ms" } as React.CSSProperties}>
+          <p className="hero-step mt-6 sm:mt-8 text-[13px] text-faint" style={{ "--hero-delay": "270ms" } as React.CSSProperties}>
             {paidPrice
               ? t("hero.priceNote", {
                   price: formatPrice(paidPrice.major, paidPrice.currency, locale),

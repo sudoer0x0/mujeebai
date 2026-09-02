@@ -18,7 +18,9 @@
     "smoke:staff": "tsx --conditions=react-server --env-file=.env.local scripts/smoke-staff-routes.ts",
     "predev": "node scripts/dev-guard.mjs",
     "smoke:chat": "tsx --conditions=react-server --env-file=.env.local scripts/smoke-chat.ts",
-    "smoke:models": "tsx --env-file=.env.local scripts/smoke-models.ts"
+    "smoke:models": "tsx --env-file=.env.local scripts/smoke-models.ts",
+    "smoke:ordering": "tsx --env-file=.env.local scripts/smoke-ordering.ts",
+    "smoke:conversation": "tsx --env-file=.env.local scripts/smoke-conversation.ts"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.2.6",
