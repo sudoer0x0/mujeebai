@@ -2,12 +2,11 @@
 
 import * as React from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
 import { MessageList } from "@/components/chat/message-list";
 import { Composer } from "@/components/chat/composer";
 import { toast } from "@/components/ui/toast";
-import { readNdjsonStream } from "@/lib/streaming";
-import type { UiAttachment, UiMessage, UiMessageVariant } from "@/components/chat/types";
+import { readEventStream, STREAM_END } from "@/lib/streaming";
+import { activeVariantIndexOf, type UiAttachment, type UiMessage, type UiMessageVariant } from "@/components/chat/types";
 
 interface RawMessage {
   id: string;
@@ -51,10 +50,15 @@ function mapRawMessage(raw: RawMessage): UiMessage {
  * message that already has variants — which is every regeneration.
  */
 function withActiveVariantContent(message: UiMessage, text: string): Partial<UiMessage> {
-  const index = message.activeVariantIndex;
-  if (index === undefined || !message.variants?.[index]) return {};
+  // Resolved the same way the renderer resolves it. Previously this
+  // required an explicit `activeVariantIndex` and gave up otherwise —
+  // but the renderer falls back to the last variant, so on a fresh reply
+  // the text was written to `message.content` while the screen was
+  // reading an empty variant.
+  const index = activeVariantIndexOf(message);
+  if (index === null) return {};
 
-  const variants = [...message.variants];
+  const variants = [...(message.variants ?? [])];
   variants[index] = { ...variants[index], content: text };
   return { variants };
 }
@@ -78,7 +82,6 @@ export function ChatView({
 }) {
   const t = useTranslations("chat");
   const tRoot = useTranslations();
-  const router = useRouter();
 
   const [conversationId, setConversationId] = React.useState(initialConversationId);
   const [messages, setMessages] = React.useState<UiMessage[]>(() => initialMessages.map(mapRawMessage));
@@ -165,7 +168,17 @@ export function ChatView({
         let text = "";
         let reasoning = "";
 
-        for await (const chunk of readNdjsonStream(response.body)) {
+        let sawEnd = false;
+
+        for await (const chunk of readEventStream(response.body)) {
+          // The server's explicit terminator. Reaching it means the model
+          // finished, as distinct from the connection simply going quiet —
+          // which is what left the caret blinking on a dropped stream.
+          if (chunk === STREAM_END) {
+            sawEnd = true;
+            continue;
+          }
+
           if (chunk.type === "delta") {
             text += chunk.text;
             setMessages((previous) =>
@@ -206,7 +219,14 @@ export function ChatView({
           }
         }
 
-        // Guarantee completion status when stream closes cleanly
+        // Settle the message once the body is exhausted.
+        //
+        // `sawEnd` distinguishes a reply the server said was finished from
+        // a connection that merely stopped producing bytes. Both used to
+        // be treated as "complete", so a dropped stream left a
+        // half-written answer looking authoritative — and a stream that
+        // ended without the client noticing left the caret blinking on a
+        // message the model had long since finished.
         setMessages((previous) =>
           previous.map((message) =>
             (message.id === settledMessageId || message.id === assistantMessageId) && message.status === "streaming"
@@ -214,12 +234,14 @@ export function ChatView({
                   ...message,
                   id: settledMessageId,
                   content: text || message.content,
-                  status: "complete",
+                  status: sawEnd ? "complete" : text ? "stopped" : "error",
                   ...withActiveVariantContent(message, text || message.content || ""),
                 }
               : message,
           ),
         );
+
+        if (!sawEnd && !text) toast.error(t("errorGeneric"));
       } catch (error) {
         if ((error as Error).name === "AbortError") {
           // Stopped deliberately: keep whatever streamed in, mark it as

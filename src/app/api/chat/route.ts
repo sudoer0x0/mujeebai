@@ -7,6 +7,7 @@ import { getDefaultModel, getDefaultVisionModel, getModelBySlug } from "@/ai/reg
 import { checkModelAccess } from "@/ai/access";
 import { checkQuota, consumeQuota } from "@/usage/quota";
 import { runAssistantTurn } from "@/ai/run-turn";
+import { streamAssistantResponse } from "@/ai/gateway";
 import { buildUserContentWithAttachments, loadConversationHistory, type AttachmentRow } from "@/ai/conversation";
 import type { ChatMessageInput } from "@/ai/types";
 import { checkRateLimit } from "@/lib/rate-limit";
@@ -32,7 +33,6 @@ export async function POST(request: Request) {
   } catch {
     return jsonError("Unauthorized", 401);
   }
-
   // Rate limit check.
   const rateLimit = checkRateLimit(`chat:${user.id}`, 20, 60_000);
   if (!rateLimit.allowed) return jsonError("chat.quotaReached.title", 429);
@@ -42,46 +42,56 @@ export async function POST(request: Request) {
     return jsonError("Invalid request", 400);
   }
   const { conversationId, content, modelSlug, attachmentIds = [] } = parsed.data;
-
   const supabase = await createServerSupabaseClient();
 
-  // 1. Resolve or create conversation.
-  let conversation;
-  let isNewConversation = false;
-  if (conversationId) {
-    const { data, error } = await supabase.from("conversations").select("*").eq("id", conversationId).maybeSingle();
-    if (error || !data) return jsonError("Conversation not found", 404);
-    conversation = data;
-  } else {
-    const { data, error } = await supabase
-      .from("conversations")
-      .insert({ user_id: user.id, title: "New conversation" })
-      .select()
-      .single();
-    if (error || !data) return jsonError("Could not create conversation", 500);
-    conversation = data;
-    isNewConversation = true;
-  }
-
-  // 2. Resolve model and access check.
-  let model = modelSlug ? await getModelBySlug(modelSlug) : null;
-  if (!model && conversation.model_id) {
-    const { data } = await supabase.from("models").select("*").eq("id", conversation.model_id).maybeSingle();
-    model = data ?? null;
-  }
-  if (!model) model = await getDefaultModel();
-  if (!model) return jsonError("No model available", 503);
-
-  const accessDenied = await checkModelAccess(user.id, model);
-  if (accessDenied) return jsonError(accessDenied.errorKey, accessDenied.status);
-
-  // 3. Resolve attachments.
+  // Everything that does not depend on anything else, at once.
   //
-  // The per-message cap is an entitlement, so it is enforced here as well
-  // as in the composer. The schema's `.max(10)` is only a parser bound
-  // against an absurd payload; the real limit is per plan and can be
-  // raised for one account, so it has to be resolved per request.
-  const maxAttachments = await getEffectiveNumber(user.id, "max_attachments_per_message", 5);
+  // This route used to run a dozen Supabase round trips strictly in
+  // sequence before it opened the model connection. Each one costs
+  // ~250ms from the app to the database region, so the person watching
+  // the screen waited three seconds before the request that actually
+  // produces their answer had even been sent. None of these four depend
+  // on each other, so none of them should wait for the others.
+  // Start the entitlement load before anything needs it.
+  //
+  // `getEffective*` share one `cache()`-memoised fetch per request, so
+  // whoever calls first pays for it and everyone after is free. That
+  // first caller used to be `checkModelAccess`, half way down the
+  // waterfall, which put ~500ms of it on the critical path. Kicking it
+  // off here folds that cost into work already happening.
+  const entitlementsWarm = getEffectiveNumber(user.id, "max_attachments_per_message", 5);
+
+  const [conversationResult, maxAttachments, requestedModel, attachmentRows] = await Promise.all([
+    conversationId
+      ? supabase.from("conversations").select("*").eq("id", conversationId).maybeSingle()
+      : supabase
+          .from("conversations")
+          .insert({ user_id: user.id, title: "New conversation" })
+          .select()
+          .single(),
+    // Already in flight above; awaiting the same promise costs nothing.
+    // The per-message cap is an entitlement, enforced here as well as in
+    // the composer: the schema's `.max()` is only a bound against an
+    // absurd payload, while the real limit is per plan and can be raised
+    // for one account.
+    entitlementsWarm,
+    modelSlug ? getModelBySlug(modelSlug) : Promise.resolve(null),
+    attachmentIds.length > 0
+      ? supabase
+          .from("attachments")
+          .select("*")
+          .in("id", attachmentIds)
+          .eq("owner_id", user.id)
+          .eq("status", "ready")
+      : Promise.resolve({ data: [] as AttachmentRow[] }),
+  ]);
+
+  if (conversationResult.error || !conversationResult.data) {
+    return jsonError(conversationId ? "Conversation not found" : "Could not create conversation", conversationId ? 404 : 500);
+  }
+  const conversation = conversationResult.data;
+  const isNewConversation = !conversationId;
+
   if (attachmentIds.length > Math.max(1, Math.round(maxAttachments) || 5)) {
     return NextResponse.json(
       { error: "chat.tooManyAttachments", limit: Math.round(maxAttachments) },
@@ -89,16 +99,19 @@ export async function POST(request: Request) {
     );
   }
 
-  let attachments: AttachmentRow[] = [];
-  if (attachmentIds.length > 0) {
-    const { data } = await supabase
-      .from("attachments")
-      .select("*")
-      .in("id", attachmentIds)
-      .eq("owner_id", user.id)
-      .eq("status", "ready");
-    attachments = data ?? [];
+  const attachments: AttachmentRow[] = (attachmentRows.data as AttachmentRow[] | null) ?? [];
+
+  // Resolve the model. The registry lookups are cached, so these are
+  // usually free; only the conversation's own model needs the database.
+  let model = requestedModel;
+  if (!model && conversation.model_id) {
+    const { data } = await supabase.from("models").select("*").eq("id", conversation.model_id).maybeSingle();
+    model = data ?? null;
   }
+  if (!model) model = await getDefaultModel();
+  if (!model) return jsonError("No model available", 503);
+  const accessDenied = await checkModelAccess(user.id, model);
+  if (accessDenied) return jsonError(accessDenied.errorKey, accessDenied.status);
 
   const hasImage = attachments.some((a) => a.kind === "image");
   if (hasImage && !model.capabilities.includes("vision")) {
@@ -112,21 +125,13 @@ export async function POST(request: Request) {
     return jsonError("chat.quotaReached.title", 429);
   }
 
-  // 4. Persist user message.
-  const { data: userMessage, error: userMessageError } = await supabase
-    .from("messages")
-    .insert({ conversation_id: conversation.id, user_id: user.id, role: "user", content, status: "complete" })
-    .select()
-    .single();
-  if (userMessageError || !userMessage) return jsonError("Could not save message", 500);
-
-  if (attachments.length > 0) {
-    await supabase
-      .from("message_attachments")
-      .insert(attachments.map((a) => ({ message_id: userMessage.id, attachment_id: a.id })));
-  }
-
-  // 5. Build conversation history.
+  // History BEFORE the new message is written.
+  //
+  // This used to load after the insert, so the row just created came back
+  // as part of "history" — and the same text was then appended again as
+  // the current turn. Every request sent the person's message to the
+  // model twice: wrong input, and paid for twice. Reading first is both
+  // the fix and one less thing in the critical path.
   const history = await loadConversationHistory(conversation.id);
   const documentAttachments = attachments.filter((a) => a.kind !== "image" && a.processed_content);
   let userContent = await buildUserContentWithAttachments(content, attachments);
@@ -137,27 +142,66 @@ export async function POST(request: Request) {
       .join("\n\n");
     userContent = typeof userContent === "string" ? `${content}\n\n${docsText}` : [...userContent, { type: "text" as const, text: docsText }];
   }
-
   const conversationHistory: ChatMessageInput[] = [...history, { role: "user", content: userContent }];
 
-  // 6. Create assistant placeholder message.
-  const { data: assistantMessage, error: assistantError } = await supabase
-    .from("messages")
-    .insert({ conversation_id: conversation.id, user_id: user.id, role: "assistant", status: "streaming" })
-    .select()
-    .single();
-  if (assistantError || !assistantMessage) return jsonError("Could not create assistant message", 500);
+  // The rows for this turn, written together.
+  //
+  // The user message, the assistant placeholder and its first variant do
+  // not depend on one another's results — only the two follow-up writes
+  // do — so they go out at once instead of three round trips deep.
+  // Open the model connection now.
+  //
+  // It needs only the model and the history, both of which are ready —
+  // and it is the slowest step in the whole request. Starting it here
+  // means the ~1.4s it takes to reach the first token runs *alongside*
+  // the row writes and the quota consume below, rather than after them.
+  //
+  // Deliberately not awaited. A rejection is handled by `runAssistantTurn`
+  // when it awaits this same promise; attaching a no-op catch here keeps
+  // Node from treating it as an unhandled rejection in the meantime.
+  const pendingStream = streamAssistantResponse({
+    model,
+    conversationHistory,
+    signal: request.signal,
+  });
+  pendingStream.catch(() => undefined);
+  const [userMessageResult, assistantResult] = await Promise.all([
+    supabase
+      .from("messages")
+      .insert({ conversation_id: conversation.id, user_id: user.id, role: "user", content, status: "complete" })
+      .select("id")
+      .single(),
+    supabase
+      .from("messages")
+      .insert({ conversation_id: conversation.id, user_id: user.id, role: "assistant", status: "streaming" })
+      .select("id")
+      .single(),
+  ]);
 
-  const { data: variant } = await supabase
-    .from("message_variants")
-    .insert({ message_id: assistantMessage.id, sequence: 1, model_id: model.id })
-    .select()
-    .single();
+  if (userMessageResult.error || !userMessageResult.data) return jsonError("Could not save message", 500);
+  if (assistantResult.error || !assistantResult.data) return jsonError("Could not create assistant message", 500);
 
+  const userMessage = userMessageResult.data;
+  const assistantMessage = assistantResult.data;
+  const [variantResult] = await Promise.all([
+    supabase
+      .from("message_variants")
+      .insert({ message_id: assistantMessage.id, sequence: 1, model_id: model.id })
+      .select("id")
+      .single(),
+    attachments.length > 0
+      ? supabase
+          .from("message_attachments")
+          .insert(attachments.map((a) => ({ message_id: userMessage.id, attachment_id: a.id })))
+      : Promise.resolve(null),
+  ]);
+
+  const variant = variantResult.data;
   if (variant) {
-    await supabase.from("messages").update({ active_variant_id: variant.id }).eq("id", assistantMessage.id);
+    // Not awaited: nothing before the first token depends on it, and the
+    // persistence step at the end of the turn re-reads the variant by id.
+    void supabase.from("messages").update({ active_variant_id: variant.id }).eq("id", assistantMessage.id);
   }
-
   try {
     await consumeQuota(user.id, category);
   } catch {
@@ -170,10 +214,10 @@ export async function POST(request: Request) {
     await supabase.from("messages").update({ status: "error" }).eq("id", assistantMessage.id);
     return jsonError("chat.quotaReached.title", 429);
   }
-
   return runAssistantTurn({
     model,
     conversationHistory,
+    pendingStream,
     conversationId: conversation.id,
     assistantMessageId: assistantMessage.id,
     variantId: variant?.id ?? "",

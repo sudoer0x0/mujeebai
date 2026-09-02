@@ -2,12 +2,11 @@ import "server-only";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { streamAssistantResponse } from "@/ai/gateway";
 import { streamChunksAsResponse } from "@/lib/streaming";
-import { GatewayError, type ChatMessageInput } from "@/ai/types";
+import { GatewayError, type ChatMessageInput, type StreamChunk } from "@/ai/types";
 import { deriveTitle } from "@/ai/conversation";
 import { logger } from "@/lib/logger";
 import type { ModelRow } from "@/ai/registry";
 import type { UpdateOf } from "@/types/database";
-import { NextResponse } from "next/server";
 
 export interface RunTurnParams {
   model: ModelRow;
@@ -18,33 +17,58 @@ export interface RunTurnParams {
   /** Set the conversation title from this text if it's still the placeholder title. */
   titleSourceText?: string;
   signal?: AbortSignal;
+  /**
+   * A model call that has already been started.
+   *
+   * Opening the connection to the provider is the single slowest step in
+   * a turn — around 1.4s to the first token — and it depends only on the
+   * model and the history. Starting it in the route, before the rows for
+   * this turn are written, lets that latency overlap the database work
+   * instead of following it. When absent, the call is made here as
+   * before, which keeps the other callers (regenerate, edit) unchanged.
+   */
+  pendingStream?: Promise<Awaited<ReturnType<typeof streamAssistantResponse>>>;
 }
 
 // Streams model turn and persists results to database.
 export async function runAssistantTurn(params: RunTurnParams): Promise<Response> {
   const supabase = await createServerSupabaseClient();
 
+  // The model this turn actually ran on. Only known once the provider
+  // answers — which now happens after the response has already started —
+  // so it is captured here and read by the persistence step below.
   let resolvedModel = params.model;
-  let generator;
-  try {
-    const result = await streamAssistantResponse({
+
+  const pending = (params.pendingStream ??
+    streamAssistantResponse({
       model: params.model,
       conversationHistory: params.conversationHistory,
       signal: params.signal,
-    });
-    generator = result.chunks;
-    resolvedModel = result.resolvedModel;
-  } catch (error) {
-    const gwError = error instanceof GatewayError ? error : new GatewayError("unknown", String(error));
-    await supabase
-      .from("message_variants")
-      .update({ error: { code: gwError.code, message: gwError.message } })
-      .eq("id", params.variantId);
-    await supabase.from("messages").update({ status: "error" }).eq("id", params.assistantMessageId);
-    return NextResponse.json({ error: gwError.code }, { status: 502 });
-  }
+    }))
+    .then((result) => {
+      resolvedModel = result.resolvedModel;
+      return result.chunks;
+    })
+    .catch(async (error) => {
+      // The connection is already open, so a failure has to be delivered
+      // *in* the stream rather than as a status code. Returning an error
+      // chunk keeps one code path for "the model failed", whether that
+      // happened before the first token or halfway through.
+      const gwError = error instanceof GatewayError ? error : new GatewayError("unknown", String(error));
+      logger.warn("chat_model_call_failed", { code: gwError.code });
+      await supabase
+        .from("message_variants")
+        .update({ error: { code: gwError.code, message: gwError.message } })
+        .eq("id", params.variantId);
+      await supabase.from("messages").update({ status: "error" }).eq("id", params.assistantMessageId);
 
-  return streamChunksAsResponse(generator, async (chunks) => {
+      async function* failed(): AsyncGenerator<StreamChunk> {
+        yield { type: "error", code: gwError.code, message: gwError.message };
+      }
+      return failed();
+    });
+
+  return streamChunksAsResponse(pending, async (chunks) => {
     const textParts: string[] = [];
     const reasoningParts: string[] = [];
     let finishReason = "stopped";
@@ -101,6 +125,10 @@ export async function runAssistantTurn(params: RunTurnParams): Promise<Response>
   }, {
     "X-Conversation-Id": params.conversationId,
     "X-Message-Id": params.assistantMessageId,
-    "X-Model-Slug": resolvedModel.slug,
+    // What was *requested*. The model actually used is only known after
+    // the provider answers, which is now after these headers are sent —
+    // a fallback swap is recorded on the variant row, which is where
+    // anything auditing this should look.
+    "X-Model-Slug": params.model.slug,
   });
 }

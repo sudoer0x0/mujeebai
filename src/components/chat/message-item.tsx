@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/input";
 import { Alert } from "@/components/ui/alert";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import type { UiMessage } from "@/components/chat/types";
+import { displayContentOf, type UiMessage } from "@/components/chat/types";
 import { cn } from "@/lib/utils";
 
 export function MessageItem({
@@ -32,8 +32,7 @@ export function MessageItem({
   const isUser = message.role === "user";
   const variants = message.variants ?? [];
   const activeIndex = message.activeVariantIndex ?? Math.max(0, variants.length - 1);
-  const activeVariant = variants[activeIndex];
-  const displayContent = isUser ? message.content : (activeVariant?.content ?? message.content);
+  const displayContent = displayContentOf(message);
   const isBusy = message.status === "pending" || message.status === "streaming";
 
   // A local id means the message exists only in this tab and the server

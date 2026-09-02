@@ -48,11 +48,20 @@ export async function generateMetadata({
       statusBarStyle: "black-translucent",
     },
     icons: {
+      // Small raster icons only.
+      //
+      // There was a 485KB SVG here — the brand mark with a base64 PNG
+      // embedded inside it. Icons declared in metadata are served raw;
+      // `next/image` does not touch them. So every visitor downloaded
+      // half a megabyte to draw a 32px favicon, on a product whose main
+      // complaint was that it felt slow. The PNGs below are the same
+      // artwork at the sizes browsers actually ask for, and total under
+      // 60KB across all of them.
       icon: [
         { url: "/favicon.ico", sizes: "any" },
-        { url: "/favicon.svg", type: "image/svg+xml" },
-        { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
         { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+        { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+        { url: "/icons/favicon-48x48.png", sizes: "48x48", type: "image/png" },
         { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
       ],
       apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
