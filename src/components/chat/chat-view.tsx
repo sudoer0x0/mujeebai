@@ -49,6 +49,33 @@ function mapRawMessage(raw: RawMessage): UiMessage {
  * a stream that only updates `message.content` is invisible on any
  * message that already has variants — which is every regeneration.
  */
+/**
+ * Puts the conversation id in the address bar without navigating.
+ *
+ * `history.replaceState` is deliberate: a real navigation would remount
+ * the chat and throw away the reply currently streaming into it. But the
+ * URL it writes has to remain a URL this app actually serves — and the
+ * previous version wrote `/chat/<id>`, dropping the `/{locale}` prefix
+ * every route in this application is mounted under.
+ *
+ * The result was the bug this fixes: the address bar no longer matched
+ * any route, so the next render resolved to a fresh empty chat. The
+ * message that had just been sent vanished, and it looked as though
+ * sending had opened a new conversation.
+ *
+ * The locale is read from the current path rather than passed in, so
+ * this cannot drift out of step with wherever the app is actually
+ * mounted.
+ */
+function replaceConversationUrl(conversationId: string) {
+  if (typeof window === "undefined") return;
+
+  const [, maybeLocale] = window.location.pathname.split("/");
+  const prefix = /^[a-z]{2}$/.test(maybeLocale ?? "") ? `/${maybeLocale}` : "";
+
+  window.history.replaceState(null, "", `${prefix}/chat/${conversationId}`);
+}
+
 function withActiveVariantContent(message: UiMessage, text: string): Partial<UiMessage> {
   // Resolved the same way the renderer resolves it. Previously this
   // required an explicit `activeVariantIndex` and gave up otherwise —
@@ -91,17 +118,11 @@ export function ChatView({
 
   const currentConvIdRef = React.useRef(initialConversationId);
 
-  /**
-   * Re-seed only when navigating to a different conversation from outside
-   * (e.g. user clicked a different chat in the sidebar).
-   */
-  React.useEffect(() => {
-    if (initialConversationId !== currentConvIdRef.current) {
-      currentConvIdRef.current = initialConversationId;
-      setConversationId(initialConversationId);
-      setMessages(initialMessages.map(mapRawMessage));
-    }
-  }, [initialConversationId, initialMessages]);
+  // No re-seeding effect. The parent keys this component by conversation
+  // id, so React remounts it on a real navigation and leaves it entirely
+  // alone when a conversation id is adopted mid-stream. Every previous
+  // attempt to work this out from props or from the pathname got one of
+  // those two cases wrong.
 
   /** Translates a server-sent message key, falling back to a generic one. */
   const translateServerError = React.useCallback(
@@ -160,9 +181,7 @@ export function ChatView({
         if (newConversationId && newConversationId !== conversationId) {
           currentConvIdRef.current = newConversationId;
           setConversationId(newConversationId);
-          if (typeof window !== "undefined") {
-            window.history.replaceState(null, "", `/chat/${newConversationId}`);
-          }
+          replaceConversationUrl(newConversationId);
         }
 
         let text = "";
@@ -437,9 +456,7 @@ export function ChatView({
       if (data.conversationId && data.conversationId !== conversationId) {
         currentConvIdRef.current = data.conversationId;
         setConversationId(data.conversationId);
-        if (typeof window !== "undefined") {
-          window.history.replaceState(null, "", `/chat/${data.conversationId}`);
-        }
+        replaceConversationUrl(data.conversationId);
       }
 
       setMessages((previous) =>

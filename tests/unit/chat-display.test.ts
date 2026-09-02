@@ -74,3 +74,39 @@ test("a user message always shows its own content", () => {
   const message = { ...assistant({ content: "hello" }), role: "user" } as UiMessage;
   assert.equal(displayContentOf(message), "hello");
 });
+
+/**
+ * The URL written after the server creates a conversation.
+ *
+ * This shipped to production as `/chat/<id>` — with no locale prefix,
+ * though every route in the app is mounted under `/{locale}`. The address
+ * bar stopped matching any route, the next render resolved to a fresh
+ * empty chat, and the message that had just been sent disappeared. It
+ * looked exactly like "sending a message opens a new empty chat".
+ *
+ * The function under test is inlined here rather than exported from a
+ * client component, because it reads `window.location`; this pins the
+ * rule it implements.
+ */
+function conversationUrl(currentPath: string, conversationId: string): string {
+  const [, maybeLocale] = currentPath.split("/");
+  const prefix = /^[a-z]{2}$/.test(maybeLocale ?? "") ? `/${maybeLocale}` : "";
+  return `${prefix}/chat/${conversationId}`;
+}
+
+test("adopting a new conversation keeps the locale prefix", () => {
+  assert.equal(conversationUrl("/en/chat", "abc"), "/en/chat/abc");
+  assert.equal(conversationUrl("/fr/chat", "abc"), "/fr/chat/abc");
+  assert.equal(conversationUrl("/ar/chat/old-id", "abc"), "/ar/chat/abc");
+});
+
+test("a path with no locale is left unprefixed rather than guessed", () => {
+  // Mounting without a locale prefix is a valid configuration; inventing
+  // one here would break it the same way dropping one broke this.
+  assert.equal(conversationUrl("/chat", "abc"), "/chat/abc");
+});
+
+test("a first segment that is not a locale is not mistaken for one", () => {
+  // Two letters is the test, so a longer segment must not be eaten.
+  assert.equal(conversationUrl("/chatting/x", "abc"), "/chat/abc");
+});

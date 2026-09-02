@@ -57,8 +57,12 @@ export async function generateMetadata({
       // complaint was that it felt slow. The PNGs below are the same
       // artwork at the sizes browsers actually ask for, and total under
       // 60KB across all of them.
+      // `/favicon.ico` is served by Next from `src/app/favicon.ico` (its
+      // own file convention) and is deliberately NOT listed here. A copy
+      // in `public/` as well made Next refuse both with
+      // "a conflicting public file and page file was found", which
+      // returned 500 for the icon on every page load.
       icon: [
-        { url: "/favicon.ico", sizes: "any" },
         { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
         { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
         { url: "/icons/favicon-48x48.png", sizes: "48x48", type: "image/png" },

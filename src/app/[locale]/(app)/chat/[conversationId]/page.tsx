@@ -53,6 +53,9 @@ export default async function ConversationPage({
 
   return (
     <ChatView
+      // See the note in ../page.tsx: identity comes from the key, so the
+      // view resets on a real navigation and never on `replaceState`.
+      key={conversation.id}
       conversationId={conversation.id}
       initialMessages={messages as never}
       initialModelSlug={conversation.models?.slug ?? null}

@@ -11,6 +11,7 @@ import { streamAssistantResponse } from "@/ai/gateway";
 import { buildUserContentWithAttachments, loadConversationHistory, type AttachmentRow } from "@/ai/conversation";
 import type { ChatMessageInput } from "@/ai/types";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { logger } from "@/lib/logger";
 
 export const runtime = "nodejs";
 export const maxDuration = 120;
@@ -26,7 +27,27 @@ function jsonError(message: string, status: number) {
   return NextResponse.json({ error: message }, { status });
 }
 
+/**
+ * The chat turn.
+ *
+ * Wrapped so that nothing escapes as an unhandled throw. It used to be
+ * possible: `loadConversationHistory` raises on a failed read, and
+ * nothing caught it — the browser got Next's generic 500 with an empty
+ * body, which tells the person nothing and tells the log nothing either.
+ */
 export async function POST(request: Request) {
+  try {
+    return await handleChat(request);
+  } catch (error) {
+    logger.error("chat_route_unhandled", {
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack?.split("\n").slice(0, 3).join(" | ") : undefined,
+    });
+    return jsonError("chat.errorGeneric", 500);
+  }
+}
+
+async function handleChat(request: Request) {
   let user;
   try {
     user = await requireUser();
