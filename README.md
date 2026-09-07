@@ -1,4 +1,4 @@
-# Mujeeb AI Pro
+# Mujeeb AI
 
 An AI platform built for multi-model intelligence.
 
