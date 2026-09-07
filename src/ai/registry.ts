@@ -36,7 +36,19 @@ export async function getProviderById(id: string): Promise<ProviderRow | null> {
 }
 
 
-// Resolves model fallback chain up to 5 hops.
+/**
+ * Known resilient free provider models on OpenRouter.
+ * Used as alternative candidates when the primary free slot is rate-limited
+ * or when an upstream provider returns 0 content tokens.
+ */
+export const FREE_FALLBACK_PROVIDERS = [
+  "poolside/laguna-s-2.1:free",
+  "minimax/minimax-m3:free",
+  "nvidia/nemotron-3.5-lightning:free",
+  "openrouter/free",
+];
+
+// Resolves model fallback chain up to 5 hops, augmented with free candidate models.
 export async function resolveFallbackChain(model: ModelRow): Promise<ModelRow[]> {
   const chain: ModelRow[] = [model];
   let current = model;
@@ -46,6 +58,22 @@ export async function resolveFallbackChain(model: ModelRow): Promise<ModelRow[]>
     chain.push(next);
     current = next;
   }
+
+  // If this is a free model, augment the chain with alternative free provider models
+  // so that single-provider rate limits or blank streams are rescued seamlessly.
+  if (model.tier === "free") {
+    const existingProviderIds = new Set(chain.map((m) => m.provider_model_id));
+    for (const fallbackId of FREE_FALLBACK_PROVIDERS) {
+      if (!existingProviderIds.has(fallbackId)) {
+        existingProviderIds.add(fallbackId);
+        chain.push({
+          ...model,
+          provider_model_id: fallbackId,
+        });
+      }
+    }
+  }
+
   return chain;
 }
 

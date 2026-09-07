@@ -51,6 +51,7 @@ export const providerStatus = {
   supabaseServiceRole: Boolean(serverEnv.SUPABASE_SERVICE_ROLE_KEY),
   openrouter: Boolean(serverEnv.OPENROUTER_API_KEY),
   cloudflareImages: Boolean(serverEnv.CLOUDFLARE_ACCOUNT_ID && serverEnv.CLOUDFLARE_API_TOKEN),
+  cloudflareChat: Boolean(serverEnv.CLOUDFLARE_ACCOUNT_ID && serverEnv.CLOUDFLARE_API_TOKEN),
   resend: Boolean(serverEnv.RESEND_API_KEY),
   paystack: Boolean(serverEnv.PAYSTACK_SECRET_KEY),
 } as const;

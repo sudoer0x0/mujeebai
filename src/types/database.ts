@@ -647,6 +647,26 @@ export interface Database {
           metadata?: Json;
         }
       >;
+      user_memories: Table<
+        {
+          id: string;
+          user_id: string;
+          category: "preference" | "bio" | "project" | "constraint" | "general";
+          content: string;
+          source_conversation_id: string | null;
+          created_at: string;
+          updated_at: string;
+        },
+        {
+          id?: string;
+          user_id: string;
+          category?: "preference" | "bio" | "project" | "constraint" | "general";
+          content: string;
+          source_conversation_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        }
+      >;
     };
     Views: Record<string, never>;
     Functions: {

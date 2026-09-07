@@ -388,7 +388,40 @@
       "slate": "Pizarra"
     },
     "accent": "Color de acento",
-    "accentHint": "Colorea botones, enlaces y resaltados en toda la aplicación."
+    "accentHint": "Colorea botones, enlaces y resaltados en toda la aplicación.",
+    "memory": {
+      "title": "Memoria de la IA",
+      "enabledLabel": "Memoria entre conversaciones",
+      "enabledDesc": "Mujeeb AI recuerda detalles y preferencias a través de las conversaciones para brindar una experiencia personalizada.",
+      "enabledToast": "Memoria activada.",
+      "disabledToast": "Memoria pausada.",
+      "toggleFailed": "No se pudo actualizar la configuración de memoria.",
+      "addPlaceholder": "Agrega algo para que Mujeeb AI recuerde (ej. preferencias, proyectos)...",
+      "addBtn": "Recordar",
+      "addedToast": "Memoria agregada.",
+      "addFailed": "No se pudo agregar la memoria.",
+      "deleteBtn": "Eliminar memoria",
+      "deletedToast": "Memoria eliminada.",
+      "deleteFailed": "No se pudo eliminar la memoria.",
+      "clearAllBtn": "Borrar todas las memorias",
+      "clearConfirmTitle": "¿Borrar todos los detalles recordados?",
+      "clearConfirmDesc": "Esto eliminará permanentemente todos los datos y preferencias que Mujeeb AI ha aprendido sobre ti.",
+      "clearConfirmBtn": "Borrar todo",
+      "cancelBtn": "Cancelar",
+      "clearedToast": "Todas las memorias han sido borradas.",
+      "clearFailed": "No se pudieron borrar las memorias.",
+      "emptyTitle": "Aún no hay memorias",
+      "emptyDesc": "A medida que converses, Mujeeb AI recordará automáticamente tus preferencias o puedes agregarlas manualmente arriba.",
+      "pausedNotice": "La memoria está actualmente pausada. Mujeeb AI no recordará detalles ni hará referencia al pasado.",
+      "invalidInput": "Por favor ingresa una nota de memoria válida.",
+      "categories": {
+        "preference": "Preferencia",
+        "bio": "Sobre ti",
+        "project": "Proyecto",
+        "constraint": "Restricción",
+        "general": "General"
+      }
+    }
   },
   "billing": {
     "plan": {
@@ -657,7 +690,20 @@
       "overrideReasonHint": "Queda registrado en el registro de auditoría.",
       "overrideSave": "Guardar excepción",
       "overrideSaved": "Excepción guardada.",
-      "overrideRemoved": "Excepción eliminada."
+      "overrideRemoved": "Excepción eliminada.",
+      "tabToday": "Uso de hoy",
+      "tabHistory": "Últimos 30 días",
+      "tabEvents": "Actividad reciente",
+      "colDate": "Fecha",
+      "colTotal": "Acciones totales",
+      "colActiveUsers": "Cuentas activas",
+      "platformHistory": "Historial de uso de la plataforma",
+      "platformHistoryDescription": "Actividad agregada diaria de todas las cuentas durante los últimos 30 días.",
+      "viewDate": "Ver detalles del día",
+      "noEvents": "No hay eventos individuales registrados recientemente.",
+      "noHistory": "No se encontró historial de uso para este período.",
+      "last7Days": "Últimos 7 días",
+      "last30Days": "Últimos 30 días"
     },
     "category": {
       "messages": "Mensajes",
@@ -1180,7 +1226,8 @@
       "users": "Cuentas",
       "moderation": "Registro de moderación",
       "activity": "Mis acciones",
-      "security": "Seguridad"
+      "security": "Seguridad",
+      "usage": "Uso"
     },
     "dashboard": {
       "title": "Resumen",

@@ -133,10 +133,10 @@ export default async function AdminUserDetailPage({
 
       <Card>
         <CardHeader>
-          <CardTitle>{t("users.detail.usageToday")}</CardTitle>
+          <CardTitle>{t("usage.title")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <UserUsagePanel userId={detail.id} usage={usage} />
+          <UserUsagePanel userId={detail.id} usage={usage} pastUsage={detail.pastUsage} />
         </CardContent>
       </Card>
 

@@ -8,6 +8,8 @@ import { recordAuditEvent } from "@/admin/audit";
 import { createServiceRoleClient } from "@/lib/supabase/server";
 import { revalidateRegistry } from "@/lib/cached-registry";
 import { logger } from "@/lib/logger";
+import { sendEmail } from "@/notifications";
+import { buildPlanGrantedEmail } from "@/notifications/templates/plan-granted";
 import type { ActionResponse } from "@/admin/user-actions";
 
 /**
@@ -68,7 +70,7 @@ export async function grantPlanAccessAction(input: unknown): Promise<ActionRespo
 
     const { data: target } = await supabase
       .from("profiles")
-      .select("id, email")
+      .select("id, email, display_name, locale")
       .eq("id", parsed.data.userId)
       .maybeSingle();
 
@@ -126,6 +128,30 @@ export async function grantPlanAccessAction(input: unknown): Promise<ActionRespo
           reason: parsed.data.reason ?? null,
         },
       });
+
+      if (target.email) {
+        try {
+          const emailMessage = buildPlanGrantedEmail({
+            to: target.email,
+            locale: target.locale ?? "en",
+            displayName: target.display_name ?? undefined,
+            planName: plan.name,
+            days: parsed.data.days,
+            expiresAt: end.toISOString(),
+            reason: parsed.data.reason ?? null,
+          });
+          const sendResult = await sendEmail(emailMessage);
+          logger.info("plan_grant_email_dispatched", {
+            userId: target.id,
+            delivered: sendResult.delivered,
+          });
+        } catch (emailErr) {
+          logger.warn("plan_grant_email_failed", {
+            userId: target.id,
+            error: String(emailErr),
+          });
+        }
+      }
     }
 
     await recordAuditEvent({

@@ -388,7 +388,40 @@
       "slate": "Ardoise"
     },
     "accent": "Couleur d'accentuation",
-    "accentHint": "Colore les boutons, liens et surbrillances dans toute l'application."
+    "accentHint": "Colore les boutons, liens et surbrillances dans toute l'application.",
+    "memory": {
+      "title": "Mémoire IA",
+      "enabledLabel": "Mémoire entre conversations",
+      "enabledDesc": "Mujeeb AI se souvient de vos préférences et détails à travers les conversations pour une expérience personnalisée.",
+      "enabledToast": "Mémoire activée.",
+      "disabledToast": "Mémoire en pause.",
+      "toggleFailed": "Impossible de mettre à jour le paramètre de mémoire.",
+      "addPlaceholder": "Ajouter un élément à mémoriser (ex. technologies, préférences)...",
+      "addBtn": "Mémoriser",
+      "addedToast": "Mémoire ajoutée.",
+      "addFailed": "Impossible d'ajouter la mémoire.",
+      "deleteBtn": "Supprimer la mémoire",
+      "deletedToast": "Mémoire supprimée.",
+      "deleteFailed": "Impossible de supprimer la mémoire.",
+      "clearAllBtn": "Effacer toutes les mémoires",
+      "clearConfirmTitle": "Effacer tous les éléments mémorisés ?",
+      "clearConfirmDesc": "Cela supprimera définitivement tous les faits et préférences que Mujeeb AI a appris à votre sujet.",
+      "clearConfirmBtn": "Tout effacer",
+      "cancelBtn": "Annuler",
+      "clearedToast": "Toutes les mémoires ont été effacées.",
+      "clearFailed": "Impossible d'effacer les mémoires.",
+      "emptyTitle": "Aucune mémoire pour l'instant",
+      "emptyDesc": "Au fil de vos discussions, Mujeeb AI retiendra automatiquement vos préférences, ou vous pouvez en ajouter manuellement ci-dessus.",
+      "pausedNotice": "La mémoire est actuellement en pause. Mujeeb AI ne mémorisera aucun nouveau détail.",
+      "invalidInput": "Veuillez saisir une note de mémoire valide.",
+      "categories": {
+        "preference": "Préférence",
+        "bio": "À propos de vous",
+        "project": "Projet",
+        "constraint": "Contrainte",
+        "general": "Général"
+      }
+    }
   },
   "billing": {
     "plan": {
@@ -657,7 +690,20 @@
       "overrideReasonHint": "Enregistré dans le journal d’audit.",
       "overrideSave": "Enregistrer la dérogation",
       "overrideSaved": "Dérogation enregistrée.",
-      "overrideRemoved": "Dérogation retirée."
+      "overrideRemoved": "Dérogation retirée.",
+      "tabToday": "Utilisation du jour",
+      "tabHistory": "30 derniers jours",
+      "tabEvents": "Activité récente",
+      "colDate": "Date",
+      "colTotal": "Total des actions",
+      "colActiveUsers": "Comptes actifs",
+      "platformHistory": "Historique d'utilisation de la plateforme",
+      "platformHistoryDescription": "Activité quotidienne globale de tous les comptes au cours des 30 derniers jours.",
+      "viewDate": "Voir les détails du jour",
+      "noEvents": "Aucun événement individuel enregistré récemment.",
+      "noHistory": "Aucun historique d'utilisation pour cette période.",
+      "last7Days": "7 derniers jours",
+      "last30Days": "30 derniers jours"
     },
     "category": {
       "messages": "Messages",
@@ -1180,7 +1226,8 @@
       "users": "Comptes",
       "moderation": "Journal de modération",
       "activity": "Mes actions",
-      "security": "Sécurité"
+      "security": "Sécurité",
+      "usage": "Utilisation"
     },
     "dashboard": {
       "title": "Vue d’ensemble",

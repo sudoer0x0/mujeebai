@@ -12,6 +12,7 @@ import { buildUserContentWithAttachments, loadConversationHistory, type Attachme
 import type { ChatMessageInput } from "@/ai/types";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { logger } from "@/lib/logger";
+import { extractAndSaveDeterministicMemories } from "@/ai/memory/extractor";
 
 export const runtime = "nodejs";
 export const maxDuration = 120;
@@ -176,7 +177,21 @@ async function handleChat(request: Request) {
   //
   // The user message, the assistant placeholder and its first variant do
   // not depend on one another's results — only the two follow-up writes
-  // do — so they go out at once instead of three round trips deep.
+  // Extract and persist deterministic memories immediately (< 5ms)
+  // so the current turn's system prompt already contains the new personal context.
+  const rawUserText = typeof content === "string" ? content : "";
+  if (rawUserText) {
+    try {
+      await extractAndSaveDeterministicMemories({
+        userId: user.id,
+        conversationId: conversation.id,
+        userText: rawUserText,
+      });
+    } catch {
+      // Non-blocking
+    }
+  }
+
   // Open the model connection now.
   //
   // It needs only the model and the history, both of which are ready —
@@ -190,6 +205,7 @@ async function handleChat(request: Request) {
   const pendingStream = streamAssistantResponse({
     model,
     conversationHistory,
+    userId: user.id,
     signal: request.signal,
   });
   pendingStream.catch(() => undefined);
@@ -283,6 +299,7 @@ async function handleChat(request: Request) {
     conversationId: conversation.id,
     assistantMessageId: assistantMessage.id,
     variantId: variant?.id ?? "",
+    userId: user.id,
     titleSourceText: isNewConversation ? content : undefined,
     signal: request.signal,
   });

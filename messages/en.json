@@ -388,7 +388,40 @@
       "slate": "Slate"
     },
     "accent": "Accent colour",
-    "accentHint": "Colours buttons, links and highlights across the app."
+    "accentHint": "Colours buttons, links and highlights across the app.",
+    "memory": {
+      "title": "AI Memory",
+      "enabledLabel": "Cross-conversation memory",
+      "enabledDesc": "Mujeeb AI remembers details and preferences across conversations to provide a more personalized experience.",
+      "enabledToast": "AI Memory enabled.",
+      "disabledToast": "AI Memory paused.",
+      "toggleFailed": "Could not update memory setting.",
+      "addPlaceholder": "Add something for Mujeeb AI to remember (e.g. tech stack, preferences)...",
+      "addBtn": "Remember",
+      "addedToast": "Memory added.",
+      "addFailed": "Could not add memory.",
+      "deleteBtn": "Delete memory",
+      "deletedToast": "Memory deleted.",
+      "deleteFailed": "Could not delete memory.",
+      "clearAllBtn": "Clear all memories",
+      "clearConfirmTitle": "Clear all remembered details?",
+      "clearConfirmDesc": "This permanently deletes all facts and preferences Mujeeb AI has learned about you across conversations.",
+      "clearConfirmBtn": "Clear all",
+      "cancelBtn": "Cancel",
+      "clearedToast": "All memories cleared.",
+      "clearFailed": "Could not clear memories.",
+      "emptyTitle": "No memories yet",
+      "emptyDesc": "As you chat, Mujeeb AI will automatically remember your preferences and key details, or you can add them manually above.",
+      "pausedNotice": "Memory is currently paused. Mujeeb AI will not remember details or reference past memories.",
+      "invalidInput": "Please enter a valid memory note.",
+      "categories": {
+        "preference": "Preference",
+        "bio": "About you",
+        "project": "Project",
+        "constraint": "Constraint",
+        "general": "General"
+      }
+    }
   },
   "billing": {
     "plan": {
@@ -657,7 +690,20 @@
       "overrideReasonHint": "Recorded in the audit log.",
       "overrideSave": "Save override",
       "overrideSaved": "Override saved.",
-      "overrideRemoved": "Override removed."
+      "overrideRemoved": "Override removed.",
+      "tabToday": "Today's usage",
+      "tabHistory": "Past 30 days",
+      "tabEvents": "Recent activity",
+      "colDate": "Date",
+      "colTotal": "Total actions",
+      "colActiveUsers": "Active accounts",
+      "platformHistory": "Platform usage history",
+      "platformHistoryDescription": "Daily aggregate activity across all accounts over the last 30 days.",
+      "viewDate": "View day details",
+      "noEvents": "No individual events recorded recently.",
+      "noHistory": "No past usage history found for this window.",
+      "last7Days": "Last 7 days",
+      "last30Days": "Last 30 days"
     },
     "category": {
       "messages": "Messages",
@@ -1180,7 +1226,8 @@
       "users": "Accounts",
       "moderation": "Moderation log",
       "activity": "My actions",
-      "security": "Security"
+      "security": "Security",
+      "usage": "Usage"
     },
     "dashboard": {
       "title": "Overview",

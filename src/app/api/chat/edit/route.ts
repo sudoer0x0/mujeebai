@@ -130,6 +130,7 @@ export async function POST(request: Request) {
     conversationId: message.conversation_id,
     assistantMessageId: assistantMessage.id,
     variantId: variant?.id ?? "",
+    userId: profile.id,
     signal: request.signal,
   });
 }

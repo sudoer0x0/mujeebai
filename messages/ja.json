@@ -388,7 +388,40 @@
       "slate": "スレート"
     },
     "accent": "アクセントカラー",
-    "accentHint": "アプリ全体のボタン・リンク・ハイライトの色を変えます。"
+    "accentHint": "アプリ全体のボタン・リンク・ハイライトの色を変えます。",
+    "memory": {
+      "title": "AIメモリ",
+      "enabledLabel": "会話間のメモリ機能",
+      "enabledDesc": "Mujeeb AIは会話を越えて詳細や好みを記憶し、よりパーソナライズされた体験を提供します。",
+      "enabledToast": "メモリを有効にしました。",
+      "disabledToast": "メモリを一時停止しました。",
+      "toggleFailed": "メモリ設定を更新できませんでした。",
+      "addPlaceholder": "Mujeeb AIに記憶させたい情報を追加（例：使用技術、好み）...",
+      "addBtn": "記憶する",
+      "addedToast": "メモリを追加しました。",
+      "addFailed": "メモリを追加できませんでした。",
+      "deleteBtn": "メモリを削除",
+      "deletedToast": "メモリを削除しました。",
+      "deleteFailed": "メモリを削除できませんでした。",
+      "clearAllBtn": "すべてのメモリを消去",
+      "clearConfirmTitle": "記憶したすべての情報を消去しますか？",
+      "clearConfirmDesc": "Mujeeb AIが会話を通じて学習したあなたに関するすべての情報と設定が完全に削除されます。",
+      "clearConfirmBtn": "すべて消去",
+      "cancelBtn": "キャンセル",
+      "clearedToast": "すべてのメモリを消去しました。",
+      "clearFailed": "メモリを消去できませんでした。",
+      "emptyTitle": "まだメモリはありません",
+      "emptyDesc": "会話を重ねるにつれて、Mujeeb AIは自動的にあなたの好みや重要な情報を学習します。または上記から手動で追加できます。",
+      "pausedNotice": "メモリ機能は現在一時停止中です。Mujeeb AIは詳細を記憶せず、過去の記憶を参照しません。",
+      "invalidInput": "有効なメモを入力してください。",
+      "categories": {
+        "preference": "好み・設定",
+        "bio": "基本情報",
+        "project": "プロジェクト",
+        "constraint": "制約事項",
+        "general": "一般"
+      }
+    }
   },
   "billing": {
     "plan": {
@@ -657,7 +690,20 @@
       "overrideReasonHint": "監査ログに記録されます。",
       "overrideSave": "個別設定を保存",
       "overrideSaved": "個別設定を保存しました。",
-      "overrideRemoved": "個別設定を削除しました。"
+      "overrideRemoved": "個別設定を削除しました。",
+      "tabToday": "本日の使用量",
+      "tabHistory": "過去30日間",
+      "tabEvents": "最近のアクティビティ",
+      "colDate": "日付",
+      "colTotal": "総アクション数",
+      "colActiveUsers": "アクティブアカウント",
+      "platformHistory": "プラットフォーム使用履歴",
+      "platformHistoryDescription": "過去30日間の全アカウントの日次集計アクティビティ。",
+      "viewDate": "日の詳細を表示",
+      "noEvents": "最近のアクティビティはありません。",
+      "noHistory": "この期間の使用履歴は見つかりませんでした。",
+      "last7Days": "過去7日間",
+      "last30Days": "過去30日間"
     },
     "category": {
       "messages": "メッセージ",
@@ -1180,7 +1226,8 @@
       "users": "アカウント",
       "moderation": "モデレーションログ",
       "activity": "自分の操作",
-      "security": "セキュリティ"
+      "security": "セキュリティ",
+      "usage": "使用状況"
     },
     "dashboard": {
       "title": "概要",

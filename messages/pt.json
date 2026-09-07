@@ -388,7 +388,40 @@
       "slate": "Ardósia"
     },
     "accent": "Cor de destaque",
-    "accentHint": "Colore botões, ligações e destaques em toda a aplicação."
+    "accentHint": "Colore botões, ligações e destaques em toda a aplicação.",
+    "memory": {
+      "title": "Memória da IA",
+      "enabledLabel": "Memória entre conversas",
+      "enabledDesc": "O Mujeeb AI lembra detalhes e preferências em várias conversas para proporcionar uma experiência personalizada.",
+      "enabledToast": "Memória ativada.",
+      "disabledToast": "Memória pausada.",
+      "toggleFailed": "Não foi possível atualizar a configuração de memória.",
+      "addPlaceholder": "Adicione algo para o Mujeeb AI lembrar (ex.: preferências, tecnologias)...",
+      "addBtn": "Lembrar",
+      "addedToast": "Memória adicionada.",
+      "addFailed": "Não foi possível adicionar a memória.",
+      "deleteBtn": "Excluir memória",
+      "deletedToast": "Memória excluída.",
+      "deleteFailed": "Não foi possível excluir a memória.",
+      "clearAllBtn": "Limpar todas as memórias",
+      "clearConfirmTitle": "Limpar todos os detalhes lembrados?",
+      "clearConfirmDesc": "Isso excluirá permanentemente todos os fatos e preferências que o Mujeeb AI aprendeu sobre você.",
+      "clearConfirmBtn": "Limpar tudo",
+      "cancelBtn": "Cancelar",
+      "clearedToast": "Todas as memórias foram limpas.",
+      "clearFailed": "Não foi possível limpar as memórias.",
+      "emptyTitle": "Nenhuma memória ainda",
+      "emptyDesc": "À medida que conversa, o Mujeeb AI lembrará automaticamente de suas preferências, ou você pode adicioná-las manualmente acima.",
+      "pausedNotice": "A memória está pausada no momento. O Mujeeb AI não lembrará detalhes nem consultará o passado.",
+      "invalidInput": "Insira uma nota de memória válida.",
+      "categories": {
+        "preference": "Preferência",
+        "bio": "Sobre você",
+        "project": "Projeto",
+        "constraint": "Restrição",
+        "general": "Geral"
+      }
+    }
   },
   "billing": {
     "plan": {
@@ -657,7 +690,20 @@
       "overrideReasonHint": "Fica registado no registo de auditoria.",
       "overrideSave": "Guardar exceção",
       "overrideSaved": "Exceção guardada.",
-      "overrideRemoved": "Exceção removida."
+      "overrideRemoved": "Exceção removida.",
+      "tabToday": "Uso de hoje",
+      "tabHistory": "Últimos 30 dias",
+      "tabEvents": "Atividade recente",
+      "colDate": "Data",
+      "colTotal": "Total de ações",
+      "colActiveUsers": "Contas ativas",
+      "platformHistory": "Histórico de uso da plataforma",
+      "platformHistoryDescription": "Atividade agregada diária em todas as contas nos últimos 30 dias.",
+      "viewDate": "Ver detalhes do dia",
+      "noEvents": "Nenhum evento individual registrado recentemente.",
+      "noHistory": "Nenhum histórico de uso encontrado para este período.",
+      "last7Days": "Últimos 7 dias",
+      "last30Days": "Últimos 30 dias"
     },
     "category": {
       "messages": "Mensagens",
@@ -1180,7 +1226,8 @@
       "users": "Contas",
       "moderation": "Registo de moderação",
       "activity": "As minhas ações",
-      "security": "Segurança"
+      "security": "Segurança",
+      "usage": "Uso"
     },
     "dashboard": {
       "title": "Visão geral",

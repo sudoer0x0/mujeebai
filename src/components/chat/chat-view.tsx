@@ -108,15 +108,52 @@ export function ChatView({
   maxAttachments: number;
 }) {
   const t = useTranslations("chat");
+  const tNav = useTranslations("nav");
   const tRoot = useTranslations();
 
   const [conversationId, setConversationId] = React.useState(initialConversationId);
   const [messages, setMessages] = React.useState<UiMessage[]>(() => initialMessages.map(mapRawMessage));
   const [modelSlug, setModelSlug] = React.useState<string | null>(initialModelSlug);
   const [isStreaming, setIsStreaming] = React.useState(false);
+  const [composerKey, setComposerKey] = React.useState(0);
   const abortRef = React.useRef<AbortController | null>(null);
 
   const currentConvIdRef = React.useRef(initialConversationId);
+
+  // Listen for instant new-chat events dispatched from the sidebar, header, or rail.
+  // Resets local messages, aborts any active stream, resets composer draft, and updates
+  // browser URL and title without requiring a full page reload or waiting for network roundtrips.
+  React.useEffect(() => {
+    function onNewChat() {
+      if (abortRef.current) {
+        abortRef.current.abort();
+        abortRef.current = null;
+      }
+      setIsStreaming(false);
+
+      currentConvIdRef.current = undefined;
+      setConversationId(undefined);
+      setMessages([]);
+      setComposerKey((k) => k + 1);
+
+      if (typeof window !== "undefined") {
+        const [, maybeLocale] = window.location.pathname.split("/");
+        const prefix = /^[a-z]{2}$/.test(maybeLocale ?? "") ? `/${maybeLocale}` : "";
+        const targetUrl = `${prefix}/chat`;
+        if (window.location.pathname !== targetUrl) {
+          window.history.pushState(null, "", targetUrl);
+        }
+        document.title = `${tNav("newChat")} · Mujeeb AI`;
+        const scroller = document.querySelector("[data-chat-scroll]");
+        if (scroller) scroller.scrollTop = 0;
+      }
+    }
+
+    window.addEventListener("mujeeb:new-chat", onNewChat);
+    return () => {
+      window.removeEventListener("mujeeb:new-chat", onNewChat);
+    };
+  }, [tNav]);
 
   // No re-seeding effect. The parent keys this component by conversation
   // id, so React remounts it on a real navigation and leaves it entirely
@@ -182,6 +219,9 @@ export function ChatView({
           currentConvIdRef.current = newConversationId;
           setConversationId(newConversationId);
           replaceConversationUrl(newConversationId);
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("mujeeb:conversations-changed"));
+          }
         }
 
         let text = "";
@@ -457,6 +497,9 @@ export function ChatView({
         currentConvIdRef.current = data.conversationId;
         setConversationId(data.conversationId);
         replaceConversationUrl(data.conversationId);
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("mujeeb:conversations-changed"));
+        }
       }
 
       setMessages((previous) =>
@@ -495,6 +538,7 @@ export function ChatView({
         />
       </div>
       <Composer
+        key={composerKey}
         isStreaming={isStreaming}
         onSend={handleSend}
         onStop={handleStop}

@@ -158,3 +158,184 @@ export async function removeUserOverride(userId: string, featureKey: string): Pr
 
   if (error) throw new Error(`Failed to remove entitlement override: ${error.message}`);
 }
+
+export interface DailyPlatformUsage {
+  date: string;
+  activeUsers: number;
+  totalUsage: number;
+  byCategory: Record<string, number>;
+}
+
+export interface PlatformUsageHistoryResult {
+  days: DailyPlatformUsage[];
+  totalsSummary: {
+    totalActions: number;
+    activeUsers7d: number;
+    activeUsers30d: number;
+    totalMessages: number;
+    totalImages: number;
+  };
+}
+
+/** Platform-wide daily usage history over the last N days (default 30). */
+export async function getPlatformUsageHistory(daysCount = 30): Promise<PlatformUsageHistoryResult> {
+  const supabase = createServiceRoleClient();
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - (daysCount - 1));
+  const startKey = startDate.toISOString().slice(0, 10);
+
+  const { data } = await supabase
+    .from("usage_counters")
+    .select("category, count, user_id, period_key")
+    .eq("period", "day")
+    .gte("period_key", startKey)
+    .order("period_key", { ascending: false });
+
+  const dateMap = new Map<string, { activeUsers: Set<string>; totalUsage: number; byCategory: Record<string, number> }>();
+  const allUsers30d = new Set<string>();
+  const allUsers7d = new Set<string>();
+  const sevenDaysAgoKey = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+
+  let totalActions = 0;
+  let totalMessages = 0;
+  let totalImages = 0;
+
+  for (const row of data ?? []) {
+    totalActions += row.count;
+    if (row.category === "messages") totalMessages += row.count;
+    if (row.category === "image_generations") totalImages += row.count;
+    allUsers30d.add(row.user_id);
+    if (row.period_key >= sevenDaysAgoKey) {
+      allUsers7d.add(row.user_id);
+    }
+
+    let entry = dateMap.get(row.period_key);
+    if (!entry) {
+      entry = { activeUsers: new Set(), totalUsage: 0, byCategory: {} };
+      dateMap.set(row.period_key, entry);
+    }
+    entry.activeUsers.add(row.user_id);
+    entry.totalUsage += row.count;
+    entry.byCategory[row.category] = (entry.byCategory[row.category] ?? 0) + row.count;
+  }
+
+  // Generate continuous list of dates for the window so days with 0 usage still show
+  const days: DailyPlatformUsage[] = [];
+  for (let i = 0; i < daysCount; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    const entry = dateMap.get(key);
+    days.push({
+      date: key,
+      activeUsers: entry ? entry.activeUsers.size : 0,
+      totalUsage: entry ? entry.totalUsage : 0,
+      byCategory: entry ? entry.byCategory : {},
+    });
+  }
+
+  return {
+    days,
+    totalsSummary: {
+      totalActions,
+      activeUsers7d: allUsers7d.size,
+      activeUsers30d: allUsers30d.size,
+      totalMessages,
+      totalImages,
+    },
+  };
+}
+
+export interface UserDailyUsageEntry {
+  date: string;
+  totalUsage: number;
+  byCategory: Record<string, number>;
+}
+
+export interface UserUsageEventEntry {
+  id: string;
+  category: string;
+  quantity: number;
+  createdAt: string;
+}
+
+export interface UserPastUsageHistory {
+  days: UserDailyUsageEntry[];
+  recentEvents: UserUsageEventEntry[];
+  totalsSummary: {
+    totalActions30d: number;
+    totalMessages30d: number;
+  };
+}
+
+/** Past usage history and recent usage events for an individual user. */
+export async function getUserPastUsage(userId: string, daysCount = 30): Promise<UserPastUsageHistory> {
+  const supabase = createServiceRoleClient();
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - (daysCount - 1));
+  const startKey = startDate.toISOString().slice(0, 10);
+
+  const [countersResult, eventsResult] = await Promise.all([
+    supabase
+      .from("usage_counters")
+      .select("category, count, period_key")
+      .eq("user_id", userId)
+      .eq("period", "day")
+      .gte("period_key", startKey)
+      .order("period_key", { ascending: false }),
+    supabase
+      .from("usage_events")
+      .select("id, category, quantity, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(50),
+  ]);
+
+  const dateMap = new Map<string, { totalUsage: number; byCategory: Record<string, number> }>();
+  let totalActions30d = 0;
+  let totalMessages30d = 0;
+
+  for (const row of countersResult.data ?? []) {
+    totalActions30d += row.count;
+    if (row.category === "messages") totalMessages30d += row.count;
+
+    let entry = dateMap.get(row.period_key);
+    if (!entry) {
+      entry = { totalUsage: 0, byCategory: {} };
+      dateMap.set(row.period_key, entry);
+    }
+    entry.totalUsage += row.count;
+    entry.byCategory[row.category] = (entry.byCategory[row.category] ?? 0) + row.count;
+  }
+
+  const days: UserDailyUsageEntry[] = [];
+  for (let i = 0; i < daysCount; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    const entry = dateMap.get(key);
+    if (entry && entry.totalUsage > 0) {
+      days.push({
+        date: key,
+        totalUsage: entry.totalUsage,
+        byCategory: entry.byCategory,
+      });
+    }
+  }
+
+  const recentEvents: UserUsageEventEntry[] = (eventsResult.data ?? []).map((e) => ({
+    id: e.id,
+    category: e.category,
+    quantity: e.quantity,
+    createdAt: e.created_at,
+  }));
+
+  return {
+    days,
+    recentEvents,
+    totalsSummary: {
+      totalActions30d,
+      totalMessages30d,
+    },
+  };
+}

@@ -104,6 +104,7 @@ export const openRouterAdapter: TextProviderAdapter = {
     }
 
     let finishReason = "stop";
+    let hasYieldedContent = false;
     for await (const event of parseSseStream(response.body)) {
       const choice = (event as { choices?: Array<Record<string, unknown>> }).choices?.[0];
       if (!choice) continue;
@@ -114,9 +115,11 @@ export const openRouterAdapter: TextProviderAdapter = {
       // is what makes "this slot never shows thinking" actually true,
       // whichever model the router happens to pick.
       if (delta?.reasoning && request.reasoningMode !== "exclude") {
+        hasYieldedContent = true;
         yield { type: "reasoning_delta", text: delta.reasoning };
       }
       if (delta?.content) {
+        hasYieldedContent = true;
         yield { type: "delta", text: delta.content };
       }
       if (typeof choice.finish_reason === "string" && choice.finish_reason) {
@@ -125,6 +128,9 @@ export const openRouterAdapter: TextProviderAdapter = {
 
       const usageRaw = (event as { usage?: Record<string, number> }).usage;
       if (usageRaw) {
+        if (!hasYieldedContent) {
+          throw new GatewayError("provider_unavailable", "Model returned 0 content tokens.");
+        }
         yield {
           type: "done",
           finishReason,
@@ -136,6 +142,10 @@ export const openRouterAdapter: TextProviderAdapter = {
         };
         return;
       }
+    }
+
+    if (!hasYieldedContent) {
+      throw new GatewayError("provider_unavailable", "Model returned 0 content tokens.");
     }
 
     yield { type: "done", finishReason };

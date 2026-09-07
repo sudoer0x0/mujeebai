@@ -114,6 +114,7 @@ export async function POST(request: Request) {
     conversationId: message.conversation_id,
     assistantMessageId: message.id,
     variantId: variant.id,
+    userId: user.id,
     signal: request.signal,
   });
 }

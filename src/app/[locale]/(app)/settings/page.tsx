@@ -11,6 +11,8 @@ import { toAccentChoice } from "@/lib/accents";
 import { listDeviceSessions } from "@/auth/device-sessions";
 import { DeviceList } from "@/components/app/device-list";
 import { ProfileForm } from "./profile-form";
+import { MemoryForm } from "./memory-form";
+import { getUserMemoryProfile } from "@/ai/memory/store";
 import { SubscriptionPanel } from "@/components/billing/subscription-panel";
 import { UsageSummary } from "@/components/billing/usage-summary";
 import { PageHeader } from "@/components/ui/page-header";
@@ -66,11 +68,12 @@ export default async function SettingsPage({
   // made Settings the slowest page in the app.
   const devices = await listDeviceSessions(user.id);
 
-  const [messages, images, vision, files] = await Promise.all([
+  const [messages, images, vision, files, memoryProfile] = await Promise.all([
     checkQuota(user.id, "messages"),
     checkQuota(user.id, "image_generations"),
     checkQuota(user.id, "vision_requests"),
     checkQuota(user.id, "file_processing"),
+    getUserMemoryProfile(user.id),
   ]);
 
   return (
@@ -92,6 +95,18 @@ export default async function SettingsPage({
               initialTheme={profile.theme}
               initialFont={toFontChoice(profile.font_preference)}
               initialAccent={toAccentChoice(profile.accent_preference)}
+            />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("memory.title")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <MemoryForm
+              initialEnabled={memoryProfile.enabled}
+              initialMemories={memoryProfile.memories}
             />
           </CardContent>
         </Card>

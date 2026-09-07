@@ -8,12 +8,15 @@ import { logger } from "@/lib/logger";
 import type { ModelRow } from "@/ai/registry";
 import type { UpdateOf } from "@/types/database";
 
+import { extractAndSaveMemories } from "@/ai/memory/extractor";
+
 export interface RunTurnParams {
   model: ModelRow;
   conversationHistory: ChatMessageInput[];
   conversationId: string;
   assistantMessageId: string;
   variantId: string;
+  userId?: string;
   /** Set the conversation title from this text if it's still the placeholder title. */
   titleSourceText?: string;
   signal?: AbortSignal;
@@ -43,6 +46,7 @@ export async function runAssistantTurn(params: RunTurnParams): Promise<Response>
     streamAssistantResponse({
       model: params.model,
       conversationHistory: params.conversationHistory,
+      userId: params.userId,
       signal: params.signal,
     }))
     .then((result) => {
@@ -119,6 +123,32 @@ export async function runAssistantTurn(params: RunTurnParams): Promise<Response>
         }
       }
       await supabase.from("conversations").update(conversationUpdate).eq("id", params.conversationId);
+
+      // Asynchronously extract and save user memories without blocking the response
+      if (status === "complete" && params.userId) {
+        const lastTurn = params.conversationHistory[params.conversationHistory.length - 1];
+        const userText =
+          typeof lastTurn?.content === "string"
+            ? lastTurn.content
+            : Array.isArray(lastTurn?.content)
+              ? lastTurn.content
+                  .filter((p) => p.type === "text")
+                  .map((p) => p.text)
+                  .join(" ")
+              : "";
+
+        if (userText) {
+          try {
+            await extractAndSaveMemories({
+              userId: params.userId!,
+              conversationId: params.conversationId,
+              userText,
+            });
+          } catch (err) {
+            logger.warn("background_memory_extract_error", { error: String(err) });
+          }
+        }
+      }
     } catch (error) {
       logger.error("chat_persist_failed", { error: String(error), conversationId: params.conversationId });
     }

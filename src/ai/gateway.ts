@@ -1,13 +1,18 @@
 import "server-only";
 import { logger } from "@/lib/logger";
 import { openRouterAdapter } from "@/ai/providers/openrouter";
+import { cloudflareChatAdapter } from "@/ai/providers/cloudflare-chat";
+import { providerStatus } from "@/lib/env.server";
 import { getProviderById, resolveFallbackChain, type ModelRow } from "@/ai/registry";
 import { getActiveSystemPrompt } from "@/ai/system-prompt";
+import { getUserMemoryProfile } from "@/ai/memory/store";
+import { formatMemoriesForPrompt } from "@/ai/memory/prompt";
 import type { ReasoningMode } from "@/ai/types";
 import { GatewayError, type ChatMessageInput, type StreamChunk, type TextProviderAdapter } from "@/ai/types";
 
 const TEXT_ADAPTERS: Record<string, TextProviderAdapter> = {
   openrouter: openRouterAdapter,
+  cloudflare: cloudflareChatAdapter,
 };
 
 async function resolveAdapter(model: ModelRow): Promise<TextProviderAdapter> {
@@ -25,6 +30,7 @@ async function resolveAdapter(model: ModelRow): Promise<TextProviderAdapter> {
 export interface AssistantStreamParams {
   model: ModelRow;
   conversationHistory: ChatMessageInput[];
+  userId?: string;
   signal?: AbortSignal;
 }
 
@@ -36,7 +42,18 @@ export interface AssistantStreamResult {
 
 // Streams LLM response with system prompt injection and provider fallback.
 export async function streamAssistantResponse(params: AssistantStreamParams): Promise<AssistantStreamResult> {
-  const systemPrompt = await getActiveSystemPrompt();
+  let systemPrompt = await getActiveSystemPrompt();
+  if (params.userId) {
+    try {
+      const memoryProfile = await getUserMemoryProfile(params.userId);
+      const memoryBlock = formatMemoriesForPrompt(memoryProfile);
+      if (memoryBlock) {
+        systemPrompt = `${systemPrompt}\n\n${memoryBlock}`;
+      }
+    } catch {
+      // Memory failure should never break conversation streaming
+    }
+  }
   const messages: ChatMessageInput[] = [{ role: "system", content: systemPrompt }, ...params.conversationHistory];
   const chain = await resolveFallbackChain(params.model);
 
@@ -74,18 +91,44 @@ export async function streamAssistantResponse(params: AssistantStreamParams): Pr
       // trigger fallback instead of surfacing as a stream that starts then
       // silently dies.
       const firstResult = await generator.next();
+      if (firstResult.done || firstResult.value.type === "error") {
+        throw new GatewayError("provider_unavailable", "Model connection closed prematurely with an error.");
+      }
       return {
-        resolvedModel: candidate,
+        resolvedModel: params.model,
         chunks: prependAndContinue(firstResult, generator),
       };
     } catch (error) {
       lastError =
         error instanceof GatewayError ? error : new GatewayError("unknown", error instanceof Error ? error.message : String(error));
       logger.warn("model_fallback_triggered", {
-        model: candidate.slug,
+        requested: params.model.slug,
+        candidateProviderModelId: candidate.provider_model_id,
         code: lastError.code,
         message: lastError.message,
       });
+  }
+  }
+
+  // If primary chain candidates failed (e.g. OpenRouter daily rate limit exhausted),
+  // rescue using Cloudflare Workers AI so the user's turn never breaks.
+  if (providerStatus.cloudflareChat) {
+    try {
+      const rescueGenerator = cloudflareChatAdapter.streamChat({
+        providerModelId: "@cf/meta/llama-3.1-8b-instruct",
+        messages,
+        signal: params.signal,
+      });
+      const firstRescue = await rescueGenerator.next();
+      if (!firstRescue.done && firstRescue.value.type !== "error") {
+        logger.info("model_rescued_by_cloudflare", { requested: params.model.slug });
+        return {
+          resolvedModel: params.model,
+          chunks: prependAndContinue(firstRescue, rescueGenerator),
+        };
+      }
+    } catch (rescueErr) {
+      logger.warn("cloudflare_rescue_failed", { error: String(rescueErr) });
     }
   }
 

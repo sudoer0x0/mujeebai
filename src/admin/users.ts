@@ -97,6 +97,8 @@ export async function getUserForAction(
   return { id: data.id, role: data.role as Role, email: data.email, status: data.status as UserStatus };
 }
 
+import { getUserPastUsage, type UserPastUsageHistory } from "@/usage/admin";
+
 export interface UserDetail extends StaffUserRow {
   planName: string | null;
   planSlug: string | null;
@@ -112,6 +114,7 @@ export interface UserDetail extends StaffUserRow {
   isGrant: boolean;
   conversationCount: number;
   usageToday: Array<{ category: string; count: number }>;
+  pastUsage: UserPastUsageHistory;
   overrides: Array<{ featureKey: string; value: unknown; expiresAt: string | null; reason: string | null }>;
 }
 
@@ -129,7 +132,7 @@ function todayKey() {
 export async function getUserDetail(userId: string): Promise<UserDetail | null> {
   const supabase = createServiceRoleClient();
 
-  const [profileResult, subscriptionResult, conversationResult, usageResult, overrideResult] = await Promise.all([
+  const [profileResult, subscriptionResult, conversationResult, usageResult, overrideResult, pastUsage] = await Promise.all([
     supabase.from("profiles").select("id, email, display_name, role, status, locale, created_at").eq("id", userId).maybeSingle(),
     supabase
       .from("subscriptions")
@@ -146,6 +149,7 @@ export async function getUserDetail(userId: string): Promise<UserDetail | null> 
       .eq("period", "day")
       .eq("period_key", todayKey()),
     supabase.from("user_entitlements").select("feature_key, value, expires_at, reason").eq("user_id", userId),
+    getUserPastUsage(userId, 30),
   ]);
 
   const profile = profileResult.data;
@@ -175,6 +179,7 @@ export async function getUserDetail(userId: string): Promise<UserDetail | null> 
     isGrant: subscription?.billing_provider === "manual",
     conversationCount: conversationResult.count ?? 0,
     usageToday: (usageResult.data ?? []).map((row) => ({ category: row.category, count: row.count })),
+    pastUsage,
     overrides: (overrideResult.data ?? []).map((row) => ({
       featureKey: row.feature_key,
       value: row.value,

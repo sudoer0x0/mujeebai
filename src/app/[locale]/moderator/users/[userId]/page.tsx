@@ -12,6 +12,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Card, CardContent, CardHeader, CardTitle, StatTile } from "@/components/ui/card";
 import { Badge, StatusDot } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
+import { UserUsagePanel } from "@/components/staff/user-usage-panel";
 import { StaffDeviceList } from "@/components/staff/staff-device-list";
 import { UserActivityList } from "@/components/staff/user-activity-list";
 import { RevokeSessionsButton } from "@/components/staff/revoke-sessions-button";
@@ -151,19 +152,10 @@ export default async function ModeratorUserDetailPage({
 
       <Card>
         <CardHeader>
-          <CardTitle>{t("users.detail.usageToday")}</CardTitle>
+          <CardTitle>{t("usage.title")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {usage.map((row) => (
-              <StatTile
-                key={row.category}
-                label={t(`category.${row.category}` as never)}
-                value={row.used.toLocaleString(locale)}
-                hint={row.limit > 0 ? t("users.detail.ofLimit", { limit: row.limit }) : t("common.unlimited")}
-              />
-            ))}
-          </div>
+          <UserUsagePanel userId={detail.id} usage={usage} pastUsage={detail.pastUsage} showReset={false} />
         </CardContent>
       </Card>
     </div>

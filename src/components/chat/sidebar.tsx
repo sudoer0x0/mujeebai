@@ -61,8 +61,19 @@ export interface SidebarProps {
 
 export function Sidebar(props: SidebarProps) {
   const t = useTranslations("nav");
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [collapsed, setCollapsed] = useSidebarCollapsed();
+
+  const handleNewChat = React.useCallback(
+    (e?: React.MouseEvent) => {
+      e?.preventDefault();
+      setMobileOpen(false);
+      window.dispatchEvent(new CustomEvent("mujeeb:new-chat"));
+      router.push("/chat");
+    },
+    [router],
+  );
 
   return (
     <>
@@ -85,20 +96,18 @@ export function Sidebar(props: SidebarProps) {
           </Button>
           <SheetContent side="start" className="w-[86vw] max-w-sm p-0" showClose={false}>
             <SheetTitle className="sr-only">{t("conversations")}</SheetTitle>
-            <SidebarContent {...props} onNavigate={() => setMobileOpen(false)} />
+            <SidebarContent {...props} onNavigate={() => setMobileOpen(false)} onNewChat={handleNewChat} />
           </SheetContent>
         </Sheet>
 
-        <Link href="/chat" className="flex min-w-0 items-center gap-2">
+        <Link href="/chat" className="flex min-w-0 items-center gap-2" onClick={handleNewChat}>
           <span className="truncate text-[17px] font-semibold tracking-tight">Mujeeb AI</span>
         </Link>
 
         <div className="flex-1" />
 
-        <Button variant="ghost" size="icon" asChild aria-label={t("newChat")}>
-          <Link href="/chat">
-            <MessageSquarePlus className="size-[22px]" />
-          </Link>
+        <Button variant="ghost" size="icon" onClick={handleNewChat} aria-label={t("newChat")}>
+          <MessageSquarePlus className="size-[22px]" />
         </Button>
       </header>
 
@@ -113,9 +122,9 @@ export function Sidebar(props: SidebarProps) {
         )}
       >
         {collapsed ? (
-          <CollapsedRail onExpand={() => setCollapsed(false)} />
+          <CollapsedRail onExpand={() => setCollapsed(false)} onNewChat={handleNewChat} />
         ) : (
-          <SidebarContent {...props} onCollapse={() => setCollapsed(true)} />
+          <SidebarContent {...props} onCollapse={() => setCollapsed(true)} onNewChat={handleNewChat} />
         )}
       </aside>
     </>
@@ -132,11 +141,26 @@ export function Sidebar(props: SidebarProps) {
  */
 function CollapsedRail({
   onExpand,
+  onNewChat,
 }: {
   onExpand: () => void;
+  onNewChat?: (e?: React.MouseEvent) => void;
 }) {
   const t = useTranslations("nav");
   const router = useRouter();
+
+  const handleNewChat = React.useCallback(
+    (e?: React.MouseEvent) => {
+      e?.preventDefault();
+      if (onNewChat) {
+        onNewChat(e);
+      } else {
+        window.dispatchEvent(new CustomEvent("mujeeb:new-chat"));
+        router.push("/chat");
+      }
+    },
+    [onNewChat, router],
+  );
 
   return (
     <div className="flex h-full flex-col items-center gap-1 py-2.5">
@@ -144,7 +168,7 @@ function CollapsedRail({
         <PanelLeftOpen />
       </RailButton>
 
-      <RailButton label={t("newChat")} onClick={() => router.push("/chat")}>
+      <RailButton label={t("newChat")} onClick={handleNewChat}>
         <MessageSquarePlus />
       </RailButton>
 
@@ -198,7 +222,12 @@ function SidebarContent({
   isFreePlan,
   onNavigate,
   onCollapse,
-}: SidebarProps & { onNavigate?: () => void; onCollapse?: () => void }) {
+  onNewChat,
+}: SidebarProps & {
+  onNavigate?: () => void;
+  onCollapse?: () => void;
+  onNewChat?: (e?: React.MouseEvent) => void;
+}) {
   const t = useTranslations("nav");
   const tc = useTranslations("chat.conversation");
   const tCommon = useTranslations("common");
@@ -217,11 +246,33 @@ function SidebarContent({
       .catch(() => setConversations([]));
   }, []);
 
-  // Reload when the route changes: a newly created conversation lands here
-  // via router.replace + refresh from the chat view.
+  // Reload when the route changes, or when custom conversation events fire.
   React.useEffect(() => {
     load();
+    const handleRefresh = () => {
+      load();
+    };
+    window.addEventListener("mujeeb:conversations-changed", handleRefresh);
+    window.addEventListener("mujeeb:new-chat", handleRefresh);
+    return () => {
+      window.removeEventListener("mujeeb:conversations-changed", handleRefresh);
+      window.removeEventListener("mujeeb:new-chat", handleRefresh);
+    };
   }, [load, pathname]);
+
+  const handleNewChat = React.useCallback(
+    (e?: React.MouseEvent) => {
+      e?.preventDefault();
+      onNavigate?.();
+      if (onNewChat) {
+        onNewChat(e);
+      } else {
+        window.dispatchEvent(new CustomEvent("mujeeb:new-chat"));
+        router.push("/chat");
+      }
+    },
+    [onNewChat, onNavigate, router],
+  );
 
   const visible = React.useMemo(() => {
     const term = query.trim().toLowerCase();
@@ -257,7 +308,10 @@ function SidebarContent({
   async function handleArchive(conversation: ConversationSummary) {
     setConversations((previous) => (previous ?? []).filter((item) => item.id !== conversation.id));
     if (!(await patch(conversation.id, { isArchived: true }))) load();
-    else if (pathname.includes(conversation.id)) router.push("/chat");
+    else if (pathname.includes(conversation.id)) {
+      window.dispatchEvent(new CustomEvent("mujeeb:new-chat"));
+      router.push("/chat");
+    }
   }
 
   async function handleRename(title: string) {
@@ -285,13 +339,16 @@ function SidebarContent({
       load();
       return;
     }
-    if (pathname.includes(target.id)) router.push("/chat");
+    if (pathname.includes(target.id)) {
+      window.dispatchEvent(new CustomEvent("mujeeb:new-chat"));
+      router.push("/chat");
+    }
   }
 
   return (
     <div className="flex h-full min-h-0 flex-col">
       <div className="flex items-center gap-2 border-b border-line px-3 py-2.5">
-        <Link href="/chat" className="flex min-w-0 flex-1 items-center gap-2" onClick={onNavigate}>
+        <Link href="/chat" className="flex min-w-0 flex-1 items-center gap-2" onClick={handleNewChat}>
           <BrandMark />
           <span className="truncate text-[13px] font-semibold tracking-tight text-foreground">Mujeeb AI</span>
         </Link>
@@ -318,10 +375,7 @@ function SidebarContent({
         <Button
           variant="ghost"
           className="w-full justify-start gap-2.5 rounded-lg bg-surface-raised text-[14px] font-medium hover:bg-line"
-          onClick={() => {
-            router.push("/chat");
-            onNavigate?.();
-          }}
+          onClick={handleNewChat}
         >
           <MessageSquarePlus className="size-[18px]" />
           {t("newChat")}

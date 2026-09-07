@@ -9,6 +9,7 @@ const SECTIONS: StaffNavSection[] = [
     items: [
       { href: "/moderator", labelKey: "nav.dashboard", icon: "dashboard" },
       { href: "/moderator/users", labelKey: "nav.users", icon: "users" },
+      { href: "/moderator/usage", labelKey: "nav.usage", icon: "usage" },
       { href: "/moderator/moderation", labelKey: "nav.moderation", icon: "moderation" },
       { href: "/moderator/activity", labelKey: "nav.activity", icon: "auditLogs" },
       { href: "/moderator/security", labelKey: "nav.security", icon: "security" },

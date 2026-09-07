@@ -388,7 +388,40 @@
       "slate": "石板灰"
     },
     "accent": "强调色",
-    "accentHint": "影响整个应用的按钮、链接与高亮颜色。"
+    "accentHint": "影响整个应用的按钮、链接与高亮颜色。",
+    "memory": {
+      "title": "AI 记忆",
+      "enabledLabel": "跨对话记忆",
+      "enabledDesc": "Mujeeb AI 会在不同对话之间记住您的偏好和关键细节，以提供更个性化的体验。",
+      "enabledToast": "已启用记忆功能。",
+      "disabledToast": "已暂停记忆功能。",
+      "toggleFailed": "无法更新记忆设置。",
+      "addPlaceholder": "添加让 Mujeeb AI 记住的内容（例如技术栈、偏好）...",
+      "addBtn": "保存记忆",
+      "addedToast": "已添加记忆。",
+      "addFailed": "无法添加记忆。",
+      "deleteBtn": "删除记忆",
+      "deletedToast": "已删除记忆。",
+      "deleteFailed": "无法删除记忆。",
+      "clearAllBtn": "清除所有记忆",
+      "clearConfirmTitle": "清除所有记住的内容？",
+      "clearConfirmDesc": "这将永久删除 Mujeeb AI 在对话中了解到的关于您的所有事实和偏好。",
+      "clearConfirmBtn": "清除全部",
+      "cancelBtn": "取消",
+      "clearedToast": "已清除所有记忆。",
+      "clearFailed": "无法清除记忆。",
+      "emptyTitle": "暂无记忆",
+      "emptyDesc": "随着您的交流，Mujeeb AI 会自动记住您的偏好和关键细节，您也可以在上方手动添加。",
+      "pausedNotice": "记忆功能当前已暂停。Mujeeb AI 不会记住新细节，也不会参考以往记忆。",
+      "invalidInput": "请输入有效的记忆内容。",
+      "categories": {
+        "preference": "偏好",
+        "bio": "个人信息",
+        "project": "项目",
+        "constraint": "限制要求",
+        "general": "常规"
+      }
+    }
   },
   "billing": {
     "plan": {
@@ -657,7 +690,20 @@
       "overrideReasonHint": "会记入审计日志。",
       "overrideSave": "保存例外",
       "overrideSaved": "例外已保存。",
-      "overrideRemoved": "例外已移除。"
+      "overrideRemoved": "例外已移除。",
+      "tabToday": "今日使用量",
+      "tabHistory": "过去 30 天",
+      "tabEvents": "最近活动",
+      "colDate": "日期",
+      "colTotal": "总操作数",
+      "colActiveUsers": "活跃账户",
+      "platformHistory": "平台使用历史",
+      "platformHistoryDescription": "过去 30 天内所有账户的每日汇总活动。",
+      "viewDate": "查看当天详情",
+      "noEvents": "近期无单项活动记录。",
+      "noHistory": "该时间段内无使用历史记录。",
+      "last7Days": "最近 7 天",
+      "last30Days": "最近 30 天"
     },
     "category": {
       "messages": "消息",
@@ -1180,7 +1226,8 @@
       "users": "账户",
       "moderation": "审核记录",
       "activity": "我的操作",
-      "security": "安全"
+      "security": "安全",
+      "usage": "使用量"
     },
     "dashboard": {
       "title": "总览",
