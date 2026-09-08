@@ -41,6 +41,7 @@ export interface LoadedMessage {
     reasoning_summary: string | null;
     finish_reason: string | null;
     error: { code: string; message: string } | null;
+    usage?: Record<string, unknown> | null;
   }>;
   attachments: LoadedAttachment[];
 }
@@ -52,7 +53,7 @@ export async function loadConversationMessages(conversationId: string): Promise<
     .from("messages")
     .select(
       "id, role, status, content, created_at, active_variant_id, " +
-        "message_variants!message_variants_message_id_fkey(id, sequence, content, reasoning_summary, finish_reason, error)",
+        "message_variants!message_variants_message_id_fkey(id, sequence, content, reasoning_summary, finish_reason, error, usage)",
     )
     .eq("conversation_id", conversationId)
     .order("created_at", { ascending: true });

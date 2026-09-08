@@ -115,7 +115,7 @@ export async function streamAssistantResponse(params: AssistantStreamParams): Pr
   if (providerStatus.cloudflareChat) {
     try {
       const rescueGenerator = cloudflareChatAdapter.streamChat({
-        providerModelId: "@cf/meta/llama-3.1-8b-instruct",
+        providerModelId: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
         messages,
         signal: params.signal,
       });

@@ -21,6 +21,13 @@ test("hasMemoryCandidates correctly identifies personal and memory trigger phras
   assert.equal(hasMemoryCandidates("Rappelle-toi que je travaille comme enseignant"), true);
   assert.equal(hasMemoryCandidates("记住我喜欢简洁的代码风格"), true);
 
+  // Positive location, travel plans & typo triggers
+  assert.equal(hasMemoryCandidates("im currently in lagos but i will be going back to kaduna soon uodate your memory"), true);
+  assert.equal(hasMemoryCandidates("i will be going back to kaduna soon"), true);
+  assert.equal(hasMemoryCandidates("uodate your memory: I moved to London"), true);
+  assert.equal(hasMemoryCandidates("do i have any planned trip?"), true);
+  assert.equal(hasMemoryCandidates("i am currently in Abuja"), true);
+
   // Negative generic questions (should NOT trigger extraction)
   assert.equal(hasMemoryCandidates("What is the capital of Saudi Arabia?"), false);
   assert.equal(hasMemoryCandidates("Can you explain how async/await works in JavaScript?"), false);
@@ -142,13 +149,97 @@ test("extractDeterministicFacts accurately captures immediate name declarations"
   const facts7 = extractDeterministicFacts("I live in Lagos and work remotely");
   assert.ok(facts7.some((f: any) => f.content.includes("Lagos")));
 
+  // Combined current location and upcoming return trip (user's exact scenario)
+  const factsUserScenario = extractDeterministicFacts(
+    "im currently in lagos but i will be going back to kaduna soon uodate your memory"
+  );
+  assert.ok(factsUserScenario.some((f: any) => f.content === "User is currently in Lagos"));
+  assert.ok(factsUserScenario.some((f: any) => f.content === "User plans to return to Kaduna soon"));
+
   // Behavioral preferences
   const facts8 = extractDeterministicFacts("always reply in concise bullet points");
   assert.ok(facts8.some((f: any) => f.content.includes("concise bullet points")));
 
+  // Age extraction
+  const factsAge1 = extractDeterministicFacts("i am 20 years old");
+  assert.ok(factsAge1.some((f: any) => f.content === "User is 20 years old"));
+  assert.equal(factsAge1[0].category, "bio");
+
+  const factsAge2 = extractDeterministicFacts("actually my age is 25");
+  assert.ok(factsAge2.some((f: any) => f.content === "User is 25 years old"));
+
+  // Favorite sports
+  const factsSport = extractDeterministicFacts("my favorite sport is football");
+  assert.ok(factsSport.some((f: any) => f.content === "User's favorite sport is football"));
+  assert.equal(factsSport[0].category, "preference");
+
+  // Supporting team & favorite team
+  const factsTeam1 = extractDeterministicFacts("i support chelsea");
+  assert.ok(factsTeam1.some((f: any) => f.content === "User supports Chelsea"));
+
+  const factsTeam2 = extractDeterministicFacts("my favorite team is Arsenal");
+  assert.ok(factsTeam2.some((f: any) => f.content === "User supports Arsenal"));
+
+  // General favorites
+  const factsFood = extractDeterministicFacts("my favorite food is pizza");
+  assert.ok(factsFood.some((f: any) => f.content === "User's favorite food is pizza"));
+
+  // Spoken languages & birthdays
+  const factsLang = extractDeterministicFacts("i speak English and French");
+  assert.ok(factsLang.some((f: any) => f.content === "User speaks English, French"));
+
+  const factsBday = extractDeterministicFacts("my birthday is May 14");
+  assert.ok(factsBday.some((f: any) => f.content === "User's birthday is May 14"));
+
   // Non-name declarations should return empty array
   assert.deepEqual(extractDeterministicFacts("What is the weather today?"), []);
   assert.deepEqual(extractDeterministicFacts(""), []);
+});
+
+test("cleanSafetyPrefix strips safety header evaluation lines from completions", () => {
+  const { cleanSafetyPrefix } = require("@/ai/providers/openrouter");
+
+  assert.equal(
+    cleanSafetyPrefix("User Safety: safe\nResponse Safety: safe\n\nHello! How can I help?"),
+    "Hello! How can I help?",
+  );
+  assert.equal(
+    cleanSafetyPrefix("User Safety: safe Response Safety: safe\nHello!"),
+    "Hello!",
+  );
+  assert.equal(
+    cleanSafetyPrefix("User Safety: safe\n\nI am doing well."),
+    "I am doing well.",
+  );
+  assert.equal(
+    cleanSafetyPrefix("Response Safety: safe\n\nSure, here is the code."),
+    "Sure, here is the code.",
+  );
+  assert.equal(
+    cleanSafetyPrefix("Hello world! User Safety: safe"),
+    "Hello world! User Safety: safe",
+  );
+});
+
+test("hasMemoryCandidates detects age, sports, teams and multi-turn dialogue context", () => {
+  assert.equal(hasMemoryCandidates("i am 20 years old"), true);
+  assert.equal(hasMemoryCandidates("i'm 20"), true);
+  assert.equal(hasMemoryCandidates("my favorite sport is football"), true);
+  assert.equal(hasMemoryCandidates("i support chelsea"), true);
+  assert.equal(hasMemoryCandidates("my birthday is tomorrow"), true);
+
+  // Multi-turn context answering assistant questions
+  const history = [
+    { role: "assistant" as const, content: "Which football team do you support?" },
+    { role: "user" as const, content: "chelsea" },
+  ];
+  assert.equal(hasMemoryCandidates("chelsea", history), true);
+
+  const historyAge = [
+    { role: "assistant" as const, content: "How old are you?" },
+    { role: "user" as const, content: "20" },
+  ];
+  assert.equal(hasMemoryCandidates("20", historyAge), true);
 });
 
 

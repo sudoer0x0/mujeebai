@@ -56,6 +56,14 @@ async function* parseSseStream(body: ReadableStream<Uint8Array>): AsyncGenerator
   }
 }
 
+/**
+ * Strips model safety evaluation headers emitted by certain providers/models
+ * (e.g. "User Safety: safe\nResponse Safety: safe\n\n").
+ */
+export function cleanSafetyPrefix(text: string): string {
+  return text.replace(/^\s*(?:(?:User|Response)\s+Safety:\s*\w+[\r\n\s]*)+/i, "");
+}
+
 export const openRouterAdapter: TextProviderAdapter = {
   slug: "openrouter",
   capabilities: ["text", "vision", "streaming", "reasoning"],
@@ -105,6 +113,9 @@ export const openRouterAdapter: TextProviderAdapter = {
 
     let finishReason = "stop";
     let hasYieldedContent = false;
+    let safetyBuffer = "";
+    let safetyBufferPassed = false;
+
     for await (const event of parseSseStream(response.body)) {
       const choice = (event as { choices?: Array<Record<string, unknown>> }).choices?.[0];
       if (!choice) continue;
@@ -119,8 +130,36 @@ export const openRouterAdapter: TextProviderAdapter = {
         yield { type: "reasoning_delta", text: delta.reasoning };
       }
       if (delta?.content) {
-        hasYieldedContent = true;
-        yield { type: "delta", text: delta.content };
+        if (!safetyBufferPassed) {
+          safetyBuffer += delta.content;
+          const trimmedStart = safetyBuffer.trimStart().toLowerCase();
+          const isPrefixMatch =
+            trimmedStart.length === 0 ||
+            "user safety:".startsWith(trimmedStart.slice(0, 12)) ||
+            "response safety:".startsWith(trimmedStart.slice(0, 16));
+
+          if (!isPrefixMatch) {
+            safetyBufferPassed = true;
+            hasYieldedContent = true;
+            yield { type: "delta", text: safetyBuffer };
+            safetyBuffer = "";
+          } else if (
+            trimmedStart.length >= 45 ||
+            safetyBuffer.includes("\n\n") ||
+            (safetyBuffer.toLowerCase().includes("safety:") && safetyBuffer.includes("\n"))
+          ) {
+            const cleaned = cleanSafetyPrefix(safetyBuffer);
+            safetyBufferPassed = true;
+            safetyBuffer = "";
+            if (cleaned) {
+              hasYieldedContent = true;
+              yield { type: "delta", text: cleaned };
+            }
+          }
+        } else {
+          hasYieldedContent = true;
+          yield { type: "delta", text: delta.content };
+        }
       }
       if (typeof choice.finish_reason === "string" && choice.finish_reason) {
         finishReason = choice.finish_reason;
@@ -128,6 +167,15 @@ export const openRouterAdapter: TextProviderAdapter = {
 
       const usageRaw = (event as { usage?: Record<string, number> }).usage;
       if (usageRaw) {
+        if (!safetyBufferPassed && safetyBuffer) {
+          const cleaned = cleanSafetyPrefix(safetyBuffer);
+          safetyBufferPassed = true;
+          safetyBuffer = "";
+          if (cleaned) {
+            hasYieldedContent = true;
+            yield { type: "delta", text: cleaned };
+          }
+        }
         if (!hasYieldedContent) {
           throw new GatewayError("provider_unavailable", "Model returned 0 content tokens.");
         }

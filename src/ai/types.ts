@@ -33,7 +33,8 @@ export type StreamChunk =
   | { type: "delta"; text: string }
   | { type: "reasoning_delta"; text: string }
   | { type: "done"; finishReason: string; usage?: NormalizedUsage }
-  | { type: "error"; code: GatewayErrorCode; message: string };
+  | { type: "error"; code: GatewayErrorCode; message: string }
+  | { type: "memory_saved"; memories: Array<{ id?: string; category: string; content: string }> };
 
 /** Model-agnostic error categories the UI can render a friendly message for. */
 export type GatewayErrorCode =

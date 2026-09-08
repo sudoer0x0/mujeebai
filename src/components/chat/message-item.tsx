@@ -2,13 +2,14 @@
 
 import * as React from "react";
 import { useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight, Copy, Check, RefreshCw, Pencil, ChevronDown, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Copy, Check, RefreshCw, Pencil, ChevronDown, X, Brain } from "lucide-react";
 import { MarkdownRenderer } from "@/components/chat/markdown-renderer";
 import { MessageAttachments } from "@/components/chat/message-attachments";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/input";
 import { Alert } from "@/components/ui/alert";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { displayContentOf, type UiMessage } from "@/components/chat/types";
 import { cn } from "@/lib/utils";
 
@@ -70,6 +71,7 @@ export function MessageItem({
 
   return (
     <article
+      data-role={message.role}
       className={cn("group flex w-full flex-col gap-1.5 py-4", isUser ? "items-end" : "items-start")}
       aria-label={isUser ? t("a11y.yourMessage") : t("a11y.assistantMessage")}
     >
@@ -215,6 +217,10 @@ export function MessageItem({
             </IconAction>
           ) : null}
 
+          {!isUser && message.savedMemories && message.savedMemories.length > 0 ? (
+            <MemoryAction memories={message.savedMemories} />
+          ) : null}
+
           {isUser && onEdit && isPersisted ? (
             <IconAction label={t("edit")} onClick={startEditing}>
               <Pencil />
@@ -223,6 +229,65 @@ export function MessageItem({
         </div>
       ) : null}
     </article>
+  );
+}
+
+function MemoryAction({
+  memories,
+}: {
+  memories: Array<{ id?: string; category: string; content: string }>;
+}) {
+  return (
+    <DropdownMenu>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              className="relative text-emerald-500 hover:text-emerald-400 hover:bg-emerald-500/10 transition-transform active:scale-95"
+              aria-label="Information saved to memory"
+            >
+              <Brain className="size-4" />
+              <span className="absolute -top-0.5 -end-0.5 flex size-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full size-2 bg-emerald-500"></span>
+              </span>
+            </Button>
+          </DropdownMenuTrigger>
+        </TooltipTrigger>
+        <TooltipContent>Information saved to memory</TooltipContent>
+      </Tooltip>
+      <DropdownMenuContent align="start" className="w-80 p-2.5 text-[13px]">
+        <div className="flex items-center gap-1.5 px-1 py-1 font-semibold text-foreground text-[12px]">
+          <Brain className="size-4 text-emerald-500" />
+          <span>Saved to Memory</span>
+        </div>
+        <DropdownMenuSeparator className="my-1.5" />
+        <div className="flex flex-col gap-1.5 py-1">
+          {memories.map((m, idx) => (
+            <div
+              key={m.id || idx}
+              className="flex flex-col gap-0.5 rounded-md bg-surface-raised/70 p-2 text-[12px] leading-snug border border-line"
+            >
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-muted">
+                {m.category}
+              </span>
+              <span className="text-foreground">{m.content}</span>
+            </div>
+          ))}
+        </div>
+        <DropdownMenuSeparator className="my-1.5" />
+        <div className="px-1 pt-0.5 text-center">
+          <a
+            href="/settings"
+            className="text-[11px] text-muted hover:text-foreground underline underline-offset-2 transition-colors"
+          >
+            Manage memories in Settings &rarr;
+          </a>
+        </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 

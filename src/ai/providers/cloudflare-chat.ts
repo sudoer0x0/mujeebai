@@ -1,6 +1,13 @@
 import "server-only";
+import dns from "node:dns";
 import { serverEnv } from "@/lib/env.server";
 import { logger } from "@/lib/logger";
+
+try {
+  dns.setDefaultResultOrder?.("ipv4first");
+} catch {
+  // Ignore
+}
 import {
   GatewayError,
   type ChatContentPart,
@@ -67,7 +74,7 @@ export const cloudflareChatAdapter: TextProviderAdapter = {
 
     const model = request.providerModelId.startsWith("@cf/")
       ? request.providerModelId
-      : "@cf/meta/llama-3.1-8b-instruct";
+      : "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
 
     const url = `https://api.cloudflare.com/client/v4/accounts/${serverEnv.CLOUDFLARE_ACCOUNT_ID}/ai/run/${model}`;
 

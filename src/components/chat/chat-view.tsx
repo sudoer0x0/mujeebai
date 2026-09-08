@@ -20,6 +20,7 @@ interface RawMessage {
     reasoning_summary: string | null;
     finish_reason: string | null;
     error: { code: string; message: string } | null;
+    usage?: Record<string, unknown> | null;
   }>;
   active_variant_id?: string | null;
   attachments?: UiAttachment[];
@@ -29,6 +30,8 @@ function mapRawMessage(raw: RawMessage): UiMessage {
   const variants = (raw.message_variants ?? []).sort((a, b) => a.sequence - b.sequence);
   const activeIndex = variants.findIndex((variant) => variant.id === raw.active_variant_id);
   const resolvedIndex = activeIndex >= 0 ? activeIndex : Math.max(0, variants.length - 1);
+  const activeVariant = variants[resolvedIndex];
+  const savedMemories = (activeVariant?.usage as { saved_memories?: Array<{ id?: string; category: string; content: string }> } | undefined)?.saved_memories;
 
   return {
     id: raw.id,
@@ -38,7 +41,8 @@ function mapRawMessage(raw: RawMessage): UiMessage {
     variants,
     activeVariantIndex: variants.length ? resolvedIndex : undefined,
     attachments: raw.attachments ?? [],
-    reasoning: variants[resolvedIndex]?.reasoning_summary ?? null,
+    reasoning: activeVariant?.reasoning_summary ?? null,
+    savedMemories: Array.isArray(savedMemories) ? savedMemories : undefined,
   };
 }
 
@@ -265,6 +269,14 @@ export function ChatView({
                       status: "complete",
                       ...withActiveVariantContent(message, text || message.content || ""),
                     }
+                  : message,
+              ),
+            );
+          } else if (chunk.type === "memory_saved") {
+            setMessages((previous) =>
+              previous.map((message) =>
+                message.id === settledMessageId || message.id === assistantMessageId
+                  ? { ...message, id: settledMessageId, savedMemories: chunk.memories }
                   : message,
               ),
             );

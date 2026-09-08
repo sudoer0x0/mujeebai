@@ -208,9 +208,32 @@ export async function saveUserMemoryProfile(userId: string, profile: UserMemoryP
   }
 }
 
+function isLocationFact(text: string): boolean {
+  const lower = text.toLowerCase().trim();
+  return (
+    lower.startsWith("user is currently in") ||
+    lower.startsWith("user lives in") ||
+    lower.startsWith("user is based in") ||
+    lower.startsWith("user resides in") ||
+    lower.startsWith("user stays in")
+  );
+}
+
+function isTravelPlanFact(text: string): boolean {
+  const lower = text.toLowerCase().trim();
+  return (
+    lower.startsWith("user plans to return to") ||
+    lower.startsWith("user plans to travel to") ||
+    lower.startsWith("user plans to go back to") ||
+    lower.startsWith("user has an upcoming trip to") ||
+    lower.startsWith("user is travelling to") ||
+    lower.startsWith("user is traveling to")
+  );
+}
+
 /**
- * Adds a memory for the user. If an identical memory already exists,
- * updates its timestamp rather than duplicating.
+ * Adds a memory for the user. If an identical or conflicting memory already exists,
+ * updates or supersedes it rather than duplicating or storing contradictory facts.
  */
 export async function addUserMemory(
   userId: string,
@@ -221,41 +244,112 @@ export async function addUserMemory(
   const trimmed = item.content.trim();
   const category = item.category || "general";
   const now = new Date().toISOString();
+  const newLower = trimmed.toLowerCase();
 
-  // Check if identical or same-subject memory already exists
-  const existingIndex = profile.memories.findIndex((m) => {
-    const existingLower = m.content.toLowerCase().trim();
-    const newLower = trimmed.toLowerCase();
-    if (existingLower === newLower) return true;
+  const isLoc = isLocationFact(newLower);
+  const isTravel = isTravelPlanFact(newLower);
+  const obsoleteMemoryIds: string[] = [];
+  let targetMemory: UserMemory | null = null;
 
-    // Single-subject replacement (e.g. updating name, assistant name, job, or residence)
-    if (newLower.startsWith("user's name is") && existingLower.startsWith("user's name is")) return true;
-    if (
-      newLower.startsWith("user wants the assistant to be named") &&
-      existingLower.startsWith("user wants the assistant to be named")
-    ) {
-      return true;
+  if (isLoc) {
+    const existingLocations = profile.memories.filter((m) => isLocationFact(m.content));
+    if (existingLocations.length > 0) {
+      targetMemory = {
+        ...existingLocations[0],
+        category,
+        content: trimmed,
+        updatedAt: now,
+      };
+      // Mark any other existing contradictory locations as obsolete
+      for (let i = 1; i < existingLocations.length; i++) {
+        obsoleteMemoryIds.push(existingLocations[i].id);
+      }
+      profile.memories = [
+        targetMemory,
+        ...profile.memories.filter((m) => !isLocationFact(m.content)),
+      ];
     }
-    if (newLower.startsWith("user works as") && existingLower.startsWith("user works as")) return true;
-    if (
-      (newLower.startsWith("user lives in") || newLower.startsWith("user is based in")) &&
-      (existingLower.startsWith("user lives in") || existingLower.startsWith("user is based in"))
-    ) {
-      return true;
+  } else if (isTravel) {
+    const existingTravel = profile.memories.find((m) => isTravelPlanFact(m.content));
+    if (existingTravel) {
+      targetMemory = {
+        ...existingTravel,
+        category,
+        content: trimmed,
+        updatedAt: now,
+      };
+      profile.memories = profile.memories.map((m) => (m.id === existingTravel.id ? targetMemory! : m));
     }
-    return false;
-  });
-
-  let targetMemory: UserMemory;
-  if (existingIndex >= 0) {
-    targetMemory = {
-      ...profile.memories[existingIndex],
-      category,
-      content: trimmed,
-      updatedAt: now,
-    };
-    profile.memories[existingIndex] = targetMemory;
   } else {
+    // Check if identical or single-subject memory already exists (name, age, sports, teams, favorites, job)
+    const existingIndex = profile.memories.findIndex((m) => {
+      const existingLower = m.content.toLowerCase().trim();
+      if (existingLower === newLower) return true;
+      if (newLower.startsWith("user's name is") && existingLower.startsWith("user's name is")) return true;
+      if (
+        newLower.startsWith("user wants the assistant to be named") &&
+        existingLower.startsWith("user wants the assistant to be named")
+      ) {
+        return true;
+      }
+      if (newLower.startsWith("user works as") && existingLower.startsWith("user works as")) return true;
+
+      // Age reconciliation (e.g. "User is 20 years old" updates previous age)
+      const isAge = (s: string) => /(?:user(?:'s)?\s+(?:is\s+\d+\s+years?\s+old|age\s+is\s+\d+))/.test(s);
+      if (isAge(newLower) && isAge(existingLower)) return true;
+
+      // Favorite sport reconciliation
+      const isFavSport = (s: string) =>
+        s.startsWith("user's favorite sport is") || s.startsWith("user's favourite sport is");
+      if (isFavSport(newLower) && isFavSport(existingLower)) return true;
+
+      // Team support / favorite team reconciliation
+      const isTeam = (s: string) =>
+        s.startsWith("user supports") ||
+        s.startsWith("user's favorite team is") ||
+        s.startsWith("user's favourite team is");
+      if (isTeam(newLower) && isTeam(existingLower)) return true;
+
+      // Favorite food / movie / color reconciliation
+      const isFavGeneral = (s: string) =>
+        s.startsWith("user's favorite ") || s.startsWith("user's favourite ");
+      if (isFavGeneral(newLower) && isFavGeneral(existingLower)) {
+        // Check if same sub-type (e.g. favorite food vs favorite color)
+        const prefixA = newLower.split(" is ")[0];
+        const prefixB = existingLower.split(" is ")[0];
+        if (prefixA && prefixA === prefixB) return true;
+      }
+
+      // Birthday reconciliation
+      const isBirthday = (s: string) =>
+        s.startsWith("user's birthday is") || s.startsWith("user was born on");
+      if (isBirthday(newLower) && isBirthday(existingLower)) return true;
+
+      // Language reconciliation
+      const isLang = (s: string) =>
+        s.startsWith("user speaks") || s.startsWith("user's native language is");
+      if (isLang(newLower) && isLang(existingLower)) return true;
+
+      // Marital status reconciliation
+      const isMarital = (s: string) =>
+        s.startsWith("user is married") || s.startsWith("user is single");
+      if (isMarital(newLower) && isMarital(existingLower)) return true;
+
+      return false;
+    });
+
+    if (existingIndex >= 0) {
+      targetMemory = {
+        ...profile.memories[existingIndex],
+        category,
+        content: trimmed,
+        updatedAt: now,
+      };
+      profile.memories[existingIndex] = targetMemory;
+    }
+  }
+
+  if (!targetMemory) {
     targetMemory = {
       id: crypto.randomUUID(),
       userId,
@@ -265,13 +359,21 @@ export async function addUserMemory(
       createdAt: now,
       updatedAt: now,
     };
-    // Keep max 100 memories per user, newest first
     profile.memories = [targetMemory, ...profile.memories].slice(0, 100);
+  }
+
+  // If any obsolete memories were superseded (e.g. older conflicting locations), clean them up from DB
+  if (obsoleteMemoryIds.length > 0) {
+    try {
+      await supabase.from("user_memories").delete().in("id", obsoleteMemoryIds);
+    } catch (cleanErr) {
+      logger.warn("cleanup_obsolete_memories_failed", { userId, error: String(cleanErr) });
+    }
   }
 
   // 1. Direct write to user_memories table
   try {
-    const { error } = await supabase.from("user_memories").upsert(
+    let { error } = await supabase.from("user_memories").upsert(
       {
         id: targetMemory.id,
         user_id: targetMemory.userId,
@@ -283,6 +385,22 @@ export async function addUserMemory(
       },
       { onConflict: "id" },
     );
+    if (error && error.code === "23503") {
+      // Retry without foreign key if conversation has not yet been persisted
+      const retry = await supabase.from("user_memories").upsert(
+        {
+          id: targetMemory.id,
+          user_id: targetMemory.userId,
+          category: targetMemory.category,
+          content: targetMemory.content,
+          source_conversation_id: null,
+          created_at: targetMemory.createdAt,
+          updated_at: targetMemory.updatedAt,
+        },
+        { onConflict: "id" },
+      );
+      error = retry.error;
+    }
     if (error) {
       logger.warn("user_memories_table_insert_warning", { userId, error: error.message });
     }

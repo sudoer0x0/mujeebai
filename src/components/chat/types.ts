@@ -5,6 +5,7 @@ export interface UiMessageVariant {
   reasoning_summary: string | null;
   finish_reason: string | null;
   error: { code: string; message: string } | null;
+  usage?: Record<string, unknown> | null;
 }
 
 /**
@@ -30,6 +31,7 @@ export interface UiMessage {
   /** Files sent with this message. Rendered under the bubble. */
   attachments?: UiAttachment[];
   reasoning?: string | null;
+  savedMemories?: Array<{ id?: string; category: string; content: string }>;
 }
 
 export interface ModelOption {
@@ -68,5 +70,6 @@ export function displayContentOf(message: UiMessage): string {
   const fromVariant = index === null ? "" : (message.variants?.[index]?.content ?? "");
   // Truthiness, not nullish: an empty variant means "nothing streamed
   // here yet", and the message's own content is the better answer.
-  return fromVariant || message.content || "";
+  const raw = fromVariant || message.content || "";
+  return raw.replace(/^\s*(?:(?:User|Response)\s+Safety:\s*\w+[\r\n\s]*)+/i, "");
 }

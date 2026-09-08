@@ -6,9 +6,10 @@ import { GatewayError, type ChatMessageInput, type StreamChunk } from "@/ai/type
 import { deriveTitle } from "@/ai/conversation";
 import { logger } from "@/lib/logger";
 import type { ModelRow } from "@/ai/registry";
-import type { UpdateOf } from "@/types/database";
+import type { Json, UpdateOf } from "@/types/database";
 
-import { extractAndSaveMemories } from "@/ai/memory/extractor";
+import { extractAndSaveMemories, type ExtractedFact } from "@/ai/memory/extractor";
+import { cleanSafetyPrefix } from "@/ai/providers/openrouter";
 
 export interface RunTurnParams {
   model: ModelRow;
@@ -33,6 +34,40 @@ export interface RunTurnParams {
   pendingStream?: Promise<Awaited<ReturnType<typeof streamAssistantResponse>>>;
 }
 
+async function* streamWithMemories(
+  source: AsyncGenerator<StreamChunk>,
+  memPromise: Promise<ExtractedFact[]>,
+): AsyncGenerator<StreamChunk> {
+  let doneChunk: StreamChunk | null = null;
+  for await (const chunk of source) {
+    if (chunk.type === "done") {
+      doneChunk = chunk;
+    } else {
+      yield chunk;
+    }
+  }
+
+  // Before emitting the stream end/done, check if memories were saved
+  try {
+    const savedMemories = await Promise.race([
+      memPromise,
+      new Promise<ExtractedFact[]>((resolve) => setTimeout(() => resolve([]), 4000)),
+    ]);
+    if (savedMemories && savedMemories.length > 0) {
+      yield {
+        type: "memory_saved",
+        memories: savedMemories.map((m) => ({ category: m.category, content: m.content })),
+      };
+    }
+  } catch {
+    // Non-blocking
+  }
+
+  if (doneChunk) {
+    yield doneChunk;
+  }
+}
+
 // Streams model turn and persists results to database.
 export async function runAssistantTurn(params: RunTurnParams): Promise<Response> {
   const supabase = await createServerSupabaseClient();
@@ -41,6 +76,31 @@ export async function runAssistantTurn(params: RunTurnParams): Promise<Response>
   // answers — which now happens after the response has already started —
   // so it is captured here and read by the persistence step below.
   let resolvedModel = params.model;
+
+  // Concurrently run memory extraction in background while the model streams
+  const lastTurn = params.conversationHistory[params.conversationHistory.length - 1];
+  const userText =
+    typeof lastTurn?.content === "string"
+      ? lastTurn.content
+      : Array.isArray(lastTurn?.content)
+        ? lastTurn.content
+            .filter((p) => p.type === "text")
+            .map((p) => p.text)
+            .join(" ")
+        : "";
+
+  const memoryPromise: Promise<ExtractedFact[]> =
+    params.userId && userText
+      ? extractAndSaveMemories({
+          userId: params.userId,
+          conversationId: params.conversationId,
+          userText,
+          conversationHistory: params.conversationHistory,
+        }).catch((err) => {
+          logger.warn("background_memory_extract_error", { error: String(err) });
+          return [];
+        })
+      : Promise.resolve([]);
 
   const pending = (params.pendingStream ??
     streamAssistantResponse({
@@ -51,7 +111,7 @@ export async function runAssistantTurn(params: RunTurnParams): Promise<Response>
     }))
     .then((result) => {
       resolvedModel = result.resolvedModel;
-      return result.chunks;
+      return streamWithMemories(result.chunks, memoryPromise);
     })
     .catch(async (error) => {
       // The connection is already open, so a failure has to be delivered
@@ -76,31 +136,39 @@ export async function runAssistantTurn(params: RunTurnParams): Promise<Response>
     const textParts: string[] = [];
     const reasoningParts: string[] = [];
     let finishReason = "stopped";
-    let usage: Record<string, number> | undefined;
+    let usage: Record<string, unknown> | undefined;
     let errorInfo: { code: string; message: string } | undefined;
+    let savedMemories: Array<{ category: string; content: string }> | undefined;
 
     for (const chunk of chunks) {
       if (chunk.type === "delta") textParts.push(chunk.text);
       else if (chunk.type === "reasoning_delta") reasoningParts.push(chunk.text);
       else if (chunk.type === "done") {
         finishReason = chunk.finishReason;
-        usage = chunk.usage as Record<string, number> | undefined;
+        usage = chunk.usage as Record<string, unknown> | undefined;
       } else if (chunk.type === "error") {
         errorInfo = { code: chunk.code, message: chunk.message };
+      } else if (chunk.type === "memory_saved") {
+        savedMemories = chunk.memories;
       }
     }
 
-    const finalContent = textParts.join("");
+    const finalContent = cleanSafetyPrefix(textParts.join(""));
     const status = errorInfo ? "error" : finishReason === "stopped" && !usage ? "stopped" : "complete";
 
     try {
+      const mergedUsage: Record<string, unknown> = {
+        ...(usage ?? {}),
+        ...(savedMemories && savedMemories.length > 0 ? { saved_memories: savedMemories } : {}),
+      };
+
       await supabase
         .from("message_variants")
         .update({
           content: finalContent,
           reasoning_summary: reasoningParts.join("") || null,
           finish_reason: finishReason,
-          usage: usage ?? {},
+          usage: mergedUsage as Json,
           error: errorInfo ?? null,
           model_id: resolvedModel.id,
         })
@@ -123,32 +191,6 @@ export async function runAssistantTurn(params: RunTurnParams): Promise<Response>
         }
       }
       await supabase.from("conversations").update(conversationUpdate).eq("id", params.conversationId);
-
-      // Asynchronously extract and save user memories without blocking the response
-      if (status === "complete" && params.userId) {
-        const lastTurn = params.conversationHistory[params.conversationHistory.length - 1];
-        const userText =
-          typeof lastTurn?.content === "string"
-            ? lastTurn.content
-            : Array.isArray(lastTurn?.content)
-              ? lastTurn.content
-                  .filter((p) => p.type === "text")
-                  .map((p) => p.text)
-                  .join(" ")
-              : "";
-
-        if (userText) {
-          try {
-            await extractAndSaveMemories({
-              userId: params.userId!,
-              conversationId: params.conversationId,
-              userText,
-            });
-          } catch (err) {
-            logger.warn("background_memory_extract_error", { error: String(err) });
-          }
-        }
-      }
     } catch (error) {
       logger.error("chat_persist_failed", { error: String(error), conversationId: params.conversationId });
     }
