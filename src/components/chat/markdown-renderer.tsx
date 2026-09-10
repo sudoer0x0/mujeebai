@@ -1,17 +1,21 @@
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import { CodeBlock } from "@/components/chat/code-block";
 import { GeneratedImage } from "@/components/chat/generated-image";
+import { preprocessLaTeX } from "@/lib/latex";
 import { cn } from "@/lib/utils";
 
-// Sanitized Markdown renderer for assistant messages.
+// Sanitized Markdown renderer for assistant messages, preserving math structures.
 const sanitizeSchema = {
   ...defaultSchema,
   attributes: {
     ...defaultSchema.attributes,
     code: [...(defaultSchema.attributes?.code ?? []), ["className"]],
     span: [...(defaultSchema.attributes?.span ?? []), ["className"]],
+    div: [...(defaultSchema.attributes?.div ?? []), ["className"]],
   },
 };
 
@@ -119,14 +123,19 @@ const components: Components = {
 };
 
 export function MarkdownRenderer({ content, className }: { content: string; className?: string }) {
+  const processedContent = preprocessLaTeX(content);
+
   return (
     <div className={cn("text-sm leading-relaxed", className)}>
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[[rehypeSanitize, sanitizeSchema]]}
+        remarkPlugins={[remarkGfm, remarkMath]}
+        rehypePlugins={[
+          [rehypeSanitize, sanitizeSchema],
+          [rehypeKatex, { throwOnError: false, strict: false }],
+        ]}
         components={components}
       >
-        {content}
+        {processedContent}
       </ReactMarkdown>
     </div>
   );

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
 
 /* ---------------------------------------------------------------------
  * Mujeeb AI design system
@@ -972,3 +973,21 @@ body {
   --accent-soft: #1c232c;
   --accent-text: #0b0f14;
 }
+
+/* ---------------------------------------------------------------------
+ * KaTeX mathematical typesetting
+ * ------------------------------------------------------------------- */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0;
+  margin: 0.75rem 0;
+  max-width: 100%;
+}
+
+.katex {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-rendering: auto;
+}
+

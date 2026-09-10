@@ -3,8 +3,9 @@
 import * as React from "react";
 import { useTranslations } from "next-intl";
 import { MessageList } from "@/components/chat/message-list";
-import { Composer } from "@/components/chat/composer";
+import { Composer, type ComposerRef } from "@/components/chat/composer";
 import { toast } from "@/components/ui/toast";
+import { UploadCloud } from "lucide-react";
 import { readEventStream, STREAM_END } from "@/lib/streaming";
 import { activeVariantIndexOf, type UiAttachment, type UiMessage, type UiMessageVariant } from "@/components/chat/types";
 
@@ -129,6 +130,77 @@ export function ChatView({
   const abortRef = React.useRef<AbortController | null>(null);
 
   const currentConvIdRef = React.useRef(initialConversationId);
+  const composerRef = React.useRef<ComposerRef>(null);
+  const [isDraggingOverChat, setIsDraggingOverChat] = React.useState(false);
+  const chatDragDepth = React.useRef(0);
+
+  // Prevent default browser drag/drop globally to prevent accidental navigation.
+  React.useEffect(() => {
+    const preventWindowDrop = (e: DragEvent) => {
+      if (Array.from(e.dataTransfer?.types ?? []).includes("Files")) {
+        e.preventDefault();
+      }
+    };
+    window.addEventListener("dragover", preventWindowDrop);
+    window.addEventListener("drop", preventWindowDrop);
+    return () => {
+      window.removeEventListener("dragover", preventWindowDrop);
+      window.removeEventListener("drop", preventWindowDrop);
+    };
+  }, []);
+
+  const handleChatDragEnter = React.useCallback(
+    (e: React.DragEvent) => {
+      if (!fileUploadsEnabled) return;
+      const hasFiles =
+        (e.dataTransfer.files && e.dataTransfer.files.length > 0) ||
+        Array.from(e.dataTransfer.types ?? []).includes("Files");
+      if (!hasFiles) return;
+      e.preventDefault();
+      e.stopPropagation();
+      chatDragDepth.current += 1;
+      setIsDraggingOverChat(true);
+    },
+    [fileUploadsEnabled],
+  );
+
+  const handleChatDragOver = React.useCallback(
+    (e: React.DragEvent) => {
+      if (!fileUploadsEnabled) return;
+      const hasFiles =
+        (e.dataTransfer.files && e.dataTransfer.files.length > 0) ||
+        Array.from(e.dataTransfer.types ?? []).includes("Files");
+      if (!hasFiles) return;
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    [fileUploadsEnabled],
+  );
+
+  const handleChatDragLeave = React.useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    chatDragDepth.current = Math.max(0, chatDragDepth.current - 1);
+    if (chatDragDepth.current === 0) {
+      setIsDraggingOverChat(false);
+    }
+  }, []);
+
+  const handleChatDrop = React.useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      chatDragDepth.current = 0;
+      setIsDraggingOverChat(false);
+      if (!fileUploadsEnabled) return;
+
+      const files = Array.from(e.dataTransfer.files ?? []);
+      if (files.length > 0) {
+        composerRef.current?.addFiles(files);
+      }
+    },
+    [fileUploadsEnabled],
+  );
 
   // Listen for instant new-chat events dispatched from the sidebar, header, or rail.
   // Resets local messages, aborts any active stream, resets composer draft, and updates
@@ -230,7 +302,11 @@ export function ChatView({
           setConversationId(newConversationId);
           replaceConversationUrl(newConversationId);
           if (typeof window !== "undefined") {
-            window.dispatchEvent(new CustomEvent("mujeeb:conversations-changed"));
+            window.dispatchEvent(
+              new CustomEvent("mujeeb:conversations-changed", {
+                detail: { conversationId: newConversationId, last_message_at: new Date().toISOString() },
+              }),
+            );
           }
         }
 
@@ -341,6 +417,16 @@ export function ChatView({
       } finally {
         setIsStreaming(false);
         abortRef.current = null;
+        if (typeof window !== "undefined") {
+          const activeId = currentConvIdRef.current || conversationId;
+          if (activeId) {
+            window.dispatchEvent(
+              new CustomEvent("mujeeb:conversations-changed", {
+                detail: { conversationId: activeId, last_message_at: new Date().toISOString() },
+              }),
+            );
+          }
+        }
       }
     },
     [conversationId, t, translateServerError],
@@ -349,6 +435,14 @@ export function ChatView({
   function handleSend(content: string, attachments: UiAttachment[] = []) {
     const stamp = Date.now();
     const assistantMessageId = `local-assistant-${stamp}`;
+
+    if (typeof window !== "undefined" && conversationId) {
+      window.dispatchEvent(
+        new CustomEvent("mujeeb:conversations-changed", {
+          detail: { conversationId, last_message_at: new Date().toISOString() },
+        }),
+      );
+    }
 
     setMessages((previous) => [
       ...previous,
@@ -515,8 +609,15 @@ export function ChatView({
         currentConvIdRef.current = data.conversationId;
         setConversationId(data.conversationId);
         replaceConversationUrl(data.conversationId);
-        if (typeof window !== "undefined") {
-          window.dispatchEvent(new CustomEvent("mujeeb:conversations-changed"));
+      }
+      if (typeof window !== "undefined") {
+        const activeId = currentConvIdRef.current || data.conversationId || conversationId;
+        if (activeId) {
+          window.dispatchEvent(
+            new CustomEvent("mujeeb:conversations-changed", {
+              detail: { conversationId: activeId, last_message_at: new Date().toISOString() },
+            }),
+          );
         }
       }
 
@@ -545,7 +646,25 @@ export function ChatView({
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-1 flex-col">
+    <div
+      className="relative flex h-full min-h-0 flex-1 flex-col"
+      onDragEnter={handleChatDragEnter}
+      onDragOver={handleChatDragOver}
+      onDragLeave={handleChatDragLeave}
+      onDrop={handleChatDrop}
+    >
+      {isDraggingOverChat && fileUploadsEnabled ? (
+        <div className="pointer-events-none absolute inset-0 z-50 flex flex-col items-center justify-center gap-3 bg-canvas/85 p-6 backdrop-blur-xs">
+          <div className="flex size-16 items-center justify-center rounded-2xl border-2 border-dashed border-accent bg-surface-raised text-accent shadow-2xl">
+            <UploadCloud className="size-8 animate-bounce" />
+          </div>
+          <div className="text-center">
+            <p className="text-base font-semibold text-foreground">
+              {t("composer.dropHint", { count: maxAttachments })}
+            </p>
+          </div>
+        </div>
+      ) : null}
       <div data-chat-scroll className="scroll-area min-h-0 flex-1 overflow-y-auto">
         <MessageList
           messages={messages}
@@ -556,6 +675,7 @@ export function ChatView({
         />
       </div>
       <Composer
+        ref={composerRef}
         key={composerKey}
         isStreaming={isStreaming}
         onSend={handleSend}

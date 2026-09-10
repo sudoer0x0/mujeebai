@@ -21,7 +21,18 @@ export async function GET() {
     .order("created_at", { ascending: false });
 
   if (error) return dbErrorResponse("conversations_list_failed", error);
-  return NextResponse.json({ conversations: data ?? [] });
+
+  // Sort pinned first, then by most recent activity (max of last_message_at or created_at)
+  const sorted = (data ?? []).slice().sort((a, b) => {
+    if (a.is_pinned !== b.is_pinned) {
+      return a.is_pinned ? -1 : 1;
+    }
+    const timeA = Math.max(new Date(a.last_message_at ?? 0).getTime(), new Date(a.created_at).getTime());
+    const timeB = Math.max(new Date(b.last_message_at ?? 0).getTime(), new Date(b.created_at).getTime());
+    return timeB - timeA;
+  });
+
+  return NextResponse.json({ conversations: sorted });
 }
 
 export async function POST() {
@@ -35,7 +46,11 @@ export async function POST() {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
     .from("conversations")
-    .insert({ user_id: user.id, title: "New conversation" })
+    .insert({
+      user_id: user.id,
+      title: "New conversation",
+      last_message_at: new Date().toISOString(),
+    })
     .select()
     .single();
 

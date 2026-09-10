@@ -28,18 +28,11 @@ export interface PendingAttachment {
 
 const MAX_TEXTAREA_HEIGHT = 200;
 
-export function Composer({
-  isStreaming,
-  onSend,
-  onStop,
-  onGenerateImage,
-  modelSlug,
-  onModelChange,
-  imageGenerationEnabled,
-  fileUploadsEnabled,
-  maxFileSizeMb,
-  maxAttachments,
-}: {
+export interface ComposerRef {
+  addFiles: (files: FileList | File[]) => void;
+}
+
+export interface ComposerProps {
   isStreaming: boolean;
   onSend: (content: string, attachments: UiAttachment[]) => void;
   onStop: () => void;
@@ -51,7 +44,23 @@ export function Composer({
   maxFileSizeMb: number;
   /** Files allowed on one message — entitlement-driven, see migration 0017. */
   maxAttachments: number;
-}) {
+}
+
+export const Composer = React.forwardRef<ComposerRef, ComposerProps>(function Composer(
+  {
+    isStreaming,
+    onSend,
+    onStop,
+    onGenerateImage,
+    modelSlug,
+    onModelChange,
+    imageGenerationEnabled,
+    fileUploadsEnabled,
+    maxFileSizeMb,
+    maxAttachments,
+  }: ComposerProps,
+  ref,
+) {
   const t = useTranslations("chat");
   const tImages = useTranslations("images");
   const tFiles = useTranslations("files");
@@ -222,33 +231,39 @@ export function Composer({
    * rejected before upload — sending 40 MB over a phone connection only to
    * be told it was too large wastes a minute and an allowance.
    */
-  function addFiles(files: FileList | File[]) {
-    const incoming = Array.from(files);
-    if (incoming.length === 0) return;
+  const addFiles = React.useCallback(
+    (files: FileList | File[]) => {
+      const incoming = Array.from(files);
+      if (incoming.length === 0) return;
 
-    const room = maxAttachments - attachments.length;
-    if (room <= 0) {
-      toast.error(t("composer.attachmentLimit", { count: maxAttachments }));
-      return;
-    }
-
-    const accepted: File[] = [];
-    let rejectedForSize = 0;
-
-    for (const file of incoming.slice(0, room)) {
-      if (file.size > maxFileSizeMb * 1024 * 1024) {
-        rejectedForSize += 1;
-        continue;
+      const room = maxAttachments - attachments.length;
+      if (room <= 0) {
+        toast.error(t("composer.attachmentLimit", { count: maxAttachments }));
+        return;
       }
-      accepted.push(file);
-    }
 
-    if (rejectedForSize > 0) toast.error(tFiles("tooLarge"));
-    if (incoming.length > room) toast.error(t("composer.attachmentLimit", { count: maxAttachments }));
+      const accepted: File[] = [];
+      let rejectedForSize = 0;
 
-    // Concurrent, not sequential.
-    for (const file of accepted) void uploadOne(file);
-  }
+      for (const file of incoming.slice(0, room)) {
+        if (file.size > maxFileSizeMb * 1024 * 1024) {
+          rejectedForSize += 1;
+          continue;
+        }
+        accepted.push(file);
+      }
+
+      if (rejectedForSize > 0) toast.error(tFiles("tooLarge"));
+      if (incoming.length > room) toast.error(t("composer.attachmentLimit", { count: maxAttachments }));
+
+      // Concurrent, not sequential.
+      for (const file of accepted) void uploadOne(file);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [attachments.length, maxAttachments, maxFileSizeMb, t, tFiles],
+  );
+
+  React.useImperativeHandle(ref, () => ({ addFiles }), [addFiles]);
 
   /**
    * Drag-and-drop.
@@ -549,4 +564,4 @@ export function Composer({
       </form>
     </div>
   );
-}
+});

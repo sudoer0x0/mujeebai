@@ -249,7 +249,29 @@ function SidebarContent({
   // Reload when the route changes, or when custom conversation events fire.
   React.useEffect(() => {
     load();
-    const handleRefresh = () => {
+    const handleRefresh = (event?: Event) => {
+      const customEvent = event as CustomEvent<{
+        conversationId?: string;
+        last_message_at?: string;
+        title?: string;
+      }> | undefined;
+      const detail = customEvent?.detail;
+
+      if (detail?.conversationId) {
+        setConversations((previous) => {
+          if (!previous) return previous;
+          const target = previous.find((item) => item.id === detail.conversationId);
+          if (target) {
+            const updated = {
+              ...target,
+              last_message_at: detail.last_message_at ?? new Date().toISOString(),
+              title: detail.title ?? target.title,
+            };
+            return [updated, ...previous.filter((item) => item.id !== detail.conversationId)];
+          }
+          return previous;
+        });
+      }
       load();
     };
     window.addEventListener("mujeeb:conversations-changed", handleRefresh);
@@ -282,7 +304,15 @@ function SidebarContent({
   }, [conversations, query]);
 
   const pinned = visible.filter((conversation) => conversation.is_pinned);
-  const recent = visible.filter((conversation) => !conversation.is_pinned);
+  const recent = React.useMemo(() => {
+    return visible
+      .filter((conversation) => !conversation.is_pinned)
+      .sort((a, b) => {
+        const timeA = Math.max(new Date(a.last_message_at ?? 0).getTime(), new Date(a.created_at).getTime());
+        const timeB = Math.max(new Date(b.last_message_at ?? 0).getTime(), new Date(b.created_at).getTime());
+        return timeB - timeA;
+      });
+  }, [visible]);
 
   async function patch(id: string, body: Record<string, unknown>) {
     const response = await fetch(`/api/conversations/${id}`, {

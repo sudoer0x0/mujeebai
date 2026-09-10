@@ -88,7 +88,11 @@ async function handleChat(request: Request) {
       ? supabase.from("conversations").select("*").eq("id", conversationId).maybeSingle()
       : supabase
           .from("conversations")
-          .insert({ user_id: user.id, title: "New conversation" })
+          .insert({
+            user_id: user.id,
+            title: "New conversation",
+            last_message_at: new Date().toISOString(),
+          })
           .select()
           .single(),
     // Already in flight above; awaiting the same promise costs nothing.
