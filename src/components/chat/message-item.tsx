@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, Copy, Check, RefreshCw, Pencil, ChevronDown, X, Brain } from "lucide-react";
 import { MarkdownRenderer } from "@/components/chat/markdown-renderer";
@@ -113,7 +114,7 @@ export function MessageItem({
                 : "flex-1",
             )}
           >
-            {message.status === "error" ? (
+            {message.status === "error" && !displayContent ? (
               <Alert tone="danger">{t("errorGeneric")}</Alert>
             ) : isBusy && !displayContent && !(message.attachments ?? []).length ? (
               <p className="pulse text-[13px] text-muted" role="status">
@@ -160,6 +161,8 @@ export function MessageItem({
 
                 {message.status === "stopped" ? (
                   <p className="mt-2 text-[12px] text-faint">{t("stopped")}</p>
+                ) : message.status === "error" && displayContent ? (
+                  <p className="mt-2 text-[12px] text-danger">{t("errorGeneric")}</p>
                 ) : null}
               </>
             )}
@@ -279,12 +282,12 @@ function MemoryAction({
         </div>
         <DropdownMenuSeparator className="my-1.5" />
         <div className="px-1 pt-0.5 text-center">
-          <a
+          <Link
             href="/settings"
             className="text-[11px] text-muted hover:text-foreground underline underline-offset-2 transition-colors"
           >
             Manage memories in Settings &rarr;
-          </a>
+          </Link>
         </div>
       </DropdownMenuContent>
     </DropdownMenu>

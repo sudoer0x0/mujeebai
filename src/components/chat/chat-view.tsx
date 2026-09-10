@@ -33,11 +33,17 @@ function mapRawMessage(raw: RawMessage): UiMessage {
   const activeVariant = variants[resolvedIndex];
   const savedMemories = (activeVariant?.usage as { saved_memories?: Array<{ id?: string; category: string; content: string }> } | undefined)?.saved_memories;
 
+  const content = raw.content || activeVariant?.content || null;
+  let status = raw.status;
+  if ((content ?? "").trim() && (status === "streaming" || status === "error" || status === "pending")) {
+    status = activeVariant?.finish_reason === "stopped" ? "stopped" : "complete";
+  }
+
   return {
     id: raw.id,
     role: raw.role,
-    status: raw.status,
-    content: raw.content,
+    status,
+    content,
     variants,
     activeVariantIndex: variants.length ? resolvedIndex : undefined,
     attachments: raw.attachments ?? [],

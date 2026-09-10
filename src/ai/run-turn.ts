@@ -1,5 +1,5 @@
 import "server-only";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { createServerSupabaseClient, createServiceRoleClient } from "@/lib/supabase/server";
 import { streamAssistantResponse } from "@/ai/gateway";
 import { streamChunksAsResponse } from "@/lib/streaming";
 import { GatewayError, type ChatMessageInput, type StreamChunk } from "@/ai/types";
@@ -47,11 +47,13 @@ async function* streamWithMemories(
     }
   }
 
-  // Before emitting the stream end/done, check if memories were saved
+  // Before emitting the stream end/done, check if memories were saved.
+  // We keep this check tight (300ms) so the completed turn never hangs
+  // waiting for background memory extraction while the user is looking at a finished answer.
   try {
     const savedMemories = await Promise.race([
       memPromise,
-      new Promise<ExtractedFact[]>((resolve) => setTimeout(() => resolve([]), 4000)),
+      new Promise<ExtractedFact[]>((resolve) => setTimeout(() => resolve([]), 300)),
     ]);
     if (savedMemories && savedMemories.length > 0) {
       yield {
@@ -120,11 +122,17 @@ export async function runAssistantTurn(params: RunTurnParams): Promise<Response>
       // happened before the first token or halfway through.
       const gwError = error instanceof GatewayError ? error : new GatewayError("unknown", String(error));
       logger.warn("chat_model_call_failed", { code: gwError.code });
-      await supabase
+      let db = supabase;
+      try {
+        db = createServiceRoleClient();
+      } catch {
+        db = supabase;
+      }
+      await db
         .from("message_variants")
         .update({ error: { code: gwError.code, message: gwError.message } })
         .eq("id", params.variantId);
-      await supabase.from("messages").update({ status: "error" }).eq("id", params.assistantMessageId);
+      await db.from("messages").update({ status: "error" }).eq("id", params.assistantMessageId);
 
       async function* failed(): AsyncGenerator<StreamChunk> {
         yield { type: "error", code: gwError.code, message: gwError.message };
@@ -162,7 +170,14 @@ export async function runAssistantTurn(params: RunTurnParams): Promise<Response>
         ...(savedMemories && savedMemories.length > 0 ? { saved_memories: savedMemories } : {}),
       };
 
-      await supabase
+      let db = supabase;
+      try {
+        db = createServiceRoleClient();
+      } catch {
+        db = supabase;
+      }
+
+      const { error: variantError } = await db
         .from("message_variants")
         .update({
           content: finalContent,
@@ -174,14 +189,31 @@ export async function runAssistantTurn(params: RunTurnParams): Promise<Response>
         })
         .eq("id", params.variantId);
 
-      await supabase.from("messages").update({ content: finalContent, status }).eq("id", params.assistantMessageId);
+      if (variantError) {
+        logger.error("message_variant_persist_failed", {
+          error: variantError.message,
+          variantId: params.variantId,
+        });
+      }
+
+      const { error: messageError } = await db
+        .from("messages")
+        .update({ content: finalContent, status })
+        .eq("id", params.assistantMessageId);
+
+      if (messageError) {
+        logger.error("message_persist_failed", {
+          error: messageError.message,
+          messageId: params.assistantMessageId,
+        });
+      }
 
       const conversationUpdate: UpdateOf<"conversations"> = {
         last_message_at: new Date().toISOString(),
         model_id: resolvedModel.id,
       };
       if (params.titleSourceText) {
-        const { data: conv } = await supabase
+        const { data: conv } = await db
           .from("conversations")
           .select("title")
           .eq("id", params.conversationId)
@@ -190,7 +222,17 @@ export async function runAssistantTurn(params: RunTurnParams): Promise<Response>
           conversationUpdate.title = deriveTitle(params.titleSourceText);
         }
       }
-      await supabase.from("conversations").update(conversationUpdate).eq("id", params.conversationId);
+      const { error: convError } = await db
+        .from("conversations")
+        .update(conversationUpdate)
+        .eq("id", params.conversationId);
+
+      if (convError) {
+        logger.error("conversation_persist_failed", {
+          error: convError.message,
+          conversationId: params.conversationId,
+        });
+      }
     } catch (error) {
       logger.error("chat_persist_failed", { error: String(error), conversationId: params.conversationId });
     }

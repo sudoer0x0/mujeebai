@@ -73,27 +73,67 @@ export async function loadConversationMessages(conversationId: string): Promise<
   const rows = (messages ?? []) as unknown as Array<Omit<LoadedMessage, "attachments"> & { created_at: string }>;
   if (rows.length === 0) return [];
 
-  // A reply that stopped mid-flight must not read as one still arriving.
-  //
-  // An assistant row is created as `streaming` and settled when the turn
-  // finishes. If the turn never finishes — the process is replaced, the
-  // connection dies, the tab is closed before the abort lands — the row
-  // stays `streaming` for good, and every later visit renders a
-  // "Generating…" that will never resolve. There were 21 such rows in
-  // this database.
-  //
-  // The route caps a turn at `maxDuration` (120s), so anything older than
-  // that provably is not still running: nothing is waiting on it, and
-  // saying otherwise is simply wrong. A younger one is left alone — it may
-  // genuinely be streaming into another tab right now.
-  const STALE_AFTER_MS = 150_000;
+  // Reconcile and settle any assistant rows that were left in an unsettled or anomalous state.
+  // In a loaded conversation (page load / reload), any message with valid content in either
+  // the message row or its variants is completed, ensuring AI outputs never disappear or
+  // get replaced by error alerts on reload.
+  const toHealInDb: Array<{ id: string; content: string; status: "complete" | "stopped" | "error" }> = [];
   const now = Date.now();
+
   for (const row of rows) {
-    if (row.status !== "streaming") continue;
-    if (now - new Date(row.created_at).getTime() < STALE_AFTER_MS) continue;
-    // Whatever arrived is kept; only the claim that more is coming is
-    // dropped. With no text at all it was a failure, not an interruption.
-    row.status = (row.content ?? "").trim() ? "stopped" : "error";
+    if (row.role !== "assistant") continue;
+
+    const variants = row.message_variants ?? [];
+    const activeVariant =
+      variants.find((v) => v.id === row.active_variant_id) ??
+      variants[variants.length - 1];
+
+    const variantContent = (activeVariant?.content ?? "").trim();
+    const rowContent = (row.content ?? "").trim();
+    const effectiveContent = variantContent || rowContent;
+
+    // If message row content is empty but variant has content, backfill row.content
+    if (!row.content && effectiveContent) {
+      row.content = effectiveContent;
+    }
+
+    if (effectiveContent) {
+      // If the message has text, it must NEVER be rendered as an error or left
+      // in streaming state on reload.
+      if (row.status === "streaming" || row.status === "pending" || row.status === "error") {
+        const settledStatus = activeVariant?.finish_reason === "stopped" ? "stopped" : "complete";
+        row.status = settledStatus;
+        toHealInDb.push({ id: row.id, content: effectiveContent, status: settledStatus });
+      }
+    } else {
+      // No text arrived at all
+      if (row.status === "streaming") {
+        const ageMs = now - new Date(row.created_at).getTime();
+        // A turn older than 20s with zero text was a failure, not an in-flight reply.
+        if (ageMs > 20_000) {
+          row.status = "error";
+          toHealInDb.push({ id: row.id, content: "", status: "error" });
+        }
+      }
+    }
+  }
+
+  // Self-heal rows in the database in the background so future queries don't see stale rows
+  if (toHealInDb.length > 0) {
+    void (async () => {
+      try {
+        const { createServiceRoleClient } = await import("@/lib/supabase/server");
+        const adminClient = createServiceRoleClient();
+        for (const item of toHealInDb) {
+          await adminClient
+            .from("messages")
+            .update({ content: item.content, status: item.status })
+            .eq("id", item.id);
+        }
+      } catch {
+        // Non-blocking
+      }
+    })();
   }
 
   const { data: links, error: linkError } = await supabase

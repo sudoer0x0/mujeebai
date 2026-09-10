@@ -42,7 +42,20 @@ export function streamChunksAsResponse(
   const encoder = new TextEncoder();
   const collected: StreamChunk[] = [];
   let opened = false;
+  let settled = false;
   let generator: AsyncGenerator<StreamChunk> | null = null;
+
+  async function settle() {
+    if (settled) return;
+    settled = true;
+    if (onSettled) {
+      try {
+        await onSettled(collected);
+      } catch {
+        // Ignored — errors in persistence are logged inside onSettled
+      }
+    }
+  }
 
   const stream = new ReadableStream<Uint8Array>({
     async pull(controller) {
@@ -61,30 +74,31 @@ export function streamChunksAsResponse(
         }
         const { value, done } = await generator.next();
         if (done) {
-          // An explicit terminator. Without it a client cannot tell a
-          // finished reply from a dropped connection, which is what left
-          // the caret blinking after the model had stopped.
+          // Persist before closing: ensures that by the time the browser
+          // receives the end event and connection closes, the database has
+          // already committed the completed message and variants.
+          await settle();
           controller.enqueue(encoder.encode("event: end\ndata: {}\n\n"));
           controller.close();
-          if (onSettled) await onSettled(collected);
           return;
         }
         collected.push(value);
         controller.enqueue(encoder.encode(`data: ${JSON.stringify(value)}\n\n`));
       } catch (error) {
         const message = error instanceof Error ? error.message : "Unknown streaming error";
+        collected.push({ type: "error", code: "unknown", message });
+        await settle();
         controller.enqueue(
           encoder.encode(`data: ${JSON.stringify({ type: "error", code: "unknown", message })}\n\n`),
         );
         controller.enqueue(encoder.encode("event: end\ndata: {}\n\n"));
         controller.close();
-        if (onSettled) await onSettled(collected);
       }
     },
     async cancel() {
       // Client aborted (stop button / navigation away). Let the caller
       // persist whatever was collected so far as a "stopped" message.
-      if (onSettled) await onSettled(collected);
+      await settle();
     },
   });
 

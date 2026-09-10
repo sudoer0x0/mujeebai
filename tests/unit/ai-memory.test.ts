@@ -1,8 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { hasMemoryCandidates, parseExtractedFacts } from "@/ai/memory/extractor";
+import { hasMemoryCandidates, parseExtractedFacts, extractDeterministicFacts } from "@/ai/memory/extractor";
 import { formatMemoriesForPrompt } from "@/ai/memory/prompt";
 import type { UserMemoryProfile } from "@/ai/memory/types";
+import { cleanSafetyPrefix } from "@/ai/providers/openrouter";
 
 test("hasMemoryCandidates correctly identifies personal and memory trigger phrases", () => {
   // Positive English triggers
@@ -114,8 +115,6 @@ test("formatMemoriesForPrompt formats memories when enabled and suppresses when 
 });
 
 test("extractDeterministicFacts accurately captures immediate name declarations", () => {
-  const { extractDeterministicFacts } = require("@/ai/memory/extractor");
-
   // English "my name is..."
   const facts1 = extractDeterministicFacts("my name is mujeeb keep that in your memory incase i ask");
   assert.equal(facts1.length, 1);
@@ -139,57 +138,57 @@ test("extractDeterministicFacts accurately captures immediate name declarations"
 
   // Assistant naming: "i want to name you yung so keep that in your memory"
   const facts5 = extractDeterministicFacts("i want to name you yung so keep that in your memory");
-  assert.ok(facts5.some((f: any) => f.content === "User wants the assistant to be named Yung"));
+  assert.ok(facts5.some((f) => f.content === "User wants the assistant to be named Yung"));
 
   // Profession and occupation
   const facts6 = extractDeterministicFacts("I work as a software engineer at a startup");
-  assert.ok(facts6.some((f: any) => f.content.includes("software engineer")));
+  assert.ok(facts6.some((f) => f.content.includes("software engineer")));
 
   // Location / residence
   const facts7 = extractDeterministicFacts("I live in Lagos and work remotely");
-  assert.ok(facts7.some((f: any) => f.content.includes("Lagos")));
+  assert.ok(facts7.some((f) => f.content.includes("Lagos")));
 
   // Combined current location and upcoming return trip (user's exact scenario)
   const factsUserScenario = extractDeterministicFacts(
     "im currently in lagos but i will be going back to kaduna soon uodate your memory"
   );
-  assert.ok(factsUserScenario.some((f: any) => f.content === "User is currently in Lagos"));
-  assert.ok(factsUserScenario.some((f: any) => f.content === "User plans to return to Kaduna soon"));
+  assert.ok(factsUserScenario.some((f) => f.content === "User is currently in Lagos"));
+  assert.ok(factsUserScenario.some((f) => f.content === "User plans to return to Kaduna soon"));
 
   // Behavioral preferences
   const facts8 = extractDeterministicFacts("always reply in concise bullet points");
-  assert.ok(facts8.some((f: any) => f.content.includes("concise bullet points")));
+  assert.ok(facts8.some((f) => f.content.includes("concise bullet points")));
 
   // Age extraction
   const factsAge1 = extractDeterministicFacts("i am 20 years old");
-  assert.ok(factsAge1.some((f: any) => f.content === "User is 20 years old"));
+  assert.ok(factsAge1.some((f) => f.content === "User is 20 years old"));
   assert.equal(factsAge1[0].category, "bio");
 
   const factsAge2 = extractDeterministicFacts("actually my age is 25");
-  assert.ok(factsAge2.some((f: any) => f.content === "User is 25 years old"));
+  assert.ok(factsAge2.some((f) => f.content === "User is 25 years old"));
 
   // Favorite sports
   const factsSport = extractDeterministicFacts("my favorite sport is football");
-  assert.ok(factsSport.some((f: any) => f.content === "User's favorite sport is football"));
+  assert.ok(factsSport.some((f) => f.content === "User's favorite sport is football"));
   assert.equal(factsSport[0].category, "preference");
 
   // Supporting team & favorite team
   const factsTeam1 = extractDeterministicFacts("i support chelsea");
-  assert.ok(factsTeam1.some((f: any) => f.content === "User supports Chelsea"));
+  assert.ok(factsTeam1.some((f) => f.content === "User supports Chelsea"));
 
   const factsTeam2 = extractDeterministicFacts("my favorite team is Arsenal");
-  assert.ok(factsTeam2.some((f: any) => f.content === "User supports Arsenal"));
+  assert.ok(factsTeam2.some((f) => f.content === "User supports Arsenal"));
 
   // General favorites
   const factsFood = extractDeterministicFacts("my favorite food is pizza");
-  assert.ok(factsFood.some((f: any) => f.content === "User's favorite food is pizza"));
+  assert.ok(factsFood.some((f) => f.content === "User's favorite food is pizza"));
 
   // Spoken languages & birthdays
   const factsLang = extractDeterministicFacts("i speak English and French");
-  assert.ok(factsLang.some((f: any) => f.content === "User speaks English, French"));
+  assert.ok(factsLang.some((f) => f.content === "User speaks English, French"));
 
   const factsBday = extractDeterministicFacts("my birthday is May 14");
-  assert.ok(factsBday.some((f: any) => f.content === "User's birthday is May 14"));
+  assert.ok(factsBday.some((f) => f.content === "User's birthday is May 14"));
 
   // Non-name declarations should return empty array
   assert.deepEqual(extractDeterministicFacts("What is the weather today?"), []);
@@ -197,7 +196,6 @@ test("extractDeterministicFacts accurately captures immediate name declarations"
 });
 
 test("cleanSafetyPrefix strips safety header evaluation lines from completions", () => {
-  const { cleanSafetyPrefix } = require("@/ai/providers/openrouter");
 
   assert.equal(
     cleanSafetyPrefix("User Safety: safe\nResponse Safety: safe\n\nHello! How can I help?"),

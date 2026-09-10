@@ -9,7 +9,7 @@ function getSettingsKey(userId: string): string {
   return `${SETTINGS_KEY_PREFIX}${userId}`;
 }
 
-interface MemoryTableRow {
+interface _MemoryTableRow {
   id: string;
   user_id: string;
   category: string;

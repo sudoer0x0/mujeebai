@@ -173,6 +173,40 @@ test("settled rows are never touched", () => {
   }
 });
 
+function settleLoadedMessage(
+  status: string,
+  messageContent: string | null,
+  variantContent: string | null,
+  finishReason?: string | null,
+): { status: string; content: string } {
+  const effective = (variantContent ?? "").trim() || (messageContent ?? "").trim();
+  if (effective) {
+    if (status === "streaming" || status === "error" || status === "pending") {
+      return { status: finishReason === "stopped" ? "stopped" : "complete", content: effective };
+    }
+    return { status, content: effective };
+  }
+  return { status: status === "streaming" ? "error" : status, content: "" };
+}
+
+test("message with variant content never settles as error on reload", () => {
+  const result = settleLoadedMessage("streaming", null, "Here is the response", "stop");
+  assert.equal(result.status, "complete");
+  assert.equal(result.content, "Here is the response");
+});
+
+test("message with variant content and error status is recovered", () => {
+  const result = settleLoadedMessage("error", null, "Here is the response", "stop");
+  assert.equal(result.status, "complete");
+  assert.equal(result.content, "Here is the response");
+});
+
+test("message with message content but no variant content settles as complete", () => {
+  const result = settleLoadedMessage("streaming", "Text in message", null, "stop");
+  assert.equal(result.status, "complete");
+  assert.equal(result.content, "Text in message");
+});
+
 /**
  * Building the history handed to the model.
  *

@@ -42,9 +42,11 @@ export async function getProviderById(id: string): Promise<ProviderRow | null> {
  * or when an upstream provider returns 0 content tokens.
  */
 export const FREE_FALLBACK_PROVIDERS = [
-  "poolside/laguna-s-2.1:free",
-  "minimax/minimax-m3:free",
   "nvidia/nemotron-3.5-lightning:free",
+  "liquid/lfm-2.5-2.6b:free",
+  "poolside/laguna-s-2.1:free",
+  "poolside/laguna-xs-2.1:free",
+  "thinkingmachines/inkling:free",
   "openrouter/free",
 ];
 
