@@ -60,9 +60,9 @@ export function Reveal({
           observer.disconnect();
         }
       },
-      // A little before the edge, so content is settled by the time the
-      // reader's eye reaches it rather than animating under their gaze.
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.05 },
+      // A little before the edge, so content settles smoothly as the
+      // reader scrolls towards it without popping in late or feeling laggy.
+      { rootMargin: "0px 0px 40px 0px", threshold: 0.02 },
     );
 
     observer.observe(element);

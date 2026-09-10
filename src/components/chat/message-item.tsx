@@ -73,7 +73,12 @@ export function MessageItem({
   return (
     <article
       data-role={message.role}
-      className={cn("group flex w-full flex-col gap-1.5 py-4", isUser ? "items-end" : "items-start")}
+      className={cn(
+        "group flex w-full flex-col",
+        isUser
+          ? "items-end pt-3.5 pb-1 sm:pt-4 sm:pb-1.5"
+          : "items-start pt-1 pb-3.5 sm:pt-1.5 sm:pb-4",
+      )}
       aria-label={isUser ? t("a11y.yourMessage") : t("a11y.assistantMessage")}
     >
       {isUser && editing ? (
@@ -101,11 +106,22 @@ export function MessageItem({
           </div>
         </div>
       ) : (
-        // No assistant avatar: a repeated single-letter badge down the left
-        // edge adds a column of noise without identifying anything the user
-        // did not already know. Replies start flush with the conversation,
-        // which also gives long answers more room.
-        <div className={cn("flex w-full", isUser ? "justify-end" : "justify-start")}>
+        // User and assistant rows: user actions sit beside the user bubble to consume
+        // zero vertical height below the bubble, dramatically reducing input-output distance.
+        <div className={cn("flex w-full items-end gap-1.5", isUser ? "justify-end" : "justify-start")}>
+          {isUser && !isBusy && !editing ? (
+            <div className="flex items-center gap-0.5 opacity-0 transition-opacity duration-150 group-hover:opacity-100 focus-within:opacity-100">
+              <IconAction label={copied ? t("copied") : t("copy")} onClick={handleCopy}>
+                {copied ? <Check className="size-3.5 text-success" /> : <Copy className="size-3.5" />}
+              </IconAction>
+              {onEdit && isPersisted ? (
+                <IconAction label={t("edit")} onClick={startEditing}>
+                  <Pencil className="size-3.5" />
+                </IconAction>
+              ) : null}
+            </div>
+          ) : null}
+
           <div
             className={cn(
               "min-w-0 text-[14px] leading-[1.65]",
@@ -170,23 +186,10 @@ export function MessageItem({
         </div>
       )}
 
-      {/* The action bar is revealed on hover *and* on keyboard focus —
-          `group-hover` alone hides these controls from keyboard users
-          entirely. It stays hidden while a reply is still streaming. */}
-      {!isBusy && !editing ? (
-        <div
-          className={cn(
-            "flex items-center gap-0.5 transition-opacity focus-within:opacity-100",
-            // Assistant controls stay visible: copy and regenerate are the
-            // two things people reach for most, and hiding them behind a
-            // hover makes them undiscoverable on touch, where there is no
-            // hover at all.
-            isUser
-              ? "justify-end opacity-0 group-hover:opacity-100"
-              : "justify-start opacity-100",
-          )}
-        >
-          {!isUser && variants.length > 1 ? (
+      {/* Assistant action bar (variant switcher, copy, regenerate, memory) */}
+      {!isUser && !isBusy && (
+        <div className="flex items-center gap-0.5 pt-1 text-muted">
+          {variants.length > 1 ? (
             <div className="me-1 flex items-center gap-0.5 text-[12px] tabular-nums text-muted">
               <Button
                 variant="ghost"
@@ -214,23 +217,17 @@ export function MessageItem({
             {copied ? <Check className="text-success" /> : <Copy />}
           </IconAction>
 
-          {!isUser && onRegenerate && isPersisted ? (
+          {onRegenerate && isPersisted ? (
             <IconAction label={t("regenerate")} onClick={() => onRegenerate(message.id)}>
               <RefreshCw />
             </IconAction>
           ) : null}
 
-          {!isUser && message.savedMemories && message.savedMemories.length > 0 ? (
+          {message.savedMemories && message.savedMemories.length > 0 ? (
             <MemoryAction memories={message.savedMemories} />
           ) : null}
-
-          {isUser && onEdit && isPersisted ? (
-            <IconAction label={t("edit")} onClick={startEditing}>
-              <Pencil />
-            </IconAction>
-          ) : null}
         </div>
-      ) : null}
+      )}
     </article>
   );
 }

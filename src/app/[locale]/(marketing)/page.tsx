@@ -53,51 +53,49 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
           A radial accent wash reads as a grey smudge against #000 rather
           than as light, and on an OLED screen it is the one thing keeping
           the panel lit. The hero carries itself on type instead. */}
-      <section className="relative isolate py-14 sm:py-24 lg:py-32">
-        <div className="mx-auto max-w-4xl text-center">
+      <section className="relative isolate flex min-h-[calc(85svh-62px)] sm:min-h-[calc(88svh-68px)] flex-col justify-center items-center pt-10 pb-16 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-28">
+        <div className="mx-auto w-full max-w-4xl text-center">
           <h1
-            className="hero-step text-display text-balance font-bold leading-[1.14] sm:leading-[1.04] tracking-[-0.03em] text-foreground"
+            className="hero-step mx-auto max-w-[340px] sm:max-w-2xl lg:max-w-3xl text-[2.75rem] sm:text-6xl lg:text-7xl font-extrabold text-foreground leading-[1.05] tracking-[-0.03em] sm:tracking-[-0.04em] text-balance"
             style={{ "--hero-delay": "0ms" } as React.CSSProperties}
           >
             {t("hero.title")}
           </h1>
 
           <p
-            className="hero-step mx-auto mt-5 max-w-md sm:max-w-xl text-pretty text-[15px] sm:text-lead leading-relaxed text-muted sm:mt-7"
-            style={{ "--hero-delay": "80ms" } as React.CSSProperties}
+            className="hero-step mx-auto mt-5 sm:mt-7 max-w-[340px] sm:max-w-xl text-pretty text-[15px] sm:text-[17px] leading-[1.6] text-muted"
+            style={{ "--hero-delay": "60ms" } as React.CSSProperties}
           >
             {t("hero.subtitle")}
           </p>
 
           <div
-            className="hero-step mt-8 flex flex-col items-center justify-center gap-3.5 sm:mt-11 sm:gap-4"
-            style={{ "--hero-delay": "160ms" } as React.CSSProperties}
+            className="hero-step mt-8 sm:mt-11 flex flex-col items-center justify-center gap-3 sm:gap-3.5 w-full mx-auto"
+            style={{ "--hero-delay": "120ms" } as React.CSSProperties}
           >
-            {/* White on black for the one action that matters, outlined
-                for the secondary. Stacked on phones and kept stacked: two
-                full-width targets are easier to hit than a side-by-side
-                pair squeezed onto a narrow screen. */}
+            {/* Primary action: prominent wide pill */}
             <Button
               size="lg"
               asChild
-              className="h-12 sm:h-[52px] w-full max-w-[280px] sm:max-w-xs gap-2 rounded-full bg-foreground px-6 sm:px-7 text-[15px] font-semibold text-canvas shadow-sm hover:bg-foreground/90"
+              className="h-12 sm:h-[52px] w-auto min-w-[240px] sm:min-w-[260px] max-w-[280px] sm:max-w-xs gap-2 rounded-full bg-foreground px-8 sm:px-9 text-[15px] sm:text-[16px] font-semibold text-canvas shadow-md hover:bg-foreground/90 transition-all hover:shadow-lg hover:-translate-y-0.5 active:scale-95"
             >
               <Link href={user ? "/chat" : "/register"}>
                 {user ? t("cta.continue") : t("cta.start")}
                 <ArrowRight className="size-4 rtl:rotate-180" aria-hidden />
               </Link>
             </Button>
+            {/* Secondary action: ~30% smaller outline pill centered below */}
             <Button
-              size="lg"
+              size="sm"
               variant="outline"
               asChild
-              className="h-12 sm:h-[52px] w-full max-w-[280px] sm:max-w-xs rounded-full border-line-strong px-6 sm:px-7 text-[15px]"
+              className="h-10 sm:h-11 w-auto min-w-[150px] sm:min-w-[170px] max-w-[180px] rounded-full border border-line-strong px-5 sm:px-6 text-[14px] sm:text-[15px] font-medium transition-all shadow-2xs hover:border-foreground/40 active:scale-95"
             >
               <Link href="/pricing">{t("cta.pricing")}</Link>
             </Button>
           </div>
 
-          <p className="hero-step mt-6 sm:mt-8 text-[13px] text-faint" style={{ "--hero-delay": "270ms" } as React.CSSProperties}>
+          <p className="hero-step mt-5 sm:mt-7 text-[13px] text-faint" style={{ "--hero-delay": "180ms" } as React.CSSProperties}>
             {paidPrice
               ? t("hero.priceNote", {
                   price: formatPrice(paidPrice.major, paidPrice.currency, locale),
@@ -108,7 +106,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         </div>
       </section>
 
-      <section className="py-16 sm:py-20">
+      <section className="pt-8 pb-16 sm:pt-14 sm:pb-20">
         <Reveal>
           <h2 className="text-heading text-center font-semibold text-foreground">{t("features.title")}</h2>
         </Reveal>

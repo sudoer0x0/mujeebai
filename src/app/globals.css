@@ -694,46 +694,39 @@ body {
 /* --- Scroll reveal --------------------------------------------------- */
 .reveal {
   transition:
-    opacity 620ms var(--ease-out) var(--reveal-delay, 0ms),
-    transform 620ms var(--ease-out) var(--reveal-delay, 0ms),
-    filter 620ms var(--ease-out) var(--reveal-delay, 0ms);
+    opacity 520ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    transform 520ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
 }
 
 .reveal[data-shown="false"] {
   opacity: 0;
-  /* A short rise with a touch of blur. The blur is what stops this
-     reading as a cheap slide — content resolves into place rather than
-     sliding in from somewhere it never was. */
-  transform: translateY(18px);
-  filter: blur(6px);
+  transform: translateY(14px);
 }
 
 .reveal[data-shown="true"] {
   opacity: 1;
   transform: none;
-  filter: none;
 }
 
 /* --- Hero entrance ---------------------------------------------------
    Runs on load rather than on scroll: the hero is already in view, and
-   the point is to give the eye an order to read in — eyebrow, headline,
-   subhead, actions, product shot — rather than presenting everything at
-   once. */
+   the point is to give the eye an order to read in — headline, subhead,
+   actions, features — rather than presenting everything at once. */
 .hero-step {
-  animation: hero-in 760ms var(--ease-out) backwards;
+  animation: hero-in 580ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
   animation-delay: var(--hero-delay, 0ms);
+  will-change: opacity, transform;
 }
 
 @keyframes hero-in {
   from {
     opacity: 0;
-    transform: translateY(16px);
-    filter: blur(6px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
     transform: none;
-    filter: none;
   }
 }
 
