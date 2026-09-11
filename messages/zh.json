@@ -229,6 +229,10 @@
       "title": "今天需要什么帮助？",
       "subtitle": "提出问题、上传文档，或从下方选择一个起点。"
     },
+    "date": {
+      "today": "今天",
+      "yesterday": "昨天"
+    },
     "regenerate": "重新生成",
     "edit": "编辑",
     "copy": "复制",

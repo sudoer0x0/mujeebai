@@ -28,10 +28,10 @@ export function DialogContent({
 }: React.ComponentProps<typeof DialogPrimitive.Content> & { showClose?: boolean }) {
   return (
     <DialogPrimitive.Portal>
-      <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/45" />
+      <DialogPrimitive.Overlay className="fixed inset-0 z-[70] bg-black/45" />
       <DialogPrimitive.Content
         className={cn(
-          "fixed z-50 flex flex-col gap-4 border border-line bg-surface p-5 shadow-md focus:outline-none",
+          "fixed z-[70] flex flex-col gap-4 border border-line bg-surface p-5 shadow-md focus:outline-none",
           "inset-x-0 bottom-0 rounded-t-lg pb-[max(1.25rem,env(safe-area-inset-bottom))]",
           "sm:inset-x-auto sm:bottom-auto sm:start-1/2 sm:top-1/2 sm:w-full sm:max-w-md",
           "sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-lg sm:pb-5 rtl:sm:translate-x-1/2",

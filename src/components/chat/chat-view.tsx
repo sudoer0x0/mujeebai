@@ -14,6 +14,7 @@ interface RawMessage {
   role: "user" | "assistant" | "system";
   status: UiMessage["status"];
   content: string | null;
+  created_at?: string | null;
   message_variants?: Array<{
     id: string;
     sequence: number;
@@ -45,6 +46,7 @@ function mapRawMessage(raw: RawMessage): UiMessage {
     role: raw.role,
     status,
     content,
+    createdAt: raw.created_at ?? undefined,
     variants,
     activeVariantIndex: variants.length ? resolvedIndex : undefined,
     attachments: raw.attachments ?? [],
@@ -450,8 +452,21 @@ export function ChatView({
       // an uploaded image simply vanished the moment it was sent: the
       // composer cleared its chips and nothing in the transcript showed
       // what had been attached.
-      { id: `local-user-${stamp}`, role: "user", status: "complete", content, attachments },
-      { id: assistantMessageId, role: "assistant", status: "pending", content: null },
+      {
+        id: `local-user-${stamp}`,
+        role: "user",
+        status: "complete",
+        content,
+        attachments,
+        createdAt: new Date(stamp).toISOString(),
+      },
+      {
+        id: assistantMessageId,
+        role: "assistant",
+        status: "pending",
+        content: null,
+        createdAt: new Date(stamp + 1).toISOString(),
+      },
     ]);
 
     void runStream(
@@ -547,8 +562,18 @@ export function ChatView({
 
     setMessages((previous) => [
       ...previous.slice(0, index),
-      { ...previous[index], content: newContent },
-      { id: assistantMessageId, role: "assistant", status: "pending", content: null },
+      {
+        ...previous[index],
+        content: newContent,
+        createdAt: previous[index].createdAt ?? new Date().toISOString(),
+      },
+      {
+        id: assistantMessageId,
+        role: "assistant",
+        status: "pending",
+        content: null,
+        createdAt: new Date().toISOString(),
+      },
     ]);
 
     void runStream(
@@ -584,8 +609,20 @@ export function ChatView({
 
     setMessages((previous) => [
       ...previous,
-      { id: `local-image-prompt-${stamp}`, role: "user", status: "complete", content: prompt },
-      { id: placeholderId, role: "assistant", status: "pending", content: null },
+      {
+        id: `local-image-prompt-${stamp}`,
+        role: "user",
+        status: "complete",
+        content: prompt,
+        createdAt: new Date(stamp).toISOString(),
+      },
+      {
+        id: placeholderId,
+        role: "assistant",
+        status: "pending",
+        content: null,
+        createdAt: new Date(stamp + 1).toISOString(),
+      },
     ]);
 
     setIsStreaming(true);

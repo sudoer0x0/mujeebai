@@ -11,7 +11,7 @@ export const DropdownMenuSub = DropdownMenuPrimitive.Sub;
 export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 
 const surfaceClasses =
-  "z-50 min-w-[11rem] overflow-hidden rounded-md border border-line bg-surface p-1 shadow-md " +
+  "z-[60] min-w-[11rem] overflow-hidden rounded-md border border-line bg-surface p-1 shadow-md " +
   "max-h-[min(24rem,var(--radix-dropdown-menu-content-available-height))] overflow-y-auto scroll-area";
 
 const itemClasses =

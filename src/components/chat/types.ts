@@ -26,6 +26,7 @@ export interface UiMessage {
   role: "user" | "assistant" | "system";
   status: "pending" | "streaming" | "complete" | "error" | "stopped";
   content: string | null;
+  createdAt?: string;
   variants?: UiMessageVariant[];
   activeVariantIndex?: number;
   /** Files sent with this message. Rendered under the bubble. */

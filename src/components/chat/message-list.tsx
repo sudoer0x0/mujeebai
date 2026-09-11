@@ -1,8 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { MessageItem } from "@/components/chat/message-item";
+import { DateSeparator } from "@/components/chat/date-separator";
+import { formatDateSeparator, shouldShowDateSeparator } from "@/lib/date";
 import type { UiMessage } from "@/components/chat/types";
 
 const SUGGESTION_KEYS = ["explain", "draft", "analyze", "brainstorm"] as const;
@@ -21,6 +23,14 @@ export function MessageList({
   onSelectPrompt?: (prompt: string) => void;
 }) {
   const t = useTranslations("chat");
+  const locale = useLocale();
+  const dateTranslations = React.useMemo(
+    () => ({
+      today: t("date.today"),
+      yesterday: t("date.yesterday"),
+    }),
+    [t],
+  );
   const bottomRef = React.useRef<HTMLDivElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [pinnedToBottom, setPinnedToBottom] = React.useState(true);
@@ -90,15 +100,28 @@ export function MessageList({
           screen reader finishes the current utterance first rather than
           interrupting on every token. */}
       <div aria-live="polite" aria-atomic="false" className="contents">
-        {messages.map((message) => (
-          <MessageItem
-            key={message.id}
-            message={message}
-            onRegenerate={onRegenerate}
-            onEdit={onEdit}
-            onSelectVariant={onSelectVariant}
-          />
-        ))}
+        {messages.map((message, index) => {
+          const prevMessage = index > 0 ? messages[index - 1] : undefined;
+          const showSeparator = shouldShowDateSeparator(message.createdAt, prevMessage?.createdAt);
+          const dateLabel =
+            showSeparator && message.createdAt
+              ? formatDateSeparator(message.createdAt, locale, dateTranslations)
+              : "";
+
+          return (
+            <React.Fragment key={message.id}>
+              {showSeparator && dateLabel ? (
+                <DateSeparator label={dateLabel} date={message.createdAt} />
+              ) : null}
+              <MessageItem
+                message={message}
+                onRegenerate={onRegenerate}
+                onEdit={onEdit}
+                onSelectVariant={onSelectVariant}
+              />
+            </React.Fragment>
+          );
+        })}
       </div>
       <div ref={bottomRef} className="h-2" />
     </div>

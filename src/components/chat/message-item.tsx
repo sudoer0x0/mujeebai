@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, Copy, Check, RefreshCw, Pencil, ChevronDown, X, Brain } from "lucide-react";
 import { MarkdownRenderer } from "@/components/chat/markdown-renderer";
 import { MessageAttachments } from "@/components/chat/message-attachments";
@@ -12,6 +12,7 @@ import { Alert } from "@/components/ui/alert";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { displayContentOf, type UiMessage } from "@/components/chat/types";
+import { formatMessageTime } from "@/lib/date";
 import { cn } from "@/lib/utils";
 
 export function MessageItem({
@@ -26,6 +27,7 @@ export function MessageItem({
   onSelectVariant?: (messageId: string, index: number) => void;
 }) {
   const t = useTranslations("chat");
+  const locale = useLocale();
   const [copied, setCopied] = React.useState(false);
   const [showReasoning, setShowReasoning] = React.useState(false);
   const [editing, setEditing] = React.useState(false);
@@ -36,6 +38,10 @@ export function MessageItem({
   const activeIndex = message.activeVariantIndex ?? Math.max(0, variants.length - 1);
   const displayContent = displayContentOf(message);
   const isBusy = message.status === "pending" || message.status === "streaming";
+  const timeString = React.useMemo(
+    () => formatMessageTime(message.createdAt, locale),
+    [message.createdAt, locale],
+  );
 
   // A local id means the message exists only in this tab and the server
   // has no row to act on yet, so regenerate/edit must stay unavailable.
@@ -166,6 +172,17 @@ export function MessageItem({
                       <p className="whitespace-pre-wrap break-words">{displayContent}</p>
                     ) : null}
                     <MessageAttachments attachments={message.attachments ?? []} />
+                    {message.createdAt && timeString ? (
+                      <div className="mt-1 flex items-center justify-end">
+                        <time
+                          dateTime={message.createdAt}
+                          suppressHydrationWarning
+                          className="text-[11px] text-muted/75 tabular-nums select-none"
+                        >
+                          {timeString}
+                        </time>
+                      </div>
+                    ) : null}
                   </>
                 ) : (
                   <MarkdownRenderer
@@ -186,45 +203,57 @@ export function MessageItem({
         </div>
       )}
 
-      {/* Assistant action bar (variant switcher, copy, regenerate, memory) */}
+      {/* Assistant action bar (variant switcher, copy, regenerate, memory) and timestamp */}
       {!isUser && !isBusy && (
-        <div className="flex items-center gap-0.5 pt-1 text-muted">
-          {variants.length > 1 ? (
-            <div className="me-1 flex items-center gap-0.5 text-[12px] tabular-nums text-muted">
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                disabled={activeIndex <= 0}
-                onClick={() => onSelectVariant?.(message.id, activeIndex - 1)}
-                aria-label={t("previousVariant")}
-              >
-                <ChevronLeft className="rtl:rotate-180" />
-              </Button>
-              <span>{t("variantOf", { current: activeIndex + 1, total: variants.length })}</span>
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                disabled={activeIndex >= variants.length - 1}
-                onClick={() => onSelectVariant?.(message.id, activeIndex + 1)}
-                aria-label={t("nextVariant")}
-              >
-                <ChevronRight className="rtl:rotate-180" />
-              </Button>
-            </div>
-          ) : null}
+        <div className="flex w-full items-center justify-between pt-1 text-muted">
+          <div className="flex items-center gap-0.5">
+            {variants.length > 1 ? (
+              <div className="me-1 flex items-center gap-0.5 text-[12px] tabular-nums text-muted">
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  disabled={activeIndex <= 0}
+                  onClick={() => onSelectVariant?.(message.id, activeIndex - 1)}
+                  aria-label={t("previousVariant")}
+                >
+                  <ChevronLeft className="rtl:rotate-180" />
+                </Button>
+                <span>{t("variantOf", { current: activeIndex + 1, total: variants.length })}</span>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  disabled={activeIndex >= variants.length - 1}
+                  onClick={() => onSelectVariant?.(message.id, activeIndex + 1)}
+                  aria-label={t("nextVariant")}
+                >
+                  <ChevronRight className="rtl:rotate-180" />
+                </Button>
+              </div>
+            ) : null}
 
-          <IconAction label={copied ? t("copied") : t("copy")} onClick={handleCopy}>
-            {copied ? <Check className="text-success" /> : <Copy />}
-          </IconAction>
-
-          {onRegenerate && isPersisted ? (
-            <IconAction label={t("regenerate")} onClick={() => onRegenerate(message.id)}>
-              <RefreshCw />
+            <IconAction label={copied ? t("copied") : t("copy")} onClick={handleCopy}>
+              {copied ? <Check className="text-success" /> : <Copy />}
             </IconAction>
-          ) : null}
 
-          {message.savedMemories && message.savedMemories.length > 0 ? (
-            <MemoryAction memories={message.savedMemories} />
+            {onRegenerate && isPersisted ? (
+              <IconAction label={t("regenerate")} onClick={() => onRegenerate(message.id)}>
+                <RefreshCw />
+              </IconAction>
+            ) : null}
+
+            {message.savedMemories && message.savedMemories.length > 0 ? (
+              <MemoryAction memories={message.savedMemories} />
+            ) : null}
+          </div>
+
+          {message.createdAt && timeString ? (
+            <time
+              dateTime={message.createdAt}
+              suppressHydrationWarning
+              className="text-[11px] text-muted/65 tabular-nums select-none ms-auto"
+            >
+              {timeString}
+            </time>
           ) : null}
         </div>
       )}

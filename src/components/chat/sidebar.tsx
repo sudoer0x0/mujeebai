@@ -618,7 +618,7 @@ function ConversationRow({
           <Button
             variant="ghost"
             size="icon-sm"
-            className="opacity-0 focus-visible:opacity-100 group-hover/row:opacity-100"
+            className="opacity-100 md:opacity-0 md:group-hover/row:opacity-100 md:focus-visible:opacity-100"
             aria-label={`${tc("actions")} — ${conversation.title}`}
           >
             <MoreHorizontal />

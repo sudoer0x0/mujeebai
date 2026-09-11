@@ -229,6 +229,10 @@
       "title": "¿En qué te ayudo?",
       "subtitle": "Haz una pregunta, adjunta un documento o elige un punto de partida."
     },
+    "date": {
+      "today": "Hoy",
+      "yesterday": "Ayer"
+    },
     "regenerate": "Regenerar",
     "edit": "Editar",
     "copy": "Copiar",

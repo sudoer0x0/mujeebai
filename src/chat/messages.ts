@@ -33,6 +33,7 @@ export interface LoadedMessage {
   role: "user" | "assistant" | "system";
   status: string;
   content: string | null;
+  created_at: string;
   active_variant_id: string | null;
   message_variants: Array<{
     id: string;
