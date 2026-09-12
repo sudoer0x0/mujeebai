@@ -39,8 +39,8 @@ export function MessageItem({
   const displayContent = displayContentOf(message);
   const isBusy = message.status === "pending" || message.status === "streaming";
   const timeString = React.useMemo(
-    () => formatMessageTime(message.createdAt, locale),
-    [message.createdAt, locale],
+    () => (isUser ? formatMessageTime(message.createdAt, locale) : ""),
+    [isUser, message.createdAt, locale],
   );
 
   // A local id means the message exists only in this tab and the server
@@ -203,57 +203,45 @@ export function MessageItem({
         </div>
       )}
 
-      {/* Assistant action bar (variant switcher, copy, regenerate, memory) and timestamp */}
+      {/* Assistant action bar (variant switcher, copy, regenerate, memory) */}
       {!isUser && !isBusy && (
-        <div className="flex w-full items-center justify-between pt-1 text-muted">
-          <div className="flex items-center gap-0.5">
-            {variants.length > 1 ? (
-              <div className="me-1 flex items-center gap-0.5 text-[12px] tabular-nums text-muted">
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  disabled={activeIndex <= 0}
-                  onClick={() => onSelectVariant?.(message.id, activeIndex - 1)}
-                  aria-label={t("previousVariant")}
-                >
-                  <ChevronLeft className="rtl:rotate-180" />
-                </Button>
-                <span>{t("variantOf", { current: activeIndex + 1, total: variants.length })}</span>
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  disabled={activeIndex >= variants.length - 1}
-                  onClick={() => onSelectVariant?.(message.id, activeIndex + 1)}
-                  aria-label={t("nextVariant")}
-                >
-                  <ChevronRight className="rtl:rotate-180" />
-                </Button>
-              </div>
-            ) : null}
+        <div className="flex items-center gap-0.5 pt-1 text-muted">
+          {variants.length > 1 ? (
+            <div className="me-1 flex items-center gap-0.5 text-[12px] tabular-nums text-muted">
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                disabled={activeIndex <= 0}
+                onClick={() => onSelectVariant?.(message.id, activeIndex - 1)}
+                aria-label={t("previousVariant")}
+              >
+                <ChevronLeft className="rtl:rotate-180" />
+              </Button>
+              <span>{t("variantOf", { current: activeIndex + 1, total: variants.length })}</span>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                disabled={activeIndex >= variants.length - 1}
+                onClick={() => onSelectVariant?.(message.id, activeIndex + 1)}
+                aria-label={t("nextVariant")}
+              >
+                <ChevronRight className="rtl:rotate-180" />
+              </Button>
+            </div>
+          ) : null}
 
-            <IconAction label={copied ? t("copied") : t("copy")} onClick={handleCopy}>
-              {copied ? <Check className="text-success" /> : <Copy />}
+          <IconAction label={copied ? t("copied") : t("copy")} onClick={handleCopy}>
+            {copied ? <Check className="text-success" /> : <Copy />}
+          </IconAction>
+
+          {onRegenerate && isPersisted ? (
+            <IconAction label={t("regenerate")} onClick={() => onRegenerate(message.id)}>
+              <RefreshCw />
             </IconAction>
+          ) : null}
 
-            {onRegenerate && isPersisted ? (
-              <IconAction label={t("regenerate")} onClick={() => onRegenerate(message.id)}>
-                <RefreshCw />
-              </IconAction>
-            ) : null}
-
-            {message.savedMemories && message.savedMemories.length > 0 ? (
-              <MemoryAction memories={message.savedMemories} />
-            ) : null}
-          </div>
-
-          {message.createdAt && timeString ? (
-            <time
-              dateTime={message.createdAt}
-              suppressHydrationWarning
-              className="text-[11px] text-muted/65 tabular-nums select-none ms-auto"
-            >
-              {timeString}
-            </time>
+          {message.savedMemories && message.savedMemories.length > 0 ? (
+            <MemoryAction memories={message.savedMemories} />
           ) : null}
         </div>
       )}

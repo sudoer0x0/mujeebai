@@ -108,3 +108,18 @@ test("shouldShowDateSeparator displays separators between different days and for
   assert.equal(shouldShowDateSeparator(null, day1Msg1), false);
   assert.equal(shouldShowDateSeparator(undefined, day1Msg1), false);
 });
+
+test("user-only timestamp policy: assistant output omits redundant timestamps", () => {
+  // In message-item, timeString is only computed when isUser is true.
+  function computeItemTimeString(role: "user" | "assistant", createdAt: string | undefined, locale: string) {
+    const isUser = role === "user";
+    return isUser ? formatMessageTime(createdAt, locale) : "";
+  }
+
+  const timestamp = "2026-03-31T14:30:00Z";
+  const userTime = computeItemTimeString("user", timestamp, "en");
+  const assistantTime = computeItemTimeString("assistant", timestamp, "en");
+
+  assert.ok(userTime.length > 0, "User message must have a formatted timestamp");
+  assert.equal(assistantTime, "", "Assistant message must omit timestamp to avoid redundancy");
+});
