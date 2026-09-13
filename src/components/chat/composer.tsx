@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/toast";
 import { ModelSelector } from "@/components/chat/model-selector";
+import { extractFilesFromClipboard } from "@/lib/clipboard";
 import { cn } from "@/lib/utils";
 import type { UiAttachment } from "@/components/chat/types";
 
@@ -298,6 +299,27 @@ export const Composer = React.forwardRef<ComposerRef, ComposerProps>(function Co
     if (dragDepth.current === 0) setDragging(false);
   }
 
+  /**
+   * Clipboard paste handling for files.
+   *
+   * Catches screenshots pasted directly from clipboard (e.g. Cmd+Shift+Ctrl+4)
+   * and files copied from the operating system file explorer.
+   *
+   * If the clipboard contains files, prevents default (to avoid pasting raw file
+   * paths into the textarea) and queues them through `addFiles`.
+   * If the clipboard contains plain text, leaves default paste untouched.
+   */
+  function handlePaste(event: React.ClipboardEvent) {
+    if (!fileUploadsEnabled || imageMode) return;
+
+    const files = extractFilesFromClipboard(event.clipboardData);
+    if (files.length === 0) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    addFiles(files);
+  }
+
   /** The "+" menu. Rendered in the row or the control bar, never both. */
   function ComposerAddButton() {
     if (!fileUploadsEnabled || imageMode) {
@@ -406,6 +428,7 @@ export const Composer = React.forwardRef<ComposerRef, ComposerProps>(function Co
           if (fileUploadsEnabled && !imageMode) event.preventDefault();
         }}
         onDrop={handleDrop}
+        onPaste={handlePaste}
       >
         {dragging ? (
           <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center rounded-3xl border-2 border-dashed border-accent bg-canvas/85">

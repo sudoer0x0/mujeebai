@@ -7,6 +7,7 @@ import { Composer, type ComposerRef } from "@/components/chat/composer";
 import { toast } from "@/components/ui/toast";
 import { UploadCloud } from "lucide-react";
 import { readEventStream, STREAM_END } from "@/lib/streaming";
+import { extractFilesFromClipboard } from "@/lib/clipboard";
 import { activeVariantIndexOf, type UiAttachment, type UiMessage, type UiMessageVariant } from "@/components/chat/types";
 
 interface RawMessage {
@@ -203,6 +204,29 @@ export function ChatView({
     },
     [fileUploadsEnabled],
   );
+
+  // Global window paste handler: allows pasting screenshots and files
+  // anywhere within the chat view even if the textarea is not directly focused.
+  // Ignores paste events when focus is inside another input (e.g. search bar, rename modal).
+  React.useEffect(() => {
+    function onWindowPaste(e: ClipboardEvent) {
+      if (!fileUploadsEnabled || e.defaultPrevented) return;
+
+      const activeTag = document.activeElement?.tagName?.toLowerCase();
+      if (activeTag === "input" || activeTag === "textarea") return;
+
+      const files = extractFilesFromClipboard(e.clipboardData);
+      if (files.length > 0) {
+        e.preventDefault();
+        composerRef.current?.addFiles(files);
+      }
+    }
+
+    window.addEventListener("paste", onWindowPaste);
+    return () => {
+      window.removeEventListener("paste", onWindowPaste);
+    };
+  }, [fileUploadsEnabled]);
 
   // Listen for instant new-chat events dispatched from the sidebar, header, or rail.
   // Resets local messages, aborts any active stream, resets composer draft, and updates
