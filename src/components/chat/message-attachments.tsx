@@ -1,69 +1,64 @@
 "use client";
 
-import { FileText } from "lucide-react";
+import * as React from "react";
+import { FileText, Video, Music } from "lucide-react";
+import { AttachmentModal } from "@/components/chat/attachment-modal";
 import type { UiAttachment } from "@/components/chat/types";
 
 /**
- * Files sent with a message, shown under its bubble.
+ * Files sent with a message, shown as neat capsule cards matching the reference design.
  *
  * Every attachment is addressed as `/api/attachments/<id>`, which
- * re-signs the private storage URL per request. Storing a signed URL on
- * the message would look fine for an hour and then break permanently.
+ * re-signs the private storage URL per request.
  *
- * Images render as a thumbnail that opens full size; everything else
- * renders as a download chip, because a PDF preview is not something this
- * component can honestly provide.
+ * Clicking an attachment opens an in-app lightbox modal for images or an
+ * in-app document viewer for files, PDFs, audio, and video.
  */
 export function MessageAttachments({ attachments }: { attachments: UiAttachment[] }) {
-  if (attachments.length === 0) return null;
+  const [activeAttachment, setActiveAttachment] = React.useState<UiAttachment | null>(null);
 
-  const images = attachments.filter((attachment) => attachment.kind === "image");
-  const files = attachments.filter((attachment) => attachment.kind !== "image");
+  if (!attachments || attachments.length === 0) return null;
 
   return (
-    <div className="mt-2 flex flex-col gap-2">
-      {images.length > 0 ? (
-        <div className="flex flex-wrap gap-2">
-          {images.map((attachment) => (
-            <a
-              key={attachment.id}
-              href={`/api/attachments/${attachment.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block overflow-hidden rounded-md border border-line transition-colors hover:border-line-strong"
-            >
-              {/* Deliberately a plain <img>: the source is an auth-gated
-                  redirect to a signed URL, which next/image cannot
-                  optimize and would only add a failing round trip. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`/api/attachments/${attachment.id}`}
-                alt={attachment.filename}
-                loading="lazy"
-                className="max-h-64 w-auto max-w-full object-contain"
-              />
-            </a>
-          ))}
-        </div>
-      ) : null}
+    <>
+      <div className="flex flex-wrap items-center justify-end gap-2 max-w-full">
+        {attachments.map((attachment) => (
+          <button
+            key={attachment.id}
+            type="button"
+            onClick={() => setActiveAttachment(attachment)}
+            className="group inline-flex items-center gap-2 rounded-xl border border-line/60 dark:border-white/10 bg-surface-raised/80 hover:bg-surface-raised dark:bg-[#1e1e20]/90 dark:hover:bg-[#28282b] px-3 py-1.5 text-xs text-foreground/90 transition-all duration-150 shadow-xs focus:outline-hidden focus:ring-2 focus:ring-accent cursor-pointer"
+            title={attachment.filename}
+            aria-label={`Open ${attachment.filename}`}
+          >
+            {attachment.kind === "image" ? (
+              <div className="relative size-6 shrink-0 overflow-hidden rounded-md border border-line/50 dark:border-white/10 bg-black/20">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/api/attachments/${attachment.id}`}
+                  alt=""
+                  loading="lazy"
+                  className="size-full object-cover"
+                />
+              </div>
+            ) : attachment.kind === "video" ? (
+              <Video className="size-4 shrink-0 text-muted" aria-hidden />
+            ) : attachment.kind === "audio" ? (
+              <Music className="size-4 shrink-0 text-muted" aria-hidden />
+            ) : (
+              <FileText className="size-4 shrink-0 text-muted" aria-hidden />
+            )}
+            <span className="max-w-44 sm:max-w-56 truncate font-normal text-foreground/90">
+              {attachment.filename}
+            </span>
+          </button>
+        ))}
+      </div>
 
-      {files.length > 0 ? (
-        <ul className="flex flex-wrap gap-1.5">
-          {files.map((attachment) => (
-            <li key={attachment.id}>
-              <a
-                href={`/api/attachments/${attachment.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 rounded-sm border border-line bg-surface px-2 py-1 text-[12px] text-foreground transition-colors hover:border-line-strong"
-              >
-                <FileText className="size-3.5 shrink-0 text-muted" aria-hidden />
-                <span className="max-w-52 truncate">{attachment.filename}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      ) : null}
-    </div>
+      <AttachmentModal
+        attachment={activeAttachment}
+        onClose={() => setActiveAttachment(null)}
+      />
+    </>
   );
 }

@@ -212,10 +212,14 @@
   },
   "chat": {
     "composer": {
-      "placeholder": "Escribe a Mujeeb AI…",
+      "placeholder": "Pregunta lo que sea…",
       "send": "Enviar",
       "stop": "Detener",
       "attach": "Adjuntar archivo",
+      "dictation": "Dictado por voz",
+      "dictationListening": "Escuchando… haz clic para detener",
+      "dictationUnsupported": "El dictado por voz no es compatible con tu navegador",
+      "dictationError": "No se pudo acceder al micrófono",
       "generateImage": "Generar imagen",
       "disclaimer": "Mujeeb AI puede cometer errores. Verifica la información importante.",
       "attachHint": "Adjuntar un documento o imagen (hasta {size})",

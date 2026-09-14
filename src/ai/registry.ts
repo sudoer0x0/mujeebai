@@ -64,12 +64,15 @@ export async function resolveFallbackChain(model: ModelRow): Promise<ModelRow[]>
   // If this is a free model, augment the chain with alternative free provider models
   // so that single-provider rate limits or blank streams are rescued seamlessly.
   if (model.tier === "free") {
+    const providers = await listProviders();
+    const openrouterProvider = providers.find((p) => p.slug === "openrouter");
     const existingProviderIds = new Set(chain.map((m) => m.provider_model_id));
     for (const fallbackId of FREE_FALLBACK_PROVIDERS) {
       if (!existingProviderIds.has(fallbackId)) {
         existingProviderIds.add(fallbackId);
         chain.push({
           ...model,
+          provider_id: openrouterProvider ? openrouterProvider.id : model.provider_id,
           provider_model_id: fallbackId,
         });
       }

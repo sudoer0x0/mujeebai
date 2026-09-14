@@ -43,7 +43,7 @@ export async function processFile(
         const { processText } = await import("./text");
         return { content: await processText(buffer) };
       }
-      case kind === "image": {
+      case kind === "image" || kind === "video" || kind === "audio": {
         return { content: "" };
       }
       default:

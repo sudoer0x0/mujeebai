@@ -16,6 +16,7 @@ export interface RunTurnParams {
   conversationHistory: ChatMessageInput[];
   conversationId: string;
   assistantMessageId: string;
+  userMessageId?: string;
   variantId: string;
   userId?: string;
   /** Set the conversation title from this text if it's still the placeholder title. */
@@ -239,6 +240,7 @@ export async function runAssistantTurn(params: RunTurnParams): Promise<Response>
   }, {
     "X-Conversation-Id": params.conversationId,
     "X-Message-Id": params.assistantMessageId,
+    ...(params.userMessageId ? { "X-User-Message-Id": params.userMessageId } : {}),
     // What was *requested*. The model actually used is only known after
     // the provider answers, which is now after these headers are sent —
     // a fallback swap is recorded on the variant row, which is where

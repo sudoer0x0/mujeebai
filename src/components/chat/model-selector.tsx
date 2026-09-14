@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ChevronDown, Lock, Check } from "lucide-react";
+import { ChevronDown, Lock, Check, Brain, Zap } from "lucide-react";
 import { useTranslations } from "next-intl";
 import {
   DropdownMenu,
@@ -15,6 +15,18 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import type { ModelOption } from "@/components/chat/types";
+
+function getModelIcon(model?: ModelOption | null) {
+  if (!model) return null;
+  const name = model.displayName.toLowerCase();
+  if (name.includes("think") || model.slug.includes("reasoning")) {
+    return <Brain className="size-3.5 shrink-0 text-accent/90" aria-hidden />;
+  }
+  if (name.includes("fast") || model.slug.includes("free")) {
+    return <Zap className="size-3.5 shrink-0 text-amber-500/90" aria-hidden />;
+  }
+  return null;
+}
 
 /**
  * Model picker, driven entirely by `/api/models`.
@@ -53,7 +65,7 @@ export function ModelSelector({
     return () => controller.abort();
   }, []);
 
-  if (models === null) return <Skeleton className={compact ? "h-7 w-24 rounded-full" : "h-7 w-40"} />;
+  if (models === null) return <Skeleton className={compact ? "h-7 w-20 rounded-full" : "h-7 w-40"} />;
 
   const available = models.filter((model) => model.unlocked);
   const locked = models.filter((model) => !model.unlocked);
@@ -68,12 +80,13 @@ export function ModelSelector({
           className={cn(
             "inline-flex items-center gap-1.5 font-medium text-muted transition-colors hover:bg-surface-raised hover:text-foreground disabled:opacity-50",
             compact
-              ? "max-w-32 rounded-full px-2 py-1 text-[12px]"
-              : "max-w-56 rounded-sm px-1.5 py-1 text-[12px]",
+              ? "rounded-full px-2.5 py-1 text-[13px] hover:bg-surface-subtle"
+              : "rounded-sm px-1.5 py-1 text-[12px]",
           )}
         >
-          <span className="truncate">{current?.displayName ?? t("selector.freeGroup")}</span>
-          <ChevronDown className="size-3 shrink-0 text-faint" aria-hidden />
+          {getModelIcon(current)}
+          <span className="truncate">{current?.displayName ?? "Fast"}</span>
+          {!compact ? <ChevronDown className="size-3 shrink-0 text-faint" aria-hidden /> : null}
         </button>
       </DropdownMenuTrigger>
 
@@ -83,10 +96,13 @@ export function ModelSelector({
           <DropdownMenuItem
             key={model.slug}
             onSelect={() => onChange(model.slug)}
-            className="flex-col items-start gap-0.5 py-2"
+            className="flex-col items-start gap-0.5 py-2 cursor-pointer"
           >
             <span className="flex w-full items-center justify-between gap-2">
-              <span className="font-medium text-foreground">{model.displayName}</span>
+              <span className="flex items-center gap-1.5 font-medium text-foreground">
+                {getModelIcon(model)}
+                {model.displayName}
+              </span>
               {model.slug === current?.slug ? <Check className="size-3.5 shrink-0 text-accent" aria-hidden /> : null}
             </span>
             {model.description ? (

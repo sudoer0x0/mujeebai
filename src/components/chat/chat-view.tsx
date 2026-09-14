@@ -283,7 +283,12 @@ export function ChatView({
   );
 
   const runStream = React.useCallback(
-    async (endpoint: string, body: Record<string, unknown>, assistantMessageId: string) => {
+    async (
+      endpoint: string,
+      body: Record<string, unknown>,
+      assistantMessageId: string,
+      userMessageId?: string,
+    ) => {
       const controller = new AbortController();
       abortRef.current = controller;
       setIsStreaming(true);
@@ -311,6 +316,7 @@ export function ChatView({
 
         const newConversationId = response.headers.get("X-Conversation-Id");
         const serverMessageId = response.headers.get("X-Message-Id");
+        const serverUserMessageId = response.headers.get("X-User-Message-Id");
 
         // Swap the optimistic local id for the server's, so regenerate and
         // edit work on this message without a page reload.
@@ -319,6 +325,14 @@ export function ChatView({
           setMessages((previous) =>
             previous.map((message) =>
               message.id === assistantMessageId ? { ...message, id: serverMessageId } : message,
+            ),
+          );
+        }
+
+        if (serverUserMessageId && userMessageId) {
+          setMessages((previous) =>
+            previous.map((message) =>
+              message.id === userMessageId ? { ...message, id: serverUserMessageId } : message,
             ),
           );
         }
@@ -470,6 +484,8 @@ export function ChatView({
       );
     }
 
+    const userMessageId = `local-user-${stamp}`;
+
     setMessages((previous) => [
       ...previous,
       // Carry the attachments onto the optimistic message. Without this
@@ -477,7 +493,7 @@ export function ChatView({
       // composer cleared its chips and nothing in the transcript showed
       // what had been attached.
       {
-        id: `local-user-${stamp}`,
+        id: userMessageId,
         role: "user",
         status: "complete",
         content,
@@ -502,6 +518,7 @@ export function ChatView({
         attachmentIds: attachments.map((attachment) => attachment.id),
       },
       assistantMessageId,
+      userMessageId,
     );
   }
 
@@ -629,12 +646,13 @@ export function ChatView({
 
   async function handleGenerateImage(prompt: string) {
     const stamp = Date.now();
+    const promptMessageId = `local-image-prompt-${stamp}`;
     const placeholderId = `local-image-${stamp}`;
 
     setMessages((previous) => [
       ...previous,
       {
-        id: `local-image-prompt-${stamp}`,
+        id: promptMessageId,
         role: "user",
         status: "complete",
         content: prompt,
@@ -683,18 +701,25 @@ export function ChatView({
       }
 
       setMessages((previous) =>
-        previous.map((message) =>
-          message.id === placeholderId
-            ? {
-                ...message,
-                id: data.messageId ?? placeholderId,
-                status: "complete",
-                // `data.url` is a stable /api/assets/<id> path, not an
-                // expiring signed URL — see that route for why.
-                content: `![${prompt.replace(/[[\]]/g, "")}](${data.url})`,
-              }
-            : message,
-        ),
+        previous.map((message) => {
+          if (message.id === placeholderId) {
+            return {
+              ...message,
+              id: data.messageId ?? placeholderId,
+              status: "complete",
+              // `data.url` is a stable /api/assets/<id> path, not an
+              // expiring signed URL — see that route for why.
+              content: `![${prompt.replace(/[[\]]/g, "")}](${data.url})`,
+            };
+          }
+          if (message.id === promptMessageId && data.userMessageId) {
+            return {
+              ...message,
+              id: data.userMessageId,
+            };
+          }
+          return message;
+        }),
       );
     } catch {
       setMessages((previous) =>

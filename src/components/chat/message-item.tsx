@@ -13,6 +13,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { displayContentOf, type UiMessage } from "@/components/chat/types";
 import { formatMessageTime } from "@/lib/date";
+import { GeneratingIndicator } from "@/components/chat/generating-indicator";
 import { cn } from "@/lib/utils";
 
 export function MessageItem({
@@ -116,7 +117,7 @@ export function MessageItem({
         // zero vertical height below the bubble, dramatically reducing input-output distance.
         <div className={cn("flex w-full items-end gap-1.5", isUser ? "justify-end" : "justify-start")}>
           {isUser && !isBusy && !editing ? (
-            <div className="flex items-center gap-0.5 opacity-0 transition-opacity duration-150 group-hover:opacity-100 focus-within:opacity-100">
+            <div className="flex items-center gap-0.5 opacity-70 transition-opacity duration-150 sm:opacity-0 sm:group-hover:opacity-100 focus-within:opacity-100">
               <IconAction label={copied ? t("copied") : t("copy")} onClick={handleCopy}>
                 {copied ? <Check className="size-3.5 text-success" /> : <Copy className="size-3.5" />}
               </IconAction>
@@ -132,16 +133,14 @@ export function MessageItem({
             className={cn(
               "min-w-0 text-[14px] leading-[1.65]",
               isUser
-                ? "max-w-[36rem] rounded-3xl bg-surface-raised px-4 py-2.5 text-foreground"
+                ? "flex flex-col items-end gap-2 max-w-[42rem]"
                 : "flex-1",
             )}
           >
             {message.status === "error" && !displayContent ? (
               <Alert tone="danger">{t("errorGeneric")}</Alert>
             ) : isBusy && !displayContent && !(message.attachments ?? []).length ? (
-              <p className="pulse text-[13px] text-muted" role="status">
-                {t("generating")}
-              </p>
+              <GeneratingIndicator />
             ) : (
               <>
                 {!isUser && message.reasoning ? (
@@ -168,28 +167,39 @@ export function MessageItem({
 
                 {isUser ? (
                   <>
-                    {displayContent ? (
-                      <p className="whitespace-pre-wrap break-words">{displayContent}</p>
+                    {(message.attachments ?? []).length > 0 ? (
+                      <MessageAttachments attachments={message.attachments ?? []} />
                     ) : null}
-                    <MessageAttachments attachments={message.attachments ?? []} />
-                    {message.createdAt && timeString ? (
-                      <div className="mt-1 flex items-center justify-end">
-                        <time
-                          dateTime={message.createdAt}
-                          suppressHydrationWarning
-                          className="text-[11px] text-muted/75 tabular-nums select-none"
-                        >
-                          {timeString}
-                        </time>
+                    {displayContent ? (
+                      <div className="max-w-[36rem] rounded-3xl bg-surface-raised px-4 py-2.5 text-foreground">
+                        <p className="whitespace-pre-wrap break-words">{displayContent}</p>
+                        {message.createdAt && timeString ? (
+                          <div className="mt-1 flex items-center justify-end">
+                            <time
+                              dateTime={message.createdAt}
+                              suppressHydrationWarning
+                              className="text-[11px] text-muted/75 tabular-nums select-none"
+                            >
+                              {timeString}
+                            </time>
+                          </div>
+                        ) : null}
                       </div>
                     ) : null}
                   </>
                 ) : (
-                  <MarkdownRenderer
-                    content={displayContent ?? ""}
-                    // The caret marks the live tail of a streaming reply.
-                    className={message.status === "streaming" ? "streaming-caret" : undefined}
-                  />
+                  <>
+                    <MarkdownRenderer
+                      content={displayContent ?? ""}
+                      // The caret marks the live tail of a streaming reply.
+                      className={message.status === "streaming" ? "streaming-caret" : undefined}
+                    />
+                    {(message.attachments ?? []).length > 0 ? (
+                      <div className="mt-3 flex justify-start">
+                        <MessageAttachments attachments={message.attachments ?? []} />
+                      </div>
+                    ) : null}
+                  </>
                 )}
 
                 {message.status === "stopped" ? (

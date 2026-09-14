@@ -212,10 +212,14 @@
   },
   "chat": {
     "composer": {
-      "placeholder": "给 Mujeeb AI 发消息…",
+      "placeholder": "提问任何问题…",
       "send": "发送",
       "stop": "停止",
       "attach": "添加附件",
+      "dictation": "语音听写",
+      "dictationListening": "正在聆听… 点击停止",
+      "dictationUnsupported": "您的浏览器不支持语音听写",
+      "dictationError": "无法访问麦克风",
       "generateImage": "生成图片",
       "disclaimer": "Mujeeb AI 可能会出错,请核实重要信息。",
       "attachHint": "上传文档或图片（最大 {size}）",

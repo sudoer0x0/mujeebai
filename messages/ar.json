@@ -212,10 +212,14 @@
   },
   "chat": {
     "composer": {
-      "placeholder": "راسل مجيب AI…",
+      "placeholder": "اسأل عن أي شيء…",
       "send": "إرسال",
       "stop": "إيقاف",
       "attach": "إرفاق ملف",
+      "dictation": "الإملاء الصوتي",
+      "dictationListening": "جارٍ الاستماع… انقر للإيقاف",
+      "dictationUnsupported": "الإملاء الصوتي غير مدعوم في متصفحك",
+      "dictationError": "تعذر الوصول إلى الميكروفون",
       "generateImage": "توليد صورة",
       "disclaimer": "قد يرتكب مجيب AI أخطاء. تحقق من المعلومات المهمة.",
       "attachHint": "أرفق مستنداً أو صورة (حتى {size})",

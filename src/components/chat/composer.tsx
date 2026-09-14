@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useTranslations } from "next-intl";
-import { ArrowUp, Paperclip, Plus, Square, X, FileText, Image as ImageIcon, AlertCircle } from "lucide-react";
+import { ArrowUp, Paperclip, Plus, Square, X, FileText, Image as ImageIcon, AlertCircle, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import {
@@ -14,6 +14,7 @@ import {
 import { toast } from "@/components/ui/toast";
 import { ModelSelector } from "@/components/chat/model-selector";
 import { extractFilesFromClipboard } from "@/lib/clipboard";
+import { useDictation } from "@/lib/use-dictation";
 import { cn } from "@/lib/utils";
 import type { UiAttachment } from "@/components/chat/types";
 
@@ -47,6 +48,92 @@ export interface ComposerProps {
   maxAttachments: number;
 }
 
+interface ComposerAddButtonProps {
+  fileUploadsEnabled: boolean;
+  imageMode: boolean;
+  setImageMode: (value: boolean) => void;
+  imageGenerationEnabled: boolean;
+  attachmentsCount: number;
+  maxAttachments: number;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
+  t: (key: string, values?: Record<string, string | number>) => string;
+}
+
+function ComposerAddButton({
+  fileUploadsEnabled,
+  imageMode,
+  setImageMode,
+  imageGenerationEnabled,
+  attachmentsCount,
+  maxAttachments,
+  fileInputRef,
+  t,
+}: ComposerAddButtonProps) {
+  const [open, setOpen] = React.useState(false);
+
+  if (!fileUploadsEnabled || imageMode) {
+    return imageMode ? (
+      <Button
+        variant="ghost"
+        size="icon"
+        className="rounded-full"
+        onClick={() => setImageMode(false)}
+        aria-label={t("composer.exitImageMode")}
+      >
+        <X className="size-4" />
+      </Button>
+    ) : null;
+  }
+
+  return (
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="rounded-full"
+          aria-label={t("composer.addContent")}
+        >
+          <Plus />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" side="top" className="w-60">
+        <DropdownMenuItem
+          // Two things are needed to open a file dialog from a menu
+          // item. `preventDefault` stops Radix closing the menu and
+          // restoring focus synchronously, and the deferred click runs
+          // after that teardown — without both, the browser treats the
+          // user-activation gesture as already spent and silently
+          // refuses to open the picker.
+          onSelect={(event) => {
+            event.preventDefault();
+            setOpen(false);
+            window.setTimeout(() => fileInputRef.current?.click(), 0);
+          }}
+          disabled={attachmentsCount >= maxAttachments}
+        >
+          <Paperclip className="size-4" aria-hidden />
+          <span className="flex-1">{t("composer.uploadFiles")}</span>
+          <span className="text-[11px] tabular-nums text-faint">
+            {attachmentsCount}/{maxAttachments}
+          </span>
+        </DropdownMenuItem>
+        {imageGenerationEnabled ? (
+          <DropdownMenuItem
+            onSelect={() => {
+              setOpen(false);
+              setImageMode(true);
+            }}
+          >
+            <ImageIcon className="size-4" aria-hidden />
+            {t("composer.generateImage")}
+          </DropdownMenuItem>
+        ) : null}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
 export const Composer = React.forwardRef<ComposerRef, ComposerProps>(function Composer(
   {
     isStreaming,
@@ -69,7 +156,6 @@ export const Composer = React.forwardRef<ComposerRef, ComposerProps>(function Co
   const [value, setValue] = React.useState("");
   const [attachments, setAttachments] = React.useState<PendingAttachment[]>([]);
   const [imageMode, setImageMode] = React.useState(false);
-  const [menuOpen, setMenuOpen] = React.useState(false);
   const [dragging, setDragging] = React.useState(false);
 
   /**
@@ -100,6 +186,37 @@ export const Composer = React.forwardRef<ComposerRef, ComposerProps>(function Co
   const dragDepth = React.useRef(0);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+
+  const baseTextRef = React.useRef("");
+  const dictation = useDictation({
+    onTranscript(text, isFinal) {
+      setValue(() => {
+        const base = baseTextRef.current;
+        const prefix = base ? (base.endsWith(" ") ? base : `${base} `) : "";
+        const next = `${prefix}${text}`;
+        if (isFinal) {
+          baseTextRef.current = next;
+        }
+        return next;
+      });
+    },
+    onError(err) {
+      if (err === "not_supported") {
+        toast.error(t("composer.dictationUnsupported"));
+      } else {
+        toast.error(t("composer.dictationError"));
+      }
+    },
+  });
+
+  function handleToggleDictation() {
+    if (!dictation.isListening) {
+      baseTextRef.current = value;
+      dictation.start();
+    } else {
+      dictation.stop();
+    }
+  }
 
   const uploading = attachments.some((attachment) => attachment.status === "uploading");
   const canSend = value.trim().length > 0 && !isStreaming && !uploading;
@@ -141,10 +258,12 @@ export const Composer = React.forwardRef<ComposerRef, ComposerProps>(function Co
 
   function submit() {
     if (!canSend) return;
+    if (dictation.isListening) dictation.stop();
     const text = value.trim();
 
     if (imageMode) {
       onGenerateImage(text);
+      setImageMode(false);
     } else {
       onSend(
         text,
@@ -320,71 +439,6 @@ export const Composer = React.forwardRef<ComposerRef, ComposerProps>(function Co
     addFiles(files);
   }
 
-  /** The "+" menu. Rendered in the row or the control bar, never both. */
-  function ComposerAddButton() {
-    if (!fileUploadsEnabled || imageMode) {
-      return imageMode ? (
-        <Button
-          variant="ghost"
-          size="icon"
-          className="rounded-full"
-          onClick={() => setImageMode(false)}
-          aria-label={t("composer.exitImageMode")}
-        >
-          <X className="size-4" />
-        </Button>
-      ) : null;
-    }
-
-    return (
-      <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full"
-            aria-label={t("composer.addContent")}
-          >
-            <Plus />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" side="top" className="w-60">
-          <DropdownMenuItem
-            // Two things are needed to open a file dialog from a menu
-            // item. `preventDefault` stops Radix closing the menu and
-            // restoring focus synchronously, and the deferred click runs
-            // after that teardown — without both, the browser treats the
-            // user-activation gesture as already spent and silently
-            // refuses to open the picker.
-            onSelect={(event) => {
-              event.preventDefault();
-              setMenuOpen(false);
-              window.setTimeout(() => fileInputRef.current?.click(), 0);
-            }}
-            disabled={attachments.length >= maxAttachments}
-          >
-            <Paperclip className="size-4" aria-hidden />
-            <span className="flex-1">{t("composer.uploadFiles")}</span>
-            <span className="text-[11px] tabular-nums text-faint">
-              {attachments.length}/{maxAttachments}
-            </span>
-          </DropdownMenuItem>
-          {imageGenerationEnabled ? (
-            <DropdownMenuItem
-              onSelect={() => {
-                setMenuOpen(false);
-                setImageMode(true);
-              }}
-            >
-              <ImageIcon className="size-4" aria-hidden />
-              {t("composer.generateImage")}
-            </DropdownMenuItem>
-          ) : null}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    );
-  }
-
   function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
     // Copy out of the FileList *before* resetting the input.
     //
@@ -516,7 +570,16 @@ export const Composer = React.forwardRef<ComposerRef, ComposerProps>(function Co
           {/* Desktop single-line: plus button leads the row */}
           {!expanded ? (
             <div className="hidden sm:block shrink-0">
-              <ComposerAddButton />
+              <ComposerAddButton
+                fileUploadsEnabled={fileUploadsEnabled}
+                imageMode={imageMode}
+                setImageMode={setImageMode}
+                imageGenerationEnabled={imageGenerationEnabled}
+                attachmentsCount={attachments.length}
+                maxAttachments={maxAttachments}
+                fileInputRef={fileInputRef}
+                t={t}
+              />
             </div>
           ) : null}
 
@@ -552,11 +615,39 @@ export const Composer = React.forwardRef<ComposerRef, ComposerProps>(function Co
           >
             {/* Mobile (always) and Desktop (when expanded): Add button sits on the left */}
             <div className={cn("flex items-center gap-1", !expanded && "sm:hidden")}>
-              {fileUploadsEnabled && !imageMode ? <ComposerAddButton /> : null}
+              <ComposerAddButton
+                fileUploadsEnabled={fileUploadsEnabled}
+                imageMode={imageMode}
+                setImageMode={setImageMode}
+                imageGenerationEnabled={imageGenerationEnabled}
+                attachmentsCount={attachments.length}
+                maxAttachments={maxAttachments}
+                fileInputRef={fileInputRef}
+                t={t}
+              />
             </div>
 
             <div className="flex items-center gap-1.5 ms-auto sm:ms-0">
               {!imageMode ? <ModelSelector value={modelSlug} onChange={onModelChange} compact /> : null}
+
+              {!imageMode && dictation.isSupported ? (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className={cn(
+                    "size-8 sm:size-7 rounded-full shrink-0 transition-colors",
+                    dictation.isListening
+                      ? "bg-red-500/15 text-red-500 hover:bg-red-500/25 animate-pulse"
+                      : "text-muted hover:text-foreground hover:bg-surface-subtle",
+                  )}
+                  onClick={handleToggleDictation}
+                  aria-label={dictation.isListening ? t("composer.dictationListening") : t("composer.dictation")}
+                  title={dictation.isListening ? t("composer.dictationListening") : t("composer.dictation")}
+                >
+                  <Mic className="size-4 sm:size-3.5" />
+                </Button>
+              ) : null}
 
               {isStreaming ? (
                 <Button

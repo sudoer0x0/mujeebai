@@ -23,11 +23,11 @@ const REF=URL_.replace("https://","").split(".")[0];
 const admin=createClient(URL_,process.env.SUPABASE_SERVICE_ROLE_KEY!,{auth:{persistSession:false}});
 let fails=0; const ok=(c:boolean,l:string,e="")=>{console.log(`  ${c?"PASS":"*** FAIL"}  ${l}${e?" :: "+e:""}`); if(!c)fails++;};
 
-async function turn(cookie: string, modelSlug: string, attempt = 0): Promise<{status:number;reasoning:number;text:number}> {
+async function turn(cookie: string, modelSlug: string, content = "What is 17*23? Answer with just the number.", attempt = 0): Promise<{status:number;reasoning:number;text:number}> {
   try {
   const res = await fetch("http://localhost:3000/api/chat", { method:"POST",
     headers:{cookie,"content-type":"application/json",connection:"close"},
-    body: JSON.stringify({ content: "What is 17*23? Answer with just the number.", modelSlug }) });
+    body: JSON.stringify({ content, modelSlug }) });
   if (res.status !== 200) return { status: res.status, reasoning: 0, text: 0 };
   const reader=res.body!.getReader(); const dec=new TextDecoder(); let buf="";
   while(true){ const {value,done}=await reader.read(); if(done)break; buf+=dec.decode(value,{stream:true}); }
@@ -39,7 +39,7 @@ async function turn(cookie: string, modelSlug: string, attempt = 0): Promise<{st
   } catch (e) {
     // A dev server compiles this route on first hit, which can outlast the
     // default fetch timeout. That is the harness, not the app.
-    if (attempt < 2) { await new Promise(r => setTimeout(r, 4000)); return turn(cookie, modelSlug, attempt + 1); }
+    if (attempt < 2) { await new Promise(r => setTimeout(r, 4000)); return turn(cookie, modelSlug, content, attempt + 1); }
     throw e;
   }
 }
@@ -62,7 +62,7 @@ async function main(){
     }
 
     console.log("\n  Mujeeb AI Reasoning — configured 'always show thinking'");
-    const r = await turn(cookie, "mujeeb-reasoning");
+    const r = await turn(cookie, "mujeeb-reasoning", "What is 17*23? Show your work step by step.");
     ok(r.status===200 && r.reasoning>0, "reasoning reached the client", `status=${r.status} reasoning=${r.reasoning}`);
   } finally { await admin.auth.admin.deleteUser(uid).catch(()=>{}); }
   console.log(fails===0?"\n  REASONING MODES OK":`\n  ${fails} FAILURES`);

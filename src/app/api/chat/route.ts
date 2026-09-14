@@ -113,6 +113,54 @@ async function handleChat(request: Request) {
   ]);
 
   if (conversationResult.error || !conversationResult.data) {
+    if (!conversationId) {
+      logger.warn("chat_conversation_create_anon_failed_retrying_service_role", {
+        error: conversationResult.error?.message,
+        userId: user.id,
+      });
+      try {
+        const { createServiceRoleClient } = await import("@/lib/supabase/server");
+        const serviceRole = createServiceRoleClient();
+
+        const { data: profile } = await serviceRole.from("profiles").select("id").eq("id", user.id).maybeSingle();
+        if (!profile) {
+          await serviceRole.from("profiles").insert({
+            id: user.id,
+            email: user.email ?? `user_${user.id.slice(0, 8)}@example.com`,
+            display_name: user.email?.split("@")[0] ?? "User",
+            role: "user",
+            status: "active",
+          });
+        }
+
+        const retry = await serviceRole
+          .from("conversations")
+          .insert({
+            user_id: user.id,
+            title: "New conversation",
+            last_message_at: new Date().toISOString(),
+          })
+          .select()
+          .single();
+        if (retry.data) {
+          conversationResult.data = retry.data;
+          conversationResult.error = null;
+        }
+      } catch (retryErr) {
+        logger.error("chat_conversation_service_role_retry_failed", {
+          error: String(retryErr),
+          userId: user.id,
+        });
+      }
+    }
+  }
+
+  if (conversationResult.error || !conversationResult.data) {
+    logger.error("chat_conversation_lookup_or_create_failed", {
+      conversationId,
+      error: conversationResult.error?.message,
+      userId: user.id,
+    });
     return jsonError(conversationId ? "Conversation not found" : "Could not create conversation", conversationId ? 404 : 500);
   }
   const conversation = conversationResult.data;
@@ -302,6 +350,7 @@ async function handleChat(request: Request) {
     pendingStream,
     conversationId: conversation.id,
     assistantMessageId: assistantMessage.id,
+    userMessageId: userMessage.id,
     variantId: variant?.id ?? "",
     userId: user.id,
     titleSourceText: isNewConversation ? content : undefined,

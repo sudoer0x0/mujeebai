@@ -14,11 +14,21 @@ import {
 
 function toOpenRouterContent(content: string | ChatContentPart[]) {
   if (typeof content === "string") return content;
-  return content.map((part) =>
-    part.type === "image_url"
-      ? { type: "image_url", image_url: { url: part.imageUrl } }
-      : { type: "text", text: part.text ?? "" },
-  );
+  return content.map((part) => {
+    if (part.type === "image_url") {
+      return { type: "image_url", image_url: { url: part.imageUrl } };
+    }
+    if (part.type === "media" && part.media) {
+      if (part.media.mimeType.startsWith("image/")) {
+        return {
+          type: "image_url",
+          image_url: { url: `data:${part.media.mimeType};base64,${part.media.data}` },
+        };
+      }
+      return { type: "text", text: `[Attached file: ${part.media.filename || "file"}]` };
+    }
+    return { type: "text", text: part.text ?? "" };
+  });
 }
 
 function toOpenRouterMessages(messages: ChatMessageInput[]) {

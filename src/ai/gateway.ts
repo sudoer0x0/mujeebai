@@ -1,5 +1,6 @@
 import "server-only";
 import { logger } from "@/lib/logger";
+import { googleChatAdapter } from "@/ai/providers/google";
 import { openRouterAdapter } from "@/ai/providers/openrouter";
 import { cloudflareChatAdapter } from "@/ai/providers/cloudflare-chat";
 import { providerStatus } from "@/lib/env.server";
@@ -11,6 +12,7 @@ import type { ReasoningMode } from "@/ai/types";
 import { GatewayError, type ChatMessageInput, type StreamChunk, type TextProviderAdapter } from "@/ai/types";
 
 const TEXT_ADAPTERS: Record<string, TextProviderAdapter> = {
+  google: googleChatAdapter,
   openrouter: openRouterAdapter,
   cloudflare: cloudflareChatAdapter,
 };

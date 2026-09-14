@@ -5,10 +5,9 @@ import { requireUser } from "@/auth/session";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { isFeatureEnabled } from "@/lib/feature-flags";
 import { checkQuota, consumeQuota } from "@/usage/quota";
-import { cloudflareImageAdapter } from "@/ai/providers/cloudflare-image";
+import { googleImageAdapter } from "@/ai/providers/google-image";
 import { createStorageAdapter } from "@/storage/factory";
 import { GatewayError } from "@/ai/types";
-import { serverEnv } from "@/lib/env.server";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
@@ -43,9 +42,9 @@ export async function POST(request: Request) {
   if (!quota.allowed) return NextResponse.json({ error: "images.quotaReached" }, { status: 429 });
 
   try {
-    const result = await cloudflareImageAdapter.generateImage({
+    const result = await googleImageAdapter.generateImage({
       prompt: parsed.data.prompt,
-      providerModelId: serverEnv.CLOUDFLARE_IMAGE_MODEL,
+      providerModelId: "gemini-2.5-flash-image",
       signal: request.signal,
     });
 
@@ -186,6 +185,7 @@ export async function POST(request: Request) {
       url,
       conversationId,
       messageId: assistantMessageId,
+      userMessageId,
       isNewConversation,
     });
   } catch (error) {

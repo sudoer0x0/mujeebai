@@ -80,22 +80,50 @@ export async function loadConversationHistory(conversationId: string): Promise<C
   return history;
 }
 
-/** Attaches image content parts (as data URLs) for vision-capable requests. */
+/** Attaches multimodal content parts (as base64 data URLs and media parts) for vision, audio, video, and PDF capable requests. */
 export async function buildUserContentWithAttachments(
   text: string,
   attachments: AttachmentRow[],
 ): Promise<ChatMessageInput["content"]> {
-  const images = attachments.filter((a) => a.kind === "image");
-  if (images.length === 0) return text;
+  const mediaAttachments = attachments.filter(
+    (a) =>
+      a.kind === "image" ||
+      a.kind === "video" ||
+      a.kind === "audio" ||
+      a.mime_type === "application/pdf",
+  );
+  if (mediaAttachments.length === 0) return text;
 
   const { createStorageAdapter } = await import("@/storage/factory");
   const storage = createStorageAdapter();
 
   const parts: ChatContentPart[] = [{ type: "text", text }];
 
-  for (const image of images) {
-    const url = await storage.getUrl(image.storage_path, { expiresInSeconds: 3600 });
-    parts.push({ type: "image_url", imageUrl: url });
+  for (const item of mediaAttachments) {
+    try {
+      const buffer = await storage.download(item.storage_path);
+      const base64 = buffer.toString("base64");
+      const mimeType = item.mime_type || (item.kind === "image" ? "image/png" : "application/octet-stream");
+      const dataUrl = `data:${mimeType};base64,${base64}`;
+
+      parts.push({
+        type: "media",
+        imageUrl: dataUrl,
+        media: {
+          mimeType,
+          data: base64,
+          filename: item.original_filename,
+        },
+      });
+    } catch {
+      // Fallback for storage implementations that only support signed URLs
+      try {
+        const url = await storage.getUrl(item.storage_path, { expiresInSeconds: 3600 });
+        parts.push({ type: "image_url", imageUrl: url });
+      } catch {
+        // Ignored
+      }
+    }
   }
 
   return parts;

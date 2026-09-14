@@ -43,9 +43,19 @@ const GROUPS: Group[] = [
       "Registration falls back to Supabase's built-in SMTP, which only delivers to project-team addresses — new users will not be able to sign up.",
   },
   {
-    label: "OpenRouter (chat + vision)",
+    label: "Google Gemini (primary chat)",
+    vars: ["GEMINI_API_KEY"],
+    impact: "Primary Gemini models (Fast & Think) will be unavailable; falls back to OpenRouter.",
+  },
+  {
+    label: "Google Gemini (Nano Banana image generation)",
+    vars: ["GEMINI_IMAGE_API_KEY"],
+    impact: "Nano Banana image generation falls back to Cloudflare Flux or GEMINI_API_KEY.",
+  },
+  {
+    label: "OpenRouter (chat + vision fallback)",
     vars: ["OPENROUTER_API_KEY"],
-    impact: "Chat cannot reach any model.",
+    impact: "Fallback models will be unavailable if Gemini fails.",
   },
   {
     label: "Cloudflare Workers AI (image generation)",

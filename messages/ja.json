@@ -212,10 +212,14 @@
   },
   "chat": {
     "composer": {
-      "placeholder": "Mujeeb AIにメッセージを送る…",
+      "placeholder": "何でも質問してください…",
       "send": "送信",
       "stop": "停止",
       "attach": "ファイルを添付",
+      "dictation": "音声入力",
+      "dictationListening": "聞き取り中… クリックして停止",
+      "dictationUnsupported": "お使いのブラウザは音声入力に対応していません",
+      "dictationError": "マイクにアクセスできませんでした",
       "generateImage": "画像を生成",
       "disclaimer": "Mujeeb AIは間違えることがあります。重要な情報は確認してください。",
       "attachHint": "書類または画像を添付（{size} まで）",

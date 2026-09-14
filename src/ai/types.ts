@@ -13,9 +13,14 @@ export type Capability =
 export type ChatRole = "system" | "user" | "assistant";
 
 export interface ChatContentPart {
-  type: "text" | "image_url";
+  type: "text" | "image_url" | "media";
   text?: string;
   imageUrl?: string;
+  media?: {
+    mimeType: string;
+    data: string;
+    filename?: string;
+  };
 }
 
 export interface ChatMessageInput {

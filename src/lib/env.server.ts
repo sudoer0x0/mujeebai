@@ -41,6 +41,9 @@ const serverSchema = z.object({
 
   SUPER_ADMIN_SETUP_TOKEN: z.string().optional(),
 
+  GEMINI_API_KEY: z.string().optional(),
+  GEMINI_IMAGE_API_KEY: z.string().optional(),
+
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
 });
 
@@ -49,6 +52,8 @@ export const serverEnv = serverSchema.parse(process.env);
 /** True when a given external provider has real credentials configured. */
 export const providerStatus = {
   supabaseServiceRole: Boolean(serverEnv.SUPABASE_SERVICE_ROLE_KEY),
+  google: Boolean(serverEnv.GEMINI_API_KEY),
+  googleImages: Boolean(serverEnv.GEMINI_IMAGE_API_KEY || serverEnv.GEMINI_API_KEY),
   openrouter: Boolean(serverEnv.OPENROUTER_API_KEY),
   cloudflareImages: Boolean(serverEnv.CLOUDFLARE_ACCOUNT_ID && serverEnv.CLOUDFLARE_API_TOKEN),
   cloudflareChat: Boolean(serverEnv.CLOUDFLARE_ACCOUNT_ID && serverEnv.CLOUDFLARE_API_TOKEN),
