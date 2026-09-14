@@ -1,8 +1,18 @@
 "use client";
 
 import * as React from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { ArrowUp, Paperclip, Plus, Square, X, FileText, Image as ImageIcon, AlertCircle, Mic } from "lucide-react";
+
+const SPEECH_LANG_MAP: Record<string, string> = {
+  en: "en-US",
+  ar: "ar-SA",
+  es: "es-ES",
+  fr: "fr-FR",
+  ja: "ja-JP",
+  pt: "pt-BR",
+  zh: "zh-CN",
+};
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import {
@@ -187,22 +197,32 @@ export const Composer = React.forwardRef<ComposerRef, ComposerProps>(function Co
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
+  const locale = useLocale();
   const baseTextRef = React.useRef("");
   const dictation = useDictation({
-    onTranscript(text, isFinal) {
-      setValue(() => {
-        const base = baseTextRef.current;
-        const prefix = base ? (base.endsWith(" ") ? base : `${base} `) : "";
-        const next = `${prefix}${text}`;
-        if (isFinal) {
-          baseTextRef.current = next;
-        }
-        return next;
-      });
+    lang: SPEECH_LANG_MAP[locale] || (typeof navigator !== "undefined" ? navigator.language : "en-US"),
+    onTranscript({ final, interim }) {
+      const base = baseTextRef.current;
+      const speech = (final + interim).trimStart();
+      if (!speech) return;
+
+      const prefix = base ? (base.endsWith(" ") ? base : `${base} `) : "";
+      setValue(`${prefix}${speech}`);
+    },
+    onTurnEnd() {
+      baseTextRef.current = value;
     },
     onError(err) {
       if (err === "not_supported") {
         toast.error(t("composer.dictationUnsupported"));
+      } else if (err === "not_allowed") {
+        toast.error(t("composer.dictationPermission"));
+      } else if (err === "no_microphone") {
+        toast.error(t("composer.dictationNoMic"));
+      } else if (err === "network_error") {
+        toast.error(t("composer.dictationNetwork"));
+      } else if (err === "not_secure") {
+        toast.error(t("composer.dictationNotSecure"));
       } else {
         toast.error(t("composer.dictationError"));
       }
@@ -212,7 +232,7 @@ export const Composer = React.forwardRef<ComposerRef, ComposerProps>(function Co
   function handleToggleDictation() {
     if (!dictation.isListening) {
       baseTextRef.current = value;
-      dictation.start();
+      void dictation.start();
     } else {
       dictation.stop();
     }
